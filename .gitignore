@@ -62,3 +62,6 @@ firebase-debug.log
 # Local agent/tooling state (not part of the product)
 .claude/
 .veris/
+
+# deploy archives (built on demand, never committed)
+*.zip
