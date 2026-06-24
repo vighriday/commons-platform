@@ -1,0 +1,1602 @@
+{
+  "finishedAt": "2026-05-22T13:00:00.000Z",
+  "inputHash": "d98a527068f53204",
+  "modelRoute": [
+    {
+      "agent": "evidence",
+      "model": "flash"
+    },
+    {
+      "agent": "impact",
+      "model": "flash-lite"
+    },
+    {
+      "agent": "attention",
+      "model": "flash-lite"
+    },
+    {
+      "agent": "hidden_crisis",
+      "model": "flash"
+    },
+    {
+      "agent": "resolution",
+      "model": "flash-lite"
+    },
+    {
+      "agent": "accountability",
+      "model": "flash"
+    },
+    {
+      "agent": "memory",
+      "model": "flash-lite"
+    }
+  ],
+  "reversal": {
+    "afterRanking": [
+      "ISS_HC1",
+      "ISS_HC2",
+      "ISS_HC3",
+      "ISS_SYN",
+      "ISS_REC",
+      "ISS_NOISE"
+    ],
+    "beforeRanking": [
+      "ISS_NOISE",
+      "ISS_REC",
+      "ISS_SYN",
+      "ISS_HC3",
+      "ISS_HC1",
+      "ISS_HC2"
+    ],
+    "issueId": "ISS_HC1",
+    "overruledIssueId": "ISS_NOISE",
+    "promotedIssueId": "ISS_HC1",
+    "reason": "“Stormwater drain choke near Agara Lake — silent flood risk” (impact 81) is promoted over the community's loudest issue “Pothole on 17th Cross, Sector 7” (attention 0.78, impact 19) — a civic blind spot the crowd missed."
+  },
+  "runId": "run_d98a527068f53204",
+  "snapshotId": "",
+  "startedAt": "2026-05-22T13:00:00.000Z",
+  "steps": [
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_HC1",
+        "reportIds": [
+          "R033",
+          "R077"
+        ]
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Stormwater drain choke near Agara Lake — silent flood risk",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R033",
+            "value": "Drain near Agara Lake Rd full of silt and plastic, water not moving."
+          },
+          {
+            "field": "media:photo",
+            "reportId": "R033",
+            "value": "silted storm drain — observed: silt+plastic occlusion, stagnant water (severity signal 5/5, conf 0.83)"
+          },
+          {
+            "field": "text",
+            "reportId": "R077",
+            "value": "Garbage dumped in the storm drain again on Agara Lake Rd."
+          }
+        ],
+        "uncertainty": "Cluster cosine tightness 0.874; 2 corroborating reports."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.93,
+        "severityNorm": 1,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 81 = severity 1.00 (sewage flooding homes) × exposure 0.93 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_HC1",
+            "value": "5/5 (sewage flooding homes)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_HC1",
+            "value": "0.93 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_HC1",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.16999999999999998,
+        "recency": 0.33380004148516906,
+        "replies": 0,
+        "upvotes": 1
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.17 = 0.5·alarm 0.17 + 0.3·engagement (1↑ 0↺) + 0.2·recency 0.33. The crowd is quiet here.",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R033",
+            "value": "alarm 0.18, 1↑ 0↺ 9👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R077",
+            "value": "alarm 0.16, 0↑ 0↺ 5👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 5,
+        "delta": 4,
+        "impactRank": 1
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Stormwater drain choke near Agara Lake — silent flood risk ranks #1 by impact but only #5 by attention — impact overrules the crowd. Impact 81 (exposure 0.93 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.17.",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_HC1",
+            "value": "1"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_HC1",
+            "value": "5"
+          }
+        ],
+        "uncertainty": "Overrule is structural (impact ≫ attention by rank), not a model judgement."
+      },
+      "parallelGroup": null,
+      "status": "overruled"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "drainage",
+        "severityRow": 5
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Stormwater drain choke near Agara Lake — silent flood risk: BBMP Storm Water Drain (SWD) Division, SLA 15d.",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_HC1",
+            "value": "Deploy mechanical desilting machinery to extract accumulated plastic waste and construction debris from the primary culvert"
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_HC1",
+            "value": "Conduct a CCTV inspection of the drain network extending 500 meters upstream to identify structural collapses or illegal sewage tap-ins"
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_HC1",
+            "value": "Clear vegetative overgrowth and blockages at the Agara Lake outfall weir to restore hydraulic flow capacity"
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_HC1",
+            "value": "Install temporary sediment traps at strategic points to prevent recurring silt buildup during the upcoming monsoon cycle"
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "drainage",
+        "dept": "BBMP Storm Water Drain (SWD) Division"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Stormwater drain choke near Agara Lake — silent flood risk: BBMP Storm Water Drain (SWD) Division (Executive Engineer, SWD).",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_HC1",
+            "value": "BBMP SWD owns stormwater drains and desilting"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_HC1",
+            "value": "Ward 174 falls under BBMP Bommanahalli zone"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-01-19T10:05:00.000Z",
+        "season": "Non-seasonal — reports fall outside the monsoon window.",
+        "type": "hidden_crisis"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "First-seen pattern for Stormwater drain choke near Agara Lake — silent flood risk; first seen 2025-01-19.",
+        "confidence": 0.66,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R033",
+            "value": "2025-01-19 @ 7J4VWJFQ"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R077",
+            "value": "2025-05-30 @ 7J4VWJFQ"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_HC2",
+        "reportIds": [
+          "R064"
+        ]
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Load-bearing wall crack, Somasundarapalya tenement block",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R064",
+            "value": "Crack running up the wall of the building near Somasundarapalya Main Rd, getting longer."
+          },
+          {
+            "field": "media:photo",
+            "reportId": "R064",
+            "value": "diagonal wall crack — observed: diagonal crack, >3mm width, load-bearing wall (severity signal 5/5, conf 0.81)"
+          }
+        ],
+        "uncertainty": "Single-source cluster — no cross-report agreement signal."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.92,
+        "severityNorm": 1,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 80 = severity 1.00 (imminent collapse / tilt) × exposure 0.92 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_HC2",
+            "value": "5/5 (imminent collapse / tilt)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_HC2",
+            "value": "0.92 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_HC2",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.2,
+        "recency": 0.24918326073428748,
+        "replies": 0,
+        "upvotes": 0
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.15 = 0.5·alarm 0.20 + 0.3·engagement (0↑ 0↺) + 0.2·recency 0.25. The crowd is quiet here.",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R064",
+            "value": "alarm 0.2, 0↑ 0↺ 7👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 6,
+        "delta": 4,
+        "impactRank": 2
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Load-bearing wall crack, Somasundarapalya tenement block ranks #2 by impact but only #6 by attention — impact overrules the crowd. Impact 80 (exposure 0.92 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.15.",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_HC2",
+            "value": "2"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_HC2",
+            "value": "6"
+          }
+        ],
+        "uncertainty": "Overrule is structural (impact ≫ attention by rank), not a model judgement."
+      },
+      "parallelGroup": null,
+      "status": "overruled"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "structural",
+        "severityRow": 5
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Load-bearing wall crack, Somasundarapalya tenement block: BBMP Town Planning / Technical Vigilance Cell (TVCC), SLA 3d.",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_HC2",
+            "value": "Immediately evacuate all residents of the affected Somasundarapalya tenement block to temporary shelter to ensure public safety"
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_HC2",
+            "value": "Install temporary shoring and structural bracing along the compromised load-bearing wall to prevent immediate collapse"
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_HC2",
+            "value": "Engage a structural engineering consultant to perform an ultrasonic pulse velocity test and a comprehensive crack pattern analysis"
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_HC2",
+            "value": "Seal off the building perimeter with barricades and warning signage to restrict unauthorized entry"
+          },
+          {
+            "field": "action5",
+            "reportId": "ISS_HC2",
+            "value": "Submit a formal condemnation notice and structural failure report to the BBMP Zonal Commissioner for emergency demolition or retrofitting authorization"
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "structural",
+        "dept": "BBMP Town Planning / Technical Vigilance Cell (TVCC)"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Load-bearing wall crack, Somasundarapalya tenement block: BBMP Town Planning / Technical Vigilance Cell (TVCC) (Executive Engineer, BBMP Bommanahalli).",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_HC2",
+            "value": "Building safety / load-bearing defects = BBMP TVCC"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_HC2",
+            "value": "Life-safety items carry an expedited SLA"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-04-15T08:30:00.000Z",
+        "season": "Non-seasonal — reports fall outside the monsoon window.",
+        "type": "hidden_crisis"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "First-seen pattern for Load-bearing wall crack, Somasundarapalya tenement block; first seen 2025-04-15.",
+        "confidence": 0.5,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R064",
+            "value": "2025-04-15 @ 7J4VWM82"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_HC3",
+        "reportIds": [
+          "R049",
+          "R069"
+        ]
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Streetlight blackout on ORR service road — pedestrian risk",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R049",
+            "value": "Streetlights off again on ORR service road near bus stop, very dark."
+          },
+          {
+            "field": "text",
+            "reportId": "R069",
+            "value": "Still no streetlights on the ORR service road stretch, unsafe walking at night."
+          }
+        ],
+        "uncertainty": "Cluster cosine tightness 0.927; 2 corroborating reports."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.89,
+        "severityNorm": 0.8,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 62 = severity 0.80 (dark stretch, pedestrian zone) × exposure 0.89 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_HC3",
+            "value": "4/5 (dark stretch, pedestrian zone)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_HC3",
+            "value": "0.89 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_HC3",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.22,
+        "recency": 0.276232887367766,
+        "replies": 1,
+        "upvotes": 2
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.23 = 0.5·alarm 0.22 + 0.3·engagement (2↑ 1↺) + 0.2·recency 0.28. The crowd is quiet here.",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R049",
+            "value": "alarm 0.22, 1↑ 0↺ 10👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R069",
+            "value": "alarm 0.22, 1↑ 1↺ 12👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 4,
+        "delta": 4,
+        "impactRank": 3
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Streetlight blackout on ORR service road — pedestrian risk sits at impact #3, attention #4 — no overrule.",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_HC3",
+            "value": "3"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_HC3",
+            "value": "4"
+          }
+        ],
+        "uncertainty": "No reversal — attention and impact broadly agree for this issue."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "streetlights",
+        "severityRow": 4
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Streetlight blackout on ORR service road — pedestrian risk: BESCOM (Bangalore Electricity Supply Company), SLA 5d.",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_HC3",
+            "value": "Dispatch night-patrol inspection team to record specific pole numbers and identify faulty circuit breakers or blown transformers on the ORR service road stretch"
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_HC3",
+            "value": "Perform immediate physical verification of ground-level junction boxes for potential cable theft or water ingress damage"
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_HC3",
+            "value": "Replace damaged LED luminaires or faulty photocell sensors to ensure automatic night-time activation"
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_HC3",
+            "value": "Coordinate with on-site contractors to execute emergency repairs on underground power lines if a localized fault is confirmed"
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "streetlights",
+        "dept": "BESCOM (Bangalore Electricity Supply Company)"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Streetlight blackout on ORR service road — pedestrian risk: BESCOM (Bangalore Electricity Supply Company) (Section Officer, BESCOM HSR sub-division).",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_HC3",
+            "value": "BESCOM owns street-light feeders + maintenance"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_HC3",
+            "value": "Pedestrian-risk blackouts are priority-routed"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-02-28T19:50:00.000Z",
+        "season": "Non-seasonal — reports fall outside the monsoon window.",
+        "type": "hidden_crisis"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "First-seen pattern for Streetlight blackout on ORR service road — pedestrian risk; first seen 2025-02-28.",
+        "confidence": 0.67,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R049",
+            "value": "2025-02-28 @ 7J4VWJCW"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R069",
+            "value": "2025-04-29 @ 7J4VWJCW"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_SYN",
+        "reportIds": [
+          "R041",
+          "R058",
+          "R072",
+          "R086"
+        ]
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "4 individually-minor reports from 3 reporters around 7J4VWJ6R point to one latent cause: Failing trunk water main under 27th Main, Sector 1 — pre-rupture.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R041",
+            "value": "Water pressure very low past few days in 27th Main, second tap barely runs in morning."
+          },
+          {
+            "field": "text",
+            "reportId": "R058",
+            "value": "Small depression forming on road near 27th Main / 5th Cross junction, getting bigger."
+          },
+          {
+            "field": "media:photo",
+            "reportId": "R058",
+            "value": "road subsidence near junction — observed: asphalt depression ~40cm, edge cracking (severity signal 4/5, conf 0.86)"
+          },
+          {
+            "field": "text",
+            "reportId": "R072",
+            "value": "Brown / rusty water from tap on Tuesday morning, cleared by evening."
+          },
+          {
+            "field": "text",
+            "reportId": "R086",
+            "value": "Patch of road stays wet even when no rain for 3 days, near the depression."
+          }
+        ],
+        "uncertainty": "Cluster cosine tightness 0.674; 4 corroborating reports."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.56,
+        "severityNorm": 1,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 49 = severity 1.00 (main rupture / supply loss to block) × exposure 0.56 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_SYN",
+            "value": "5/5 (main rupture / supply loss to block)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_SYN",
+            "value": "0.56 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_SYN",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.2375,
+        "recency": 0.39578147687201826,
+        "replies": 1,
+        "upvotes": 4
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.30 = 0.5·alarm 0.24 + 0.3·engagement (4↑ 1↺) + 0.2·recency 0.40. The crowd is quiet here.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R041",
+            "value": "alarm 0.22, 1↑ 0↺ 8👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R058",
+            "value": "alarm 0.28, 2↑ 1↺ 14👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R072",
+            "value": "alarm 0.25, 1↑ 0↺ 6👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R086",
+            "value": "alarm 0.2, 0↑ 0↺ 4👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 3,
+        "delta": 4,
+        "impactRank": 4
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Failing trunk water main under 27th Main, Sector 1 — pre-rupture sits at impact #4, attention #3 — no overrule.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_SYN",
+            "value": "4"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_SYN",
+            "value": "3"
+          }
+        ],
+        "uncertainty": "No reversal — attention and impact broadly agree for this issue."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "water",
+        "severityRow": 5
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Failing trunk water main under 27th Main, Sector 1 — pre-rupture: Bangalore Water Supply & Sewerage Board (BWSSB), SLA 7d.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_SYN",
+            "value": "Execute an emergency isolation of the sector valve to reduce pressure on the failing segment and prevent an uncontrolled rupture."
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_SYN",
+            "value": "Deploy a leak detection and ultrasonic testing team to verify the exact breach location and structural integrity of the main."
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_SYN",
+            "value": "Coordinate with the BBMP road works division to obtain immediate excavation clearance for the 27th Main section."
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_SYN",
+            "value": "Mobilize a specialized welding and pipe-fitting crew for rapid on-site repair or section replacement using trenchless technology if soil conditions permit."
+          },
+          {
+            "field": "action5",
+            "reportId": "ISS_SYN",
+            "value": "Establish a temporary mobile water tanker supply schedule for affected residents in Sector 1 to mitigate service disruption during the repair window."
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "water",
+        "dept": "Bangalore Water Supply & Sewerage Board (BWSSB)"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Failing trunk water main under 27th Main, Sector 1 — pre-rupture: Bangalore Water Supply & Sewerage Board (BWSSB) (Assistant Executive Engineer, BWSSB Sub-division).",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_SYN",
+            "value": "BWSSB owns trunk water mains + supply"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_SYN",
+            "value": "Trunk-main failure is a parastatal, not BBMP, jurisdiction"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-02-11T09:14:00.000Z",
+        "season": "Mixed seasonality — 1/4 reports in the monsoon window.",
+        "type": "synthesis"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "First-seen pattern for Failing trunk water main under 27th Main, Sector 1 — pre-rupture; first seen 2025-02-11.",
+        "confidence": 0.79,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R041",
+            "value": "2025-02-11 @ 7J4VWJ6R"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R058",
+            "value": "2025-03-26 @ 7J4VWJ6R"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R072",
+            "value": "2025-05-09 @ 7J4VWJ6R"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R086",
+            "value": "2025-07-02 @ 7J4VWJ6R"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_REC",
+        "reportIds": [
+          "R028",
+          "R055",
+          "R083"
+        ]
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "3 reports in the same cell (7J4VWJ7Q) over 162 days — a recurring failure, not isolated incidents.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R028",
+            "value": "Drain overflowing onto road at 14th Main 1st Cross, sewage smell."
+          },
+          {
+            "field": "text",
+            "reportId": "R055",
+            "value": "Same drain at 14th Main overflowing again, third time this season."
+          },
+          {
+            "field": "text",
+            "reportId": "R083",
+            "value": "Drain at 14th Main 1st Cross blocked and overflowing yet again, monsoon starting."
+          }
+        ],
+        "uncertainty": "Cluster cosine tightness 0.887; 3 corroborating reports."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.49,
+        "severityNorm": 0.8,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 34 = severity 0.80 (overflow onto road / silted choke) × exposure 0.49 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_REC",
+            "value": "4/5 (overflow onto road / silted choke)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_REC",
+            "value": "0.49 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_REC",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.28,
+        "recency": 0.37061812901887575,
+        "replies": 5,
+        "upvotes": 12
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.51 = 0.5·alarm 0.28 + 0.3·engagement (12↑ 5↺) + 0.2·recency 0.37. The crowd is loud here.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R028",
+            "value": "alarm 0.3, 3↑ 1↺ 20👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R055",
+            "value": "alarm 0.27, 4↑ 2↺ 25👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R083",
+            "value": "alarm 0.27, 5↑ 2↺ 30👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 2,
+        "delta": 4,
+        "impactRank": 5
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross sits at impact #5, attention #2 — no overrule.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_REC",
+            "value": "5"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_REC",
+            "value": "2"
+          }
+        ],
+        "uncertainty": "No reversal — attention and impact broadly agree for this issue."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "drainage",
+        "severityRow": 4
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross: BBMP Storm Water Drain (SWD) Division, SLA 15d.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_REC",
+            "value": "Conduct an immediate desilting and suction cleaning operation of the primary drain network at the 14th Main x 1st Cross junction to restore flow capacity"
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_REC",
+            "value": "Deploy a survey team to inspect the structural integrity of the drain wall and identify potential collapses causing the current blockage"
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_REC",
+            "value": "Execute a topographic survey of the road grade to identify low-lying depressions contributing to stagnant surface water"
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_REC",
+            "value": "Install a reinforced concrete slab cover over the exposed open section of the drain to prevent further solid waste dumping"
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "drainage",
+        "dept": "BBMP Storm Water Drain (SWD) Division"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross: BBMP Storm Water Drain (SWD) Division (Executive Engineer, SWD).",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_REC",
+            "value": "BBMP SWD owns stormwater drains and desilting"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_REC",
+            "value": "Ward 174 falls under BBMP Bommanahalli zone"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-01-08T11:00:00.000Z",
+        "season": "Mixed seasonality — 1/3 reports in the monsoon window.",
+        "type": "recurrence"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recurring pattern for Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross; first seen 2025-01-08.",
+        "confidence": 0.76,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R028",
+            "value": "2025-01-08 @ 7J4VWJ7Q"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R055",
+            "value": "2025-03-21 @ 7J4VWJ7Q"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R083",
+            "value": "2025-06-19 @ 7J4VWJ7Q"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "evidence",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "issueId": "ISS_NOISE",
+        "reportIds": [
+          "R047",
+          "R051",
+          "R052",
+          "R060",
+          "R068",
+          "R074",
+          "R081"
+        ]
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Pothole on 17th Cross, Sector 7",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "text",
+            "reportId": "R047",
+            "value": "DANGEROUS pothole on 17th Cross Sector 7, almost fell off my scooter!"
+          },
+          {
+            "field": "media:photo",
+            "reportId": "R047",
+            "value": "pothole on 17th Cross — observed: pothole ~30cm, surface only (severity signal 2/5, conf 0.78)"
+          },
+          {
+            "field": "text",
+            "reportId": "R051",
+            "value": "When will this 17th Cross pothole be fixed?? Reported weeks ago."
+          },
+          {
+            "field": "text",
+            "reportId": "R052",
+            "value": "Same big pothole on 17th Cross still not repaired, ridiculous."
+          },
+          {
+            "field": "text",
+            "reportId": "R060",
+            "value": "Pothole on 17th Cross getting worse, cars swerving into oncoming traffic."
+          },
+          {
+            "field": "text",
+            "reportId": "R068",
+            "value": "17th Cross pothole — third complaint. BBMP please act."
+          },
+          {
+            "field": "text",
+            "reportId": "R074",
+            "value": "Massive pothole 17th Cross Sector 7, dangerous at night."
+          },
+          {
+            "field": "text",
+            "reportId": "R081",
+            "value": "Still waiting on the 17th Cross pothole repair. Disappointing."
+          }
+        ],
+        "uncertainty": "Cluster cosine tightness 0.886; 7 corroborating reports."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "impact",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "exposure": 0.55,
+        "severityNorm": 0.4,
+        "vulnerability": 0.87
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Impact 19 = severity 0.40 (minor pothole) × exposure 0.55 (Open Buildings) × vulnerability 0.87 (Data Commons, district) × 100.",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "severity",
+            "reportId": "ISS_NOISE",
+            "value": "2/5 (minor pothole)"
+          },
+          {
+            "field": "exposure",
+            "reportId": "ISS_NOISE",
+            "value": "0.55 — derived-from-real"
+          },
+          {
+            "field": "vulnerability",
+            "reportId": "ISS_NOISE",
+            "value": "0.87 — district-level proxy"
+          }
+        ],
+        "uncertainty": "Vulnerability is a district-level proxy (Census 2011 via Data Commons)."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "attention",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "alarmMean": 0.8123311779648067,
+        "recency": 0.3493310516490355,
+        "replies": 20,
+        "upvotes": 51
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Attention 0.78 = 0.5·alarm 0.81 + 0.3·engagement (51↑ 20↺) + 0.2·recency 0.35. The crowd is loud here.",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "engagement",
+            "reportId": "R047",
+            "value": "alarm 0.8445085341855884, 12↑ 3↺ 75👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R051",
+            "value": "alarm 0.7980606050789356, 9↑ 4↺ 64👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R052",
+            "value": "alarm 0.842769344355911, 7↑ 2↺ 66👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R060",
+            "value": "alarm 0.8187768663652242, 8↑ 2↺ 57👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R068",
+            "value": "alarm 0.7959110814332963, 6↑ 4↺ 71👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R074",
+            "value": "alarm 0.8025647193938494, 5↑ 2↺ 73👁"
+          },
+          {
+            "field": "engagement",
+            "reportId": "R081",
+            "value": "alarm 0.7837270949408413, 4↑ 3↺ 71👁"
+          }
+        ],
+        "uncertainty": "Attention reflects community signal only — it is deliberately independent of measured impact."
+      },
+      "parallelGroup": "impact-attention",
+      "status": "ok"
+    },
+    {
+      "agent": "hidden_crisis",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "attentionRank": 1,
+        "delta": 4,
+        "impactRank": 6
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Pothole on 17th Cross, Sector 7 sits at impact #6, attention #1 — no overrule.",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "impactRank",
+            "reportId": "ISS_NOISE",
+            "value": "6"
+          },
+          {
+            "field": "attentionRank",
+            "reportId": "ISS_NOISE",
+            "value": "1"
+          }
+        ],
+        "uncertainty": "No reversal — attention and impact broadly agree for this issue."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "resolution",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "roads",
+        "severityRow": 2
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "Recommended resolution path for Pothole on 17th Cross, Sector 7: BBMP Roads & Infrastructure, SLA 10d.",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "action1",
+            "reportId": "ISS_NOISE",
+            "value": "Conduct site inspection to assess structural depth and perimeter of the pothole on 17th Cross"
+          },
+          {
+            "field": "action2",
+            "reportId": "ISS_NOISE",
+            "value": "Perform cold-mix or hot-mix asphalt patching based on current road material specification"
+          },
+          {
+            "field": "action3",
+            "reportId": "ISS_NOISE",
+            "value": "Level and compact the patch to match existing road grade to prevent water accumulation"
+          },
+          {
+            "field": "action4",
+            "reportId": "ISS_NOISE",
+            "value": "Monitor site post-repair to ensure adhesion and resistance to traffic wear"
+          }
+        ],
+        "uncertainty": "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "accountability",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "category": "roads",
+        "dept": "BBMP Roads & Infrastructure"
+      },
+      "model": "flash",
+      "ms": 1,
+      "out": {
+        "claim": "Accountable authority for Pothole on 17th Cross, Sector 7: BBMP Roads & Infrastructure (Assistant Executive Engineer, BBMP Ward 174).",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "citation1",
+            "reportId": "ISS_NOISE",
+            "value": "Potholes / road surface = BBMP Roads"
+          },
+          {
+            "field": "citation2",
+            "reportId": "ISS_NOISE",
+            "value": "Ward-level routine maintenance"
+          }
+        ],
+        "uncertainty": "Brief drafted by Flash; authority + contact are fixed facts from the authority map."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    },
+    {
+      "agent": "memory",
+      "cached": true,
+      "callCount": 0,
+      "in": {
+        "firstSeen": "2025-02-20T00:00:00.000Z",
+        "season": "Mixed seasonality — 1/7 reports in the monsoon window.",
+        "type": "noise"
+      },
+      "model": "flash-lite",
+      "ms": 1,
+      "out": {
+        "claim": "First-seen pattern for Pothole on 17th Cross, Sector 7; first seen 2025-02-20.",
+        "confidence": 0.86,
+        "evidence": [
+          {
+            "field": "occurrence",
+            "reportId": "R047",
+            "value": "2025-02-20 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R051",
+            "value": "2025-03-05 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R052",
+            "value": "2025-03-12 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R060",
+            "value": "2025-04-02 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R068",
+            "value": "2025-04-25 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R074",
+            "value": "2025-05-15 @ 7J4VWJ5W"
+          },
+          {
+            "field": "occurrence",
+            "reportId": "R081",
+            "value": "2025-06-08 @ 7J4VWJ5W"
+          }
+        ],
+        "uncertainty": "Timeline is derived; narrative drafted by Flash-Lite."
+      },
+      "parallelGroup": null,
+      "status": "ok"
+    }
+  ],
+  "wardId": "blr-174-hsr"
+}

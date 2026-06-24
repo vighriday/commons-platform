@@ -1,0 +1,15 @@
+{
+  "recommendedActions": [
+    "Immediately evacuate all residents of the affected Somasundarapalya tenement block to temporary shelter to ensure public safety",
+    "Install temporary shoring and structural bracing along the compromised load-bearing wall to prevent immediate collapse",
+    "Engage a structural engineering consultant to perform an ultrasonic pulse velocity test and a comprehensive crack pattern analysis",
+    "Seal off the building perimeter with barricades and warning signage to restrict unauthorized entry",
+    "Submit a formal condemnation notice and structural failure report to the BBMP Zonal Commissioner for emergency demolition or retrofitting authorization"
+  ],
+  "dependencies": [
+    "BBMP Revenue Department for occupant relocation and temporary housing arrangements",
+    "Bengaluru City Police for perimeter security and crowd management",
+    "BESCOM for emergency power disconnection to the tenement to prevent electrical hazards during potential collapse",
+    "BWSSB for isolating water supply lines connected to the structure to prevent soil saturation and additional settling"
+  ]
+}

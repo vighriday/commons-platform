@@ -1,0 +1,14 @@
+{
+  "recommendedActions": [
+    "Execute an emergency isolation of the sector valve to reduce pressure on the failing segment and prevent an uncontrolled rupture.",
+    "Deploy a leak detection and ultrasonic testing team to verify the exact breach location and structural integrity of the main.",
+    "Coordinate with the BBMP road works division to obtain immediate excavation clearance for the 27th Main section.",
+    "Mobilize a specialized welding and pipe-fitting crew for rapid on-site repair or section replacement using trenchless technology if soil conditions permit.",
+    "Establish a temporary mobile water tanker supply schedule for affected residents in Sector 1 to mitigate service disruption during the repair window."
+  ],
+  "dependencies": [
+    "BBMP Road Infrastructure Department for emergency trenching and road restoration permits.",
+    "Bangalore Traffic Police for traffic diversion management on 27th Main during the repair operation.",
+    "BESCOM for coordination if underground utility relocation or electrical safety clearance is required near the rupture site."
+  ]
+}

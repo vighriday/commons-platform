@@ -1,0 +1,12 @@
+{
+  "recommendedActions": [
+    "Conduct site inspection to assess structural depth and perimeter of the pothole on 17th Cross",
+    "Perform cold-mix or hot-mix asphalt patching based on current road material specification",
+    "Level and compact the patch to match existing road grade to prevent water accumulation",
+    "Monitor site post-repair to ensure adhesion and resistance to traffic wear"
+  ],
+  "dependencies": [
+    "BWSSB: Verify if pothole was caused by underground utility leak or trench subsidence",
+    "Traffic Police: Coordinate temporary traffic diversion during the patching process"
+  ]
+}

@@ -1,355 +1,628 @@
 [
   {
-    "issueId": "ISS_HC1",
-    "wardId": "blr-174-hsr",
-    "type": "hidden_crisis",
-    "title": "Stormwater drain choke near Agara Lake — silent flood risk",
-    "plusCellId": "7J4VWJFQ",
+    "attentionScore": 0.17,
+    "category": "drainage",
     "contributingReports": [
       "R033",
       "R077"
     ],
-    "category": "drainage",
+    "createdAt": "2025-05-30T16:20:00.000Z",
+    "escalation": {
+      "briefMarkdown": "To: Executive Engineer, SWD Division, BBMP. Subject: Urgent Inspection Request: Choked Stormwater Drain, Agara Lake Vicinity (Location: 7J4VWJFQ, HSR Layout, Ward 174). This brief serves to escalate a critical drainage failure identified near Agara Lake. Our assessment assigns an impact score of 81/100, indicating a severe silent flood risk. Crucially, this location is a municipal BLIND SPOT; despite high structural risk, it lacks community visibility and reporting. The current choke poses an immediate threat to local infrastructure during seasonal rains. We request an urgent site inspection and prompt desilting/clearing operations to mitigate potential inundation. Your swift intervention is essential to prevent structural damage.",
+      "citations": [
+        "BBMP SWD owns stormwater drains and desilting",
+        "Ward 174 falls under BBMP Bommanahalli zone"
+      ],
+      "contact": {
+        "email": "swd@bbmp.gov.in",
+        "phone": "080-22660000",
+        "portal": "https://bbmp.gov.in"
+      },
+      "dept": "BBMP Storm Water Drain (SWD) Division",
+      "jurisdictionAdminLevel": "zone",
+      "officialRole": "Executive Engineer, SWD"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 1,
+        "densityNorm": 0.98,
+        "heightNorm": 0.63
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.93
+    },
     "handoff": {
       "claim": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "confidence": 0.66,
       "evidence": [
         {
-          "reportId": "R033",
           "field": "text",
+          "reportId": "R033",
           "value": "Drain near Agara Lake Rd full of silt and plastic, water not moving."
         },
         {
-          "reportId": "R077",
           "field": "text",
+          "reportId": "R077",
           "value": "Garbage dumped in the storm drain again on Agara Lake Rd."
         }
       ],
-      "confidence": 0.66,
       "uncertainty": "Vulnerability is a district-level proxy."
     },
+    "impactScore": 81,
+    "issueId": "ISS_HC1",
+    "memory": {
+      "firstSeen": "2025-01-19T10:05:00.000Z",
+      "narrative": "This is a recurring, chronic maintenance failure. Although reported twice within five months, both instances occur outside the monsoon season, indicating that the blockage is persistent rather than storm-driven. The lack of proactive clearing suggests a systemic neglect of urban drainage infrastructure, creating a latent flood risk that leaves surrounding areas vulnerable to sudden, heavy rainfall events.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-01-19T10:05:00.000Z",
+          "plusCellId": "7J4VWJFQ",
+          "reportId": "R033"
+        },
+        {
+          "date": "2025-05-30T16:20:00.000Z",
+          "plusCellId": "7J4VWJFQ",
+          "reportId": "R077"
+        }
+      ],
+      "priorTitles": [
+        "Blocked storm drain at Agara lake entrance",
+        "Accumulated debris in perimeter drainage network",
+        "Impaired stormwater outlet causing water stagnation",
+        "Unmaintained drainage infrastructure near lakefront",
+        "Risk of localized inundation due to clogged pipe"
+      ],
+      "seasonalPattern": "Non-seasonal — reports fall outside the monsoon window."
+    },
+    "plusCellId": "7J4VWJFQ",
+    "quadrant": "hidden_crisis",
+    "recurrence": null,
+    "resolution": {
+      "dependencies": [
+        "BBMP Engineering Department for heavy equipment deployment",
+        "Bangalore Water Supply and Sewerage Board (BWSSB) for diversion of illegal sewage lines",
+        "Lake Development Division for coordinating clearing operations near the water body buffer zone"
+      ],
+      "effectivenessScore": 0.66,
+      "estCostBand": "₹2L–₹10L",
+      "recommendedActions": [
+        "Deploy mechanical desilting machinery to extract accumulated plastic waste and construction debris from the primary culvert",
+        "Conduct a CCTV inspection of the drain network extending 500 meters upstream to identify structural collapses or illegal sewage tap-ins",
+        "Clear vegetative overgrowth and blockages at the Agara Lake outfall weir to restore hydraulic flow capacity",
+        "Install temporary sediment traps at strategic points to prevent recurring silt buildup during the upcoming monsoon cycle"
+      ],
+      "responsibleDept": "BBMP Storm Water Drain (SWD) Division",
+      "slaDays": 15
+    },
+    "reversal": {
+      "attentionRank": 5,
+      "impactRank": 1,
+      "overruledAttention": true,
+      "reason": "Impact 81 (exposure 0.93 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.17."
+    },
     "severity": {
-      "row": 5,
       "label": "sewage flooding homes",
-      "norm": 1
+      "norm": 1,
+      "row": 5
     },
-    "exposure": {
-      "value": 0.93,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.98,
-        "heightNorm": 0.63,
-        "changeNorm": 1
-      }
-    },
+    "title": "Stormwater drain choke near Agara Lake — silent flood risk",
+    "type": "hidden_crisis",
     "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
       "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
       "inputs": {
         "deprivationNorm": 0.219,
         "floodProneFlag": 1
-      }
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
     },
-    "impactScore": 81,
-    "attentionScore": 0.17,
-    "quadrant": "hidden_crisis",
-    "recurrence": null,
-    "reversal": {
-      "overruledAttention": true,
-      "attentionRank": 5,
-      "impactRank": 1,
-      "reason": "Impact 81 (exposure 0.93 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.17."
-    },
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-05-30T16:20:00.000Z"
+    "wardId": "blr-174-hsr"
   },
   {
-    "issueId": "ISS_HC2",
-    "wardId": "blr-174-hsr",
-    "type": "hidden_crisis",
-    "title": "Load-bearing wall crack, Somasundarapalya tenement block",
-    "plusCellId": "7J4VWM82",
+    "attentionScore": 0.15,
+    "category": "structural",
     "contributingReports": [
       "R064"
     ],
-    "category": "structural",
+    "createdAt": "2025-04-15T08:30:00.000Z",
+    "escalation": {
+      "briefMarkdown": "### Escalation: Structural Integrity Concern, Ward 174\n\n**To:** Executive Engineer, BBMP Bommanahalli / TVCC\n**Subject:** Urgent Structural Risk at Somasundarapalya Tenement Block\n\n**Location:** 7J4VWM82, HSR Layout, Ward 174\n**Impact Assessment:** 80/100\n\nWe are escalating a critical report regarding a severe load-bearing wall crack at the Somasundarapalya tenement block. This location represents a significant civic **BLIND SPOT**; despite the high structural impact score, the issue has received minimal community attention, increasing the risk of delayed intervention.\n\nGiven the structural nature of this defect, immediate technical inspection and mitigation are requested to prevent further degradation. Please prioritize this site for a formal site assessment by the Technical Vigilance Cell to determine necessary remedial actions.",
+      "citations": [
+        "Building safety / load-bearing defects = BBMP TVCC",
+        "Life-safety items carry an expedited SLA"
+      ],
+      "contact": {
+        "email": "tvcc@bbmp.gov.in",
+        "phone": "080-22221188",
+        "portal": "https://bbmp.gov.in"
+      },
+      "dept": "BBMP Town Planning / Technical Vigilance Cell (TVCC)",
+      "jurisdictionAdminLevel": "city",
+      "officialRole": "Executive Engineer, BBMP Bommanahalli"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 1,
+        "densityNorm": 0.97,
+        "heightNorm": 0.83
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.92
+    },
     "handoff": {
       "claim": "Load-bearing wall crack, Somasundarapalya tenement block",
+      "confidence": 0.5,
       "evidence": [
         {
-          "reportId": "R064",
           "field": "text",
+          "reportId": "R064",
           "value": "Crack running up the wall of the building near Somasundarapalya Main Rd, getting longer."
         }
       ],
-      "confidence": 0.5,
       "uncertainty": "Vulnerability is a district-level proxy; single-source report."
     },
+    "impactScore": 80,
+    "issueId": "ISS_HC2",
+    "memory": {
+      "firstSeen": "2025-04-15T08:30:00.000Z",
+      "narrative": "This is a first occurrence for this specific Somasundarapalya tenement block, as no previous logs exist for this address. Because the report is isolated and falls outside the monsoon season, the crack likely indicates a sudden structural shift or material fatigue rather than moisture-induced erosion. Immediate engineering inspection is advised to determine if this is an isolated incident or the beginning of a larger, systemic structural decline in the building complex.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-04-15T08:30:00.000Z",
+          "plusCellId": "7J4VWM82",
+          "reportId": "R064"
+        }
+      ],
+      "priorTitles": [
+        "Structural integrity failure in tenement masonry",
+        "Visible fissure in primary load-bearing wall",
+        "Settlement cracks in Somasundarapalya housing",
+        "Wall instability and potential collapse risk"
+      ],
+      "seasonalPattern": "Non-seasonal — reports fall outside the monsoon window."
+    },
+    "plusCellId": "7J4VWM82",
+    "quadrant": "hidden_crisis",
+    "recurrence": null,
+    "resolution": {
+      "dependencies": [
+        "BBMP Revenue Department for occupant relocation and temporary housing arrangements",
+        "Bengaluru City Police for perimeter security and crowd management",
+        "BESCOM for emergency power disconnection to the tenement to prevent electrical hazards during potential collapse",
+        "BWSSB for isolating water supply lines connected to the structure to prevent soil saturation and additional settling"
+      ],
+      "effectivenessScore": 0.58,
+      "estCostBand": "₹1L–₹50L+",
+      "recommendedActions": [
+        "Immediately evacuate all residents of the affected Somasundarapalya tenement block to temporary shelter to ensure public safety",
+        "Install temporary shoring and structural bracing along the compromised load-bearing wall to prevent immediate collapse",
+        "Engage a structural engineering consultant to perform an ultrasonic pulse velocity test and a comprehensive crack pattern analysis",
+        "Seal off the building perimeter with barricades and warning signage to restrict unauthorized entry",
+        "Submit a formal condemnation notice and structural failure report to the BBMP Zonal Commissioner for emergency demolition or retrofitting authorization"
+      ],
+      "responsibleDept": "BBMP Town Planning / Technical Vigilance Cell (TVCC)",
+      "slaDays": 3
+    },
+    "reversal": {
+      "attentionRank": 6,
+      "impactRank": 2,
+      "overruledAttention": true,
+      "reason": "Impact 80 (exposure 0.92 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.15."
+    },
     "severity": {
-      "row": 5,
       "label": "imminent collapse / tilt",
-      "norm": 1
+      "norm": 1,
+      "row": 5
     },
-    "exposure": {
-      "value": 0.92,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.97,
-        "heightNorm": 0.83,
-        "changeNorm": 1
-      }
-    },
+    "title": "Load-bearing wall crack, Somasundarapalya tenement block",
+    "type": "hidden_crisis",
     "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
       "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
       "inputs": {
         "deprivationNorm": 0.219,
         "floodProneFlag": 0
-      }
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
     },
-    "impactScore": 80,
-    "attentionScore": 0.15,
-    "quadrant": "hidden_crisis",
-    "recurrence": null,
-    "reversal": {
-      "overruledAttention": true,
-      "attentionRank": 6,
-      "impactRank": 2,
-      "reason": "Impact 80 (exposure 0.92 from Open Buildings × vulnerability 0.87 from Data Commons) overrules low attention 0.15."
-    },
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-04-15T08:30:00.000Z"
+    "wardId": "blr-174-hsr"
   },
   {
-    "issueId": "ISS_HC3",
-    "wardId": "blr-174-hsr",
-    "type": "hidden_crisis",
-    "title": "Streetlight blackout on ORR service road — pedestrian risk",
-    "plusCellId": "7J4VWJCW",
+    "attentionScore": 0.23,
+    "category": "streetlights",
     "contributingReports": [
       "R049",
       "R069"
     ],
-    "category": "streetlights",
+    "createdAt": "2025-04-29T20:15:00.000Z",
+    "escalation": {
+      "briefMarkdown": "### Escalation: Streetlight Blackout on ORR Service Road\n\n**To:** Section Officer, BESCOM HSR Sub-Division\n**Subject:** Urgent Resolution Required for Streetlight Infrastructure\n\nI am reporting a total streetlight blackout on the ORR service road (Location: 7J4VWJCW, HSR Layout, BBMP Ward 174). \n\n**Impact Assessment:** 62/100\n\nThe lack of illumination poses a significant safety risk to pedestrians and increases vulnerability to accidents on this high-traffic stretch. Given the severity, I request an immediate site inspection and necessary electrical repairs to restore safety in this sector. \n\nPlease acknowledge receipt of this escalation and provide an update on the planned timeline for restorative action.",
+      "citations": [
+        "BESCOM owns street-light feeders + maintenance",
+        "Pedestrian-risk blackouts are priority-routed"
+      ],
+      "contact": {
+        "email": "feedback@bescom.co.in",
+        "phone": "1912",
+        "portal": "https://bescom.karnataka.gov.in"
+      },
+      "dept": "BESCOM (Bangalore Electricity Supply Company)",
+      "jurisdictionAdminLevel": "utility",
+      "officialRole": "Section Officer, BESCOM HSR sub-division"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 0.78,
+        "densityNorm": 0.94,
+        "heightNorm": 0.47
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.89
+    },
     "handoff": {
       "claim": "Streetlight blackout on ORR service road — pedestrian risk",
+      "confidence": 0.67,
       "evidence": [
         {
-          "reportId": "R049",
           "field": "text",
+          "reportId": "R049",
           "value": "Streetlights off again on ORR service road near bus stop, very dark."
         },
         {
-          "reportId": "R069",
           "field": "text",
+          "reportId": "R069",
           "value": "Still no streetlights on the ORR service road stretch, unsafe walking at night."
         }
       ],
-      "confidence": 0.67,
       "uncertainty": "Vulnerability is a district-level proxy."
     },
+    "impactScore": 62,
+    "issueId": "ISS_HC3",
+    "memory": {
+      "firstSeen": "2025-02-28T19:50:00.000Z",
+      "narrative": "This is a recurring pattern of infrastructure maintenance failure. Reports spanning February to April 2025 indicate persistent outages outside of seasonal weather events, suggesting a systematic malfunction rather than isolated incidents. The repeat complaints highlight a failure to rectify the lighting issue permanently, posing a continued safety risk to pedestrians navigating the ORR service road in total darkness.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-02-28T19:50:00.000Z",
+          "plusCellId": "7J4VWJCW",
+          "reportId": "R049"
+        },
+        {
+          "date": "2025-04-29T20:15:00.000Z",
+          "plusCellId": "7J4VWJCW",
+          "reportId": "R069"
+        }
+      ],
+      "priorTitles": [
+        "Unlit service road section",
+        "Pedestrian safety hazard due to lack of lighting",
+        "Frequent streetlight failure on ORR",
+        "Dark stretch on Outer Ring Road service lane"
+      ],
+      "seasonalPattern": "Non-seasonal — reports fall outside the monsoon window."
+    },
+    "plusCellId": "7J4VWJCW",
+    "quadrant": "hidden_crisis",
+    "recurrence": null,
+    "resolution": {
+      "dependencies": [
+        "BBMP Electrical Division for administrative clearance and site access",
+        "Bengaluru Traffic Police for safety cordoning and traffic management during repair works on the busy service road",
+        "BWSSB for verifying if any recent excavation work caused accidental damage to underground power cables"
+      ],
+      "effectivenessScore": 0.56,
+      "estCostBand": "₹20k–₹2L",
+      "recommendedActions": [
+        "Dispatch night-patrol inspection team to record specific pole numbers and identify faulty circuit breakers or blown transformers on the ORR service road stretch",
+        "Perform immediate physical verification of ground-level junction boxes for potential cable theft or water ingress damage",
+        "Replace damaged LED luminaires or faulty photocell sensors to ensure automatic night-time activation",
+        "Coordinate with on-site contractors to execute emergency repairs on underground power lines if a localized fault is confirmed"
+      ],
+      "responsibleDept": "BESCOM (Bangalore Electricity Supply Company)",
+      "slaDays": 5
+    },
+    "reversal": null,
     "severity": {
-      "row": 4,
       "label": "dark stretch, pedestrian zone",
-      "norm": 0.8
+      "norm": 0.8,
+      "row": 4
     },
-    "exposure": {
-      "value": 0.89,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.94,
-        "heightNorm": 0.47,
-        "changeNorm": 0.78
-      }
-    },
+    "title": "Streetlight blackout on ORR service road — pedestrian risk",
+    "type": "hidden_crisis",
     "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
       "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
       "inputs": {
         "deprivationNorm": 0.219,
         "floodProneFlag": 0
-      }
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
     },
-    "impactScore": 62,
-    "attentionScore": 0.23,
-    "quadrant": "hidden_crisis",
-    "recurrence": null,
-    "reversal": null,
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-04-29T20:15:00.000Z"
+    "wardId": "blr-174-hsr"
   },
   {
-    "issueId": "ISS_SYN",
-    "wardId": "blr-174-hsr",
-    "type": "synthesis",
-    "title": "Failing trunk water main under 27th Main, Sector 1 — pre-rupture",
-    "plusCellId": "7J4VWJ6R",
+    "attentionScore": 0.3,
+    "category": "water",
     "contributingReports": [
       "R041",
       "R058",
       "R072",
       "R086"
     ],
-    "category": "water",
+    "createdAt": "2025-07-02T21:10:00.000Z",
+    "escalation": {
+      "briefMarkdown": "To: Assistant Executive Engineer, BWSSB Sub-division. Subject: Escalation regarding failing trunk water main at 27th Main, Sector 1, HSR Layout (Plus Code: 7J4VWJ6R). This communication serves to escalate a critical issue concerning a failing trunk water main located in BBMP Ward 174. Technical assessment indicates an impact score of 49/100, signifying a high risk of imminent rupture. Given the potential for significant water loss and infrastructure damage, I request an immediate site inspection by your technical team. Please initiate necessary preventive maintenance or repair protocols to mitigate this failure. Your prompt attention to this matter is essential to maintain service reliability in the area.",
+      "citations": [
+        "BWSSB owns trunk water mains + supply",
+        "Trunk-main failure is a parastatal, not BBMP, jurisdiction"
+      ],
+      "contact": {
+        "email": "complaints@bwssb.gov.in",
+        "phone": "1916",
+        "portal": "https://bwssb.karnataka.gov.in"
+      },
+      "dept": "Bangalore Water Supply & Sewerage Board (BWSSB)",
+      "jurisdictionAdminLevel": "utility",
+      "officialRole": "Assistant Executive Engineer, BWSSB Sub-division"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 0.41,
+        "densityNorm": 0.61,
+        "heightNorm": 0.27
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.56
+    },
     "handoff": {
       "claim": "Failing trunk water main under 27th Main, Sector 1 — pre-rupture",
+      "confidence": 0.79,
       "evidence": [
         {
-          "reportId": "R041",
           "field": "text",
+          "reportId": "R041",
           "value": "Water pressure very low past few days in 27th Main, second tap barely runs in morning."
         },
         {
-          "reportId": "R058",
           "field": "text",
+          "reportId": "R058",
           "value": "Small depression forming on road near 27th Main / 5th Cross junction, getting bigger."
         },
         {
-          "reportId": "R072",
           "field": "text",
+          "reportId": "R072",
           "value": "Brown / rusty water from tap on Tuesday morning, cleared by evening."
         },
         {
-          "reportId": "R086",
           "field": "text",
+          "reportId": "R086",
           "value": "Patch of road stays wet even when no rain for 3 days, near the depression."
         }
       ],
-      "confidence": 0.79,
       "uncertainty": "Vulnerability is a district-level proxy."
     },
+    "impactScore": 49,
+    "issueId": "ISS_SYN",
+    "memory": {
+      "firstSeen": "2025-02-11T09:14:00.000Z",
+      "narrative": "This is a recurring pattern of infrastructure failure rather than an isolated incident. With four distinct reports submitted between February and July 2025, the progression of symptoms—ranging from localized pooling to surface settlement—indicates chronic degradation of the trunk water main. The consistency of these reports confirms that the current state is the culmination of a protracted period of structural decay, necessitating immediate intervention to prevent a catastrophic rupture.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-02-11T09:14:00.000Z",
+          "plusCellId": "7J4VWJ6R",
+          "reportId": "R041"
+        },
+        {
+          "date": "2025-03-26T18:40:00.000Z",
+          "plusCellId": "7J4VWJ6R",
+          "reportId": "R058"
+        },
+        {
+          "date": "2025-05-09T07:55:00.000Z",
+          "plusCellId": "7J4VWJ6R",
+          "reportId": "R072"
+        },
+        {
+          "date": "2025-07-02T21:10:00.000Z",
+          "plusCellId": "7J4VWJ6R",
+          "reportId": "R086"
+        }
+      ],
+      "priorTitles": [
+        "Subsurface water pooling at 27th Main",
+        "Evidence of pipe structural fatigue near Sector 1",
+        "Audible subterranean water flow 27th Main",
+        "Pavement settlement due to suspected main leak",
+        "Seepage identified at main arterial junction"
+      ],
+      "seasonalPattern": "Mixed seasonality — 1/4 reports in the monsoon window."
+    },
+    "plusCellId": "7J4VWJ6R",
+    "quadrant": "monitor",
+    "recurrence": null,
+    "resolution": {
+      "dependencies": [
+        "BBMP Road Infrastructure Department for emergency trenching and road restoration permits.",
+        "Bangalore Traffic Police for traffic diversion management on 27th Main during the repair operation.",
+        "BESCOM for coordination if underground utility relocation or electrical safety clearance is required near the rupture site."
+      ],
+      "effectivenessScore": 0.66,
+      "estCostBand": "₹5L–₹25L",
+      "recommendedActions": [
+        "Execute an emergency isolation of the sector valve to reduce pressure on the failing segment and prevent an uncontrolled rupture.",
+        "Deploy a leak detection and ultrasonic testing team to verify the exact breach location and structural integrity of the main.",
+        "Coordinate with the BBMP road works division to obtain immediate excavation clearance for the 27th Main section.",
+        "Mobilize a specialized welding and pipe-fitting crew for rapid on-site repair or section replacement using trenchless technology if soil conditions permit.",
+        "Establish a temporary mobile water tanker supply schedule for affected residents in Sector 1 to mitigate service disruption during the repair window."
+      ],
+      "responsibleDept": "Bangalore Water Supply & Sewerage Board (BWSSB)",
+      "slaDays": 7
+    },
+    "reversal": null,
     "severity": {
-      "row": 5,
       "label": "main rupture / supply loss to block",
-      "norm": 1
+      "norm": 1,
+      "row": 5
     },
-    "exposure": {
-      "value": 0.56,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.61,
-        "heightNorm": 0.27,
-        "changeNorm": 0.41
-      }
-    },
+    "title": "Failing trunk water main under 27th Main, Sector 1 — pre-rupture",
+    "type": "synthesis",
     "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
       "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
       "inputs": {
         "deprivationNorm": 0.219,
         "floodProneFlag": 1
-      }
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
     },
-    "impactScore": 49,
-    "attentionScore": 0.3,
-    "quadrant": "monitor",
-    "recurrence": null,
-    "reversal": null,
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-07-02T21:10:00.000Z"
+    "wardId": "blr-174-hsr"
   },
   {
-    "issueId": "ISS_REC",
-    "wardId": "blr-174-hsr",
-    "type": "recurrence",
-    "title": "Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
-    "plusCellId": "7J4VWJ7Q",
+    "attentionScore": 0.51,
+    "category": "drainage",
     "contributingReports": [
       "R028",
       "R055",
       "R083"
     ],
-    "category": "drainage",
+    "createdAt": "2025-06-19T09:40:00.000Z",
+    "escalation": {
+      "briefMarkdown": "### Escalation: Recurring Drainage Infrastructure Failure - Ward 174\n\n**To:** Executive Engineer, SWD Division, BBMP\n**Subject:** Urgent Inspection Request - 14th Main x 1st Cross, HSR Layout\n\nThis brief serves to escalate a recurring drainage infrastructure failure at the intersection of 14th Main and 1st Cross, HSR Layout (Location Code: 7J4VWJ7Q). \n\n**Impact Assessment:** 34/100\n\nThe site is experiencing persistent structural instability and blockages, posing an increasing risk to local sanitation and road integrity. Given the ongoing nature of these failures, I request an immediate site inspection by your technical team to assess the damage and initiate necessary remedial action to restore infrastructure functionality.\n\nWe look forward to your prompt response regarding the proposed timeline for intervention.",
+      "citations": [
+        "BBMP SWD owns stormwater drains and desilting",
+        "Ward 174 falls under BBMP Bommanahalli zone"
+      ],
+      "contact": {
+        "email": "swd@bbmp.gov.in",
+        "phone": "080-22660000",
+        "portal": "https://bbmp.gov.in"
+      },
+      "dept": "BBMP Storm Water Drain (SWD) Division",
+      "jurisdictionAdminLevel": "zone",
+      "officialRole": "Executive Engineer, SWD"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 0.29,
+        "densityNorm": 0.54,
+        "heightNorm": 0.18
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.49
+    },
     "handoff": {
       "claim": "Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
+      "confidence": 0.76,
       "evidence": [
         {
-          "reportId": "R028",
           "field": "text",
+          "reportId": "R028",
           "value": "Drain overflowing onto road at 14th Main 1st Cross, sewage smell."
         },
         {
-          "reportId": "R055",
           "field": "text",
+          "reportId": "R055",
           "value": "Same drain at 14th Main overflowing again, third time this season."
         },
         {
-          "reportId": "R083",
           "field": "text",
+          "reportId": "R083",
           "value": "Drain at 14th Main 1st Cross blocked and overflowing yet again, monsoon starting."
         }
       ],
-      "confidence": 0.76,
       "uncertainty": "Vulnerability is a district-level proxy."
     },
-    "severity": {
-      "row": 4,
-      "label": "overflow onto road / silted choke",
-      "norm": 0.8
-    },
-    "exposure": {
-      "value": 0.49,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.54,
-        "heightNorm": 0.18,
-        "changeNorm": 0.29
-      }
-    },
-    "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
-      "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
-      "inputs": {
-        "deprivationNorm": 0.219,
-        "floodProneFlag": 1
-      }
-    },
     "impactScore": 34,
-    "attentionScore": 0.51,
+    "issueId": "ISS_REC",
+    "memory": {
+      "firstSeen": "2025-01-08T11:00:00.000Z",
+      "narrative": "This is a confirmed recurring pattern. With three separate reports filed between January and June 2025, the issue indicates a systemic failure in the local drainage network rather than an isolated incident. The presence of flooding during both dry and monsoon periods suggests that the infrastructure is chronically undersized or obstructed, requiring a comprehensive engineering assessment rather than routine maintenance to resolve.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-01-08T11:00:00.000Z",
+          "plusCellId": "7J4VWJ7Q",
+          "reportId": "R028"
+        },
+        {
+          "date": "2025-03-21T17:30:00.000Z",
+          "plusCellId": "7J4VWJ7Q",
+          "reportId": "R055"
+        },
+        {
+          "date": "2025-06-19T09:40:00.000Z",
+          "plusCellId": "7J4VWJ7Q",
+          "reportId": "R083"
+        }
+      ],
+      "priorTitles": [
+        "Chronic Stormwater Backflow at 14th and 1st",
+        "Repeated Curb Inlets Clogging",
+        "Flooding Issue at 14th Main Intersection",
+        "Persistent Drainage Malfunction",
+        "Infrastructure Capacity Shortfall 14th Main"
+      ],
+      "seasonalPattern": "Mixed seasonality — 1/3 reports in the monsoon window."
+    },
+    "plusCellId": "7J4VWJ7Q",
     "quadrant": "noise",
     "recurrence": {
       "count": 3,
       "spanDays": 162
     },
+    "resolution": {
+      "dependencies": [
+        "BWSSB for verifying if existing sewer pipelines are leaking into or obstructing the storm water drain",
+        "BBMP Road Infrastructure Department for synchronizing road resurfacing with the drain grade rectification",
+        "BESCOM for identifying underground utility cables that may be inhibiting drain expansion or repair"
+      ],
+      "effectivenessScore": 0.56,
+      "estCostBand": "₹2L–₹10L",
+      "recommendedActions": [
+        "Conduct an immediate desilting and suction cleaning operation of the primary drain network at the 14th Main x 1st Cross junction to restore flow capacity",
+        "Deploy a survey team to inspect the structural integrity of the drain wall and identify potential collapses causing the current blockage",
+        "Execute a topographic survey of the road grade to identify low-lying depressions contributing to stagnant surface water",
+        "Install a reinforced concrete slab cover over the exposed open section of the drain to prevent further solid waste dumping"
+      ],
+      "responsibleDept": "BBMP Storm Water Drain (SWD) Division",
+      "slaDays": 15
+    },
     "reversal": null,
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-06-19T09:40:00.000Z"
+    "severity": {
+      "label": "overflow onto road / silted choke",
+      "norm": 0.8,
+      "row": 4
+    },
+    "title": "Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
+    "type": "recurrence",
+    "vulnerability": {
+      "adminLevel": "district",
+      "inputs": {
+        "deprivationNorm": 0.219,
+        "floodProneFlag": 1
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
+    },
+    "wardId": "blr-174-hsr"
   },
   {
-    "issueId": "ISS_NOISE",
-    "wardId": "blr-174-hsr",
-    "type": "noise",
-    "title": "Pothole on 17th Cross, Sector 7",
-    "plusCellId": "7J4VWJ5W",
+    "attentionScore": 0.78,
+    "category": "roads",
     "contributingReports": [
       "R047",
       "R051",
@@ -359,83 +632,162 @@
       "R074",
       "R081"
     ],
-    "category": "roads",
+    "createdAt": "2025-06-08T00:00:00.000Z",
+    "escalation": {
+      "briefMarkdown": "### Escalation: Road Infrastructure Deficiency - Ward 174\n\n**To:** Assistant Executive Engineer, BBMP Roads & Infrastructure\n**Subject:** Urgent Inspection Request: Pothole on 17th Cross, Sector 7\n\n**Location:** 7J4VWJ5W, HSR Layout, BBMP Ward 174\n**Impact Assessment:** 19/100\n\nThis brief serves to formally escalate a road infrastructure issue identified at the aforementioned location. A significant pothole has developed on 17th Cross, Sector 7, posing a hazard to motorists and pedestrians. Given the assessed impact, prompt intervention is required to prevent further road degradation and ensure public safety.\n\nWe kindly request that your office conducts an on-site inspection and initiates necessary repair works at the earliest convenience.\n\nSubmitted for your review and necessary action.",
+      "citations": [
+        "Potholes / road surface = BBMP Roads",
+        "Ward-level routine maintenance"
+      ],
+      "contact": {
+        "email": "roads@bbmp.gov.in",
+        "phone": "080-22975555",
+        "portal": "https://bbmp.gov.in"
+      },
+      "dept": "BBMP Roads & Infrastructure",
+      "jurisdictionAdminLevel": "ward",
+      "officialRole": "Assistant Executive Engineer, BBMP Ward 174"
+    },
+    "exposure": {
+      "inputs": {
+        "changeNorm": 0.35,
+        "densityNorm": 0.6,
+        "heightNorm": 0.22
+      },
+      "provenance": "derived-from-real",
+      "source": "open_buildings",
+      "value": 0.55
+    },
     "handoff": {
       "claim": "Pothole on 17th Cross, Sector 7",
+      "confidence": 0.86,
       "evidence": [
         {
-          "reportId": "R047",
           "field": "text",
+          "reportId": "R047",
           "value": "DANGEROUS pothole on 17th Cross Sector 7, almost fell off my scooter!"
         },
         {
-          "reportId": "R051",
           "field": "text",
+          "reportId": "R051",
           "value": "When will this 17th Cross pothole be fixed?? Reported weeks ago."
         },
         {
-          "reportId": "R052",
           "field": "text",
+          "reportId": "R052",
           "value": "Same big pothole on 17th Cross still not repaired, ridiculous."
         },
         {
-          "reportId": "R060",
           "field": "text",
+          "reportId": "R060",
           "value": "Pothole on 17th Cross getting worse, cars swerving into oncoming traffic."
         },
         {
-          "reportId": "R068",
           "field": "text",
+          "reportId": "R068",
           "value": "17th Cross pothole — third complaint. BBMP please act."
         },
         {
-          "reportId": "R074",
           "field": "text",
+          "reportId": "R074",
           "value": "Massive pothole 17th Cross Sector 7, dangerous at night."
         },
         {
-          "reportId": "R081",
           "field": "text",
+          "reportId": "R081",
           "value": "Still waiting on the 17th Cross pothole repair. Disappointing."
         }
       ],
-      "confidence": 0.86,
       "uncertainty": "Vulnerability is a district-level proxy."
     },
+    "impactScore": 19,
+    "issueId": "ISS_NOISE",
+    "memory": {
+      "firstSeen": "2025-02-20T00:00:00.000Z",
+      "narrative": "This issue represents a recurring pattern of infrastructure neglect rather than an isolated incident. With seven reports filed between February and June 2025, the persistence of the pothole suggests that prior repair attempts were either insufficient or temporary. The fact that reports span multiple months indicates an ongoing failure to maintain the road surface, regardless of the seasonal influence noted in the data.",
+      "occurrenceTimeline": [
+        {
+          "date": "2025-02-20T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R047"
+        },
+        {
+          "date": "2025-03-05T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R051"
+        },
+        {
+          "date": "2025-03-12T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R052"
+        },
+        {
+          "date": "2025-04-02T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R060"
+        },
+        {
+          "date": "2025-04-25T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R068"
+        },
+        {
+          "date": "2025-05-15T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R074"
+        },
+        {
+          "date": "2025-06-08T00:00:00.000Z",
+          "plusCellId": "7J4VWJ5W",
+          "reportId": "R081"
+        }
+      ],
+      "priorTitles": [
+        "Road surface degradation on 17th Cross",
+        "Hazardous street damage in Sector 7",
+        "Vehicle impact reports due to road conditions",
+        "Pavement failure near 17th Cross intersection"
+      ],
+      "seasonalPattern": "Mixed seasonality — 1/7 reports in the monsoon window."
+    },
+    "plusCellId": "7J4VWJ5W",
+    "quadrant": "noise",
+    "recurrence": null,
+    "resolution": {
+      "dependencies": [
+        "BWSSB: Verify if pothole was caused by underground utility leak or trench subsidence",
+        "Traffic Police: Coordinate temporary traffic diversion during the patching process"
+      ],
+      "effectivenessScore": 0.44,
+      "estCostBand": "₹50k–₹5L",
+      "recommendedActions": [
+        "Conduct site inspection to assess structural depth and perimeter of the pothole on 17th Cross",
+        "Perform cold-mix or hot-mix asphalt patching based on current road material specification",
+        "Level and compact the patch to match existing road grade to prevent water accumulation",
+        "Monitor site post-repair to ensure adhesion and resistance to traffic wear"
+      ],
+      "responsibleDept": "BBMP Roads & Infrastructure",
+      "slaDays": 10
+    },
+    "reversal": null,
     "severity": {
-      "row": 2,
       "label": "minor pothole",
-      "norm": 0.4
+      "norm": 0.4,
+      "row": 2
     },
-    "exposure": {
-      "value": 0.55,
-      "source": "open_buildings",
-      "provenance": "derived-from-real",
-      "inputs": {
-        "densityNorm": 0.6,
-        "heightNorm": 0.22,
-        "changeNorm": 0.35
-      }
-    },
+    "title": "Pothole on 17th Cross, Sector 7",
+    "type": "noise",
     "vulnerability": {
-      "value": 0.87,
-      "source": "data_commons",
       "adminLevel": "district",
-      "lowGranularityWarning": true,
-      "provenance": "real",
       "inputs": {
         "deprivationNorm": 0.219,
         "floodProneFlag": 0
-      }
+      },
+      "lowGranularityWarning": true,
+      "provenance": "real",
+      "source": "data_commons",
+      "value": 0.87
     },
-    "impactScore": 19,
-    "attentionScore": 0.78,
-    "quadrant": "noise",
-    "recurrence": null,
-    "reversal": null,
-    "resolution": null,
-    "escalation": null,
-    "memory": null,
-    "createdAt": "2025-06-08T00:00:00.000Z"
+    "wardId": "blr-174-hsr"
   }
 ]
