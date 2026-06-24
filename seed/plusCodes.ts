@@ -9,7 +9,6 @@
 // coordinates inside bbox 12.900–12.925 N, 77.635–77.655 E (audit B15/C9/C10).
 
 const CODE_ALPHABET = "23456789CFGHJMPQRVWX";
-const ENCODING_BASE = CODE_ALPHABET.length; // 20
 const LATITUDE_MAX = 90;
 const LONGITUDE_MAX = 180;
 const PAIR_CODE_LENGTH = 10;

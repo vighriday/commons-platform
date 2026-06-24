@@ -23,6 +23,7 @@ import { securityHeaders } from "./server/middleware/securityHeaders.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
 import { geminiPing } from "./server/gemini.ts";
+import { data } from "./server/data.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -73,6 +74,29 @@ async function startServer() {
         .status(502)
         .json({ ok: false, error: "GEMINI_CALL_FAILED", requestId: req.requestId });
     }
+  });
+
+  // Issues — the Attention×Impact issue set.
+  api.get("/issues", (_req, res) => {
+    res.json({ ward: data.ward, issues: data.listIssues() });
+  });
+
+  api.get("/issues/:id", (req, res) => {
+    const issue = data.getIssue(req.params.id);
+    if (!issue) {
+      res.status(404).json({ error: "ISSUE_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    res.json(issue);
+  });
+
+  // Neighborhood — the Digital Twin + Civic Pulse for a ward.
+  api.get("/neighborhood/:ward", (req, res) => {
+    if (req.params.ward !== data.ward) {
+      res.status(404).json({ error: "WARD_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    res.json(data.getNeighborhood());
   });
 
   app.use("/api", api);
