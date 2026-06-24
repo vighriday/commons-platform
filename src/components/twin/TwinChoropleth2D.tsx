@@ -1,3 +1,4 @@
+import type { FeatureCollection } from "geojson";
 // COMMONS — the 2D exposure choropleth (the guaranteed fallback).
 //
 // Built BEFORE the 3D twin and consumes the IDENTICAL joined geometry, so when
@@ -5,9 +6,8 @@
 // difference: same 14 cells, same 6 markers, same colours, same click→drawer.
 // Pure MapLibre (no WebGL2 columns) — works anywhere a raster map works.
 import { Layer, Marker, Source } from "react-map-gl/maplibre";
+import { CELL_HALF_DEG, type TwinGeo } from "../../lib/twinGeo.ts";
 import { BaseMap } from "./BaseMap.tsx";
-import { type TwinGeo, CELL_HALF_DEG } from "../../lib/twinGeo.ts";
-import type { FeatureCollection } from "geojson";
 
 // Amber→red exposure ramp (low → high risk). The hottest cells (Agara Lake 0.93,
 // Somasundara 0.92) read deepest red.
@@ -16,11 +16,16 @@ function exposureFill(): maplibregl.ExpressionSpecification {
     "interpolate",
     ["linear"],
     ["get", "exposure"],
-    0.3, "#3a2f1a",
-    0.5, "#6b4e1f",
-    0.7, "#b5701f",
-    0.9, "#e0521f",
-    1.0, "#ff3b30",
+    0.3,
+    "#3a2f1a",
+    0.5,
+    "#6b4e1f",
+    0.7,
+    "#b5701f",
+    0.9,
+    "#e0521f",
+    1.0,
+    "#ff3b30",
   ] as unknown as maplibregl.ExpressionSpecification;
 }
 
@@ -59,7 +64,11 @@ export function TwinChoropleth2D({
   return (
     <BaseMap>
       <Source id="cells" type="geojson" data={data}>
-        <Layer id="cell-fill" type="fill" paint={{ "fill-color": exposureFill(), "fill-opacity": 0.55 }} />
+        <Layer
+          id="cell-fill"
+          type="fill"
+          paint={{ "fill-color": exposureFill(), "fill-opacity": 0.55 }}
+        />
         <Layer id="cell-line" type="line" paint={{ "line-color": "#1f2a37", "line-width": 1 }} />
       </Source>
 
@@ -82,7 +91,9 @@ export function TwinChoropleth2D({
                 boxShadow: focused ? `0 0 0 4px ${m.color}55` : "none",
               }}
             >
-              <span className="font-data text-[10px] font-medium text-black/80">{m.impactScore}</span>
+              <span className="font-data text-[10px] font-medium text-black/80">
+                {m.impactScore}
+              </span>
             </button>
           </Marker>
         );

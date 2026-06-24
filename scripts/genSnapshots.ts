@@ -14,8 +14,8 @@
 // import.meta.url is safe here: this is a build-time tsx (ESM) script, never
 // bundled into the CJS server. The server reads the output via process.cwd().
 import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { computeQuadrant } from "../shared/scoring.ts";
 import type { CivicPulse, Issue, Report, Snapshot, TwinDoc } from "../shared/types.ts";
 
@@ -70,7 +70,9 @@ function frameScores(issue: Issue, t: number): { impactScore: number; attentionS
 // A light twin per frame (infraHealth tracks the worsening mean impact). The
 // full exposureGrid is carried so the Twin view can read any frame if needed.
 function frameTwin(base: TwinDoc, frameImpacts: number[]): TwinDoc {
-  const mean = frameImpacts.length ? frameImpacts.reduce((s, n) => s + n, 0) / frameImpacts.length : 0;
+  const mean = frameImpacts.length
+    ? frameImpacts.reduce((s, n) => s + n, 0) / frameImpacts.length
+    : 0;
   return { ...base, infraHealth: Math.round(100 - mean) };
 }
 
@@ -89,17 +91,16 @@ const baseTwin: TwinDoc = {
 
 const snapshots: Snapshot[] = FRAMES.map((iso) => {
   const t = new Date(iso).getTime();
-  const quadrantState = issues
-    .map((issue) => {
-      const { impactScore, attentionScore } = frameScores(issue, t);
-      return {
-        issueId: issue.issueId,
-        attentionScore,
-        impactScore,
-        quadrant: computeQuadrant(attentionScore, impactScore),
-        emerged: reportsSeen(issue, t).length > 0,
-      };
-    });
+  const quadrantState = issues.map((issue) => {
+    const { impactScore, attentionScore } = frameScores(issue, t);
+    return {
+      issueId: issue.issueId,
+      attentionScore,
+      impactScore,
+      quadrant: computeQuadrant(attentionScore, impactScore),
+      emerged: reportsSeen(issue, t).length > 0,
+    };
+  });
 
   const active = quadrantState.filter((q) => q.emerged);
   const emergingRisks = [...active]
@@ -113,14 +114,20 @@ const snapshots: Snapshot[] = FRAMES.map((iso) => {
   const summary: CivicPulse = {
     status: active.length === 0 ? "Quiet" : "Active",
     emergingRisk: topImpact ? issues.find((i) => i.issueId === topImpact.issueId)!.title : "—",
-    mostIgnoredProblem: topImpact ? issues.find((i) => i.issueId === topImpact.issueId)!.title : "—",
-    attentionPattern: loudest ? `Loudest: ${issues.find((i) => i.issueId === loudest.issueId)!.title}` : "—",
+    mostIgnoredProblem: topImpact
+      ? issues.find((i) => i.issueId === topImpact.issueId)!.title
+      : "—",
+    attentionPattern: loudest
+      ? `Loudest: ${issues.find((i) => i.issueId === loudest.issueId)!.title}`
+      : "—",
     civicBlindSpot:
       loudest && topImpact && loudest.issueId !== topImpact.issueId
         ? `Loudest is "${issues.find((i) => i.issueId === loudest.issueId)!.title}", but the top risk is "${issues.find((i) => i.issueId === topImpact.issueId)!.title}".`
         : "—",
     resolutionBottleneck: "—",
-    priorityRecommendation: topImpact ? issues.find((i) => i.issueId === topImpact.issueId)!.title : "—",
+    priorityRecommendation: topImpact
+      ? issues.find((i) => i.issueId === topImpact.issueId)!.title
+      : "—",
     narrative: `As of ${iso.slice(0, 10)}, ${active.length} issues have surfaced in HSR Layout.`,
   };
 
@@ -129,28 +136,49 @@ const snapshots: Snapshot[] = FRAMES.map((iso) => {
     takenAt: iso,
     // Strip the helper `emerged` flag from the persisted quadrantState (keep the type clean).
     quadrantState: quadrantState.map(({ emerged: _e, ...q }) => q),
-    twin: { ...frameTwin(baseTwin, active.map((q) => q.impactScore)), emergingRisks },
+    twin: {
+      ...frameTwin(
+        baseTwin,
+        active.map((q) => q.impactScore),
+      ),
+      emergingRisks,
+    },
     summary,
   };
 });
 
 // ── Assertions: the story + the frozen-fingerprint consistency ───────────────────
 function assert(c: boolean, m: string): void {
-  if (!c) { console.error(`[genSnapshots] FAIL: ${m}`); process.exit(1); }
+  if (!c) {
+    console.error(`[genSnapshots] FAIL: ${m}`);
+    process.exit(1);
+  }
 }
 
 assert(snapshots.length >= 4, `≥4 snapshots (got ${snapshots.length})`);
 // takenAt strictly ascending
 for (let i = 1; i < snapshots.length; i++) {
-  assert(new Date(snapshots[i].takenAt) > new Date(snapshots[i - 1].takenAt), "frames strictly ascending");
+  assert(
+    new Date(snapshots[i].takenAt) > new Date(snapshots[i - 1].takenAt),
+    "frames strictly ascending",
+  );
 }
 // The LAST frame must reproduce the committed issues.json exactly (all reports seen).
 const last = snapshots[snapshots.length - 1];
 for (const issue of issues) {
   const q = last.quadrantState.find((s) => s.issueId === issue.issueId)!;
-  assert(q.impactScore === issue.impactScore, `${issue.issueId} final impact ${q.impactScore} === ${issue.impactScore}`);
-  assert(q.attentionScore === issue.attentionScore, `${issue.issueId} final attention ${q.attentionScore} === ${issue.attentionScore}`);
-  assert(q.quadrant === issue.quadrant, `${issue.issueId} final quadrant ${q.quadrant} === ${issue.quadrant}`);
+  assert(
+    q.impactScore === issue.impactScore,
+    `${issue.issueId} final impact ${q.impactScore} === ${issue.impactScore}`,
+  );
+  assert(
+    q.attentionScore === issue.attentionScore,
+    `${issue.issueId} final attention ${q.attentionScore} === ${issue.attentionScore}`,
+  );
+  assert(
+    q.quadrant === issue.quadrant,
+    `${issue.issueId} final quadrant ${q.quadrant} === ${issue.quadrant}`,
+  );
 }
 // The story: by the LAST frame, the pothole is louder than HC-1 but lower impact.
 const potLast = last.quadrantState.find((s) => s.issueId === "ISS_NOISE")!;
@@ -163,5 +191,7 @@ console.log(`[genSnapshots] OK — ${snapshots.length} frames written.`);
 for (const s of snapshots) {
   const pot = s.quadrantState.find((q) => q.issueId === "ISS_NOISE")!;
   const hc1 = s.quadrantState.find((q) => q.issueId === "ISS_HC1")!;
-  console.log(`  ${s.takenAt.slice(0, 10)}  pothole att ${pot.attentionScore.toFixed(2)} imp ${String(pot.impactScore).padStart(2)} ${pot.quadrant.padEnd(13)} | HC-1 att ${hc1.attentionScore.toFixed(2)} imp ${hc1.impactScore} ${hc1.quadrant}`);
+  console.log(
+    `  ${s.takenAt.slice(0, 10)}  pothole att ${pot.attentionScore.toFixed(2)} imp ${String(pot.impactScore).padStart(2)} ${pot.quadrant.padEnd(13)} | HC-1 att ${hc1.attentionScore.toFixed(2)} imp ${hc1.impactScore} ${hc1.quadrant}`,
+  );
 }

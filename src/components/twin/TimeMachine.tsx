@@ -1,3 +1,5 @@
+import type { Issue, Quadrant } from "@shared/types.ts";
+import { useQuery } from "@tanstack/react-query";
 // COMMONS — the Time Machine (snapshot scrubber).
 //
 // Scrubs the month-end snapshots so the contradiction is visible OVER TIME: the
@@ -6,12 +8,10 @@
 // the whole way — the silent crisis the crowd never looked at. Reads the frozen
 // snapshots (0 model calls); the slider is the only interaction.
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { api } from "../../lib/api.ts";
 import { QUADRANT_COLOR } from "../../lib/twinGeo.ts";
 import { useTwinStore } from "../../lib/twinStore.ts";
 import { IconReversal } from "../icons.tsx";
-import type { Issue, Quadrant } from "@shared/types.ts";
 
 const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 function label(iso: string): string {
@@ -30,10 +30,14 @@ export function TimeMachine({ ward, issues }: { ward: string; issues: Issue[] })
     if (idx !== null) return idx;
     if (focusDateISO && snapshots.length) {
       const t = new Date(focusDateISO).getTime();
-      let best = 0, bestD = Infinity;
+      let best = 0,
+        bestD = Number.POSITIVE_INFINITY;
       snapshots.forEach((s, i) => {
         const d = Math.abs(new Date(s.takenAt).getTime() - t);
-        if (d < bestD) { bestD = d; best = i; }
+        if (d < bestD) {
+          bestD = d;
+          best = i;
+        }
       });
       return best;
     }
@@ -41,10 +45,18 @@ export function TimeMachine({ ward, issues }: { ward: string; issues: Issue[] })
   }, [idx, focusDateISO, snapshots]);
 
   if (snapQ.isPending) {
-    return <Shell><span className="font-data text-xs text-ink-faint">Loading the Time Machine…</span></Shell>;
+    return (
+      <Shell>
+        <span className="font-data text-xs text-ink-faint">Loading the Time Machine…</span>
+      </Shell>
+    );
   }
   if (snapQ.isError || snapshots.length === 0) {
-    return <Shell><span className="font-data text-xs text-ink-faint">Time Machine unavailable.</span></Shell>;
+    return (
+      <Shell>
+        <span className="font-data text-xs text-ink-faint">Time Machine unavailable.</span>
+      </Shell>
+    );
   }
 
   const frame = snapshots[activeIdx];
@@ -56,13 +68,18 @@ export function TimeMachine({ ward, issues }: { ward: string; issues: Issue[] })
         <div className="label">Time Machine · HSR Layout</div>
         <h2
           className="mt-1 font-semibold text-ink"
-          style={{ fontSize: "var(--text-display)", lineHeight: "var(--text-display--line-height)", letterSpacing: "var(--text-display--letter-spacing)" }}
+          style={{
+            fontSize: "var(--text-display)",
+            lineHeight: "var(--text-display--line-height)",
+            letterSpacing: "var(--text-display--letter-spacing)",
+          }}
         >
           The loud problem and the quiet one
         </h2>
         <p className="mt-2 max-w-2xl text-ink-muted">
-          Scrub the last months. Watch the pothole's <span className="text-noise">attention</span> climb while a
-          silent <span className="text-hidden">drainage crisis</span> stays high-impact and ignored.
+          Scrub the last months. Watch the pothole's <span className="text-noise">attention</span>{" "}
+          climb while a silent <span className="text-hidden">drainage crisis</span> stays
+          high-impact and ignored.
         </p>
       </header>
 
@@ -118,7 +135,11 @@ export function TimeMachine({ ward, issues }: { ward: string; issues: Issue[] })
 }
 
 function FrameRow({
-  title, impact, attention, quadrant, emphasised,
+  title,
+  impact,
+  attention,
+  quadrant,
+  emphasised,
 }: { title: string; impact: number; attention: number; quadrant: Quadrant; emphasised: boolean }) {
   const color = QUADRANT_COLOR[quadrant];
   return (
@@ -128,7 +149,9 @@ function FrameRow({
       }`}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className={`text-[13px] ${emphasised ? "font-medium text-ink" : "text-ink-muted"}`}>{title}</span>
+        <span className={`text-[13px] ${emphasised ? "font-medium text-ink" : "text-ink-muted"}`}>
+          {title}
+        </span>
         <span className="flex items-center gap-1.5 text-[11px]" style={{ color }}>
           <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
           {quadrant === "hidden_crisis" ? "Hidden" : quadrant[0].toUpperCase() + quadrant.slice(1)}
@@ -143,12 +166,20 @@ function FrameRow({
   );
 }
 
-function Bar({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+function Bar({
+  label,
+  value,
+  max,
+  color,
+}: { label: string; value: number; max: number; color: string }) {
   return (
     <div className="flex items-center gap-2">
       <span className="w-16 shrink-0 font-data text-[10px] text-ink-faint">{label}</span>
       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-overlay">
-        <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(value / max) * 100}%`, background: color }} />
+        <div
+          className="h-full rounded-full transition-all duration-300"
+          style={{ width: `${(value / max) * 100}%`, background: color }}
+        />
       </div>
       <span className="w-7 shrink-0 text-right font-data text-[10px] text-ink-muted">{value}</span>
     </div>
@@ -157,6 +188,8 @@ function Bar({ label, value, max, color }: { label: string; value: number; max: 
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex h-[520px] max-w-[1400px] items-center justify-center px-7">{children}</div>
+    <div className="mx-auto flex h-[520px] max-w-[1400px] items-center justify-center px-7">
+      {children}
+    </div>
   );
 }

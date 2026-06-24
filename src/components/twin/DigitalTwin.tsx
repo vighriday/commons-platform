@@ -1,3 +1,4 @@
+import type { Issue, Quadrant, TwinDoc } from "@shared/types.ts";
 // COMMONS — the Digital Twin (public component App's "twin" view renders).
 //
 // Decides 3D-vs-2D and degrades safely:
@@ -8,12 +9,11 @@
 //      the SAME 2D choropleth — so a runtime deck.gl throw degrades, not blanks.
 // Both paths consume one buildTwinGeo() join, so they are data-identical.
 import { useMemo } from "react";
-import { buildTwinGeo, QUADRANT_COLOR } from "../../lib/twinGeo.ts";
+import { QUADRANT_COLOR, buildTwinGeo } from "../../lib/twinGeo.ts";
 import { useTwinStore } from "../../lib/twinStore.ts";
 import { DigitalTwin3D } from "./DigitalTwin3D.tsx";
 import { TwinChoropleth2D } from "./TwinChoropleth2D.tsx";
 import { TwinErrorBoundary } from "./TwinErrorBoundary.tsx";
-import type { Issue, Quadrant, TwinDoc } from "@shared/types.ts";
 
 // One-time WebGL2 capability probe.
 function hasWebGL2(): boolean {

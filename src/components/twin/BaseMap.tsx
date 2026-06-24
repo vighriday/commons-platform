@@ -1,13 +1,13 @@
+import maplibregl from "maplibre-gl";
 // COMMONS — the shared MapLibre base map.
 //
 // A thin wrapper over react-map-gl/maplibre that paints the CSP-clean CARTO dark
 // raster basemap centred on HSR Layout. Both the 3D twin and the 2D choropleth
 // render their layers on top of this. Children are map sources/layers/markers.
 import { useRef } from "react";
-import Map, { type MapRef } from "react-map-gl/maplibre";
-import maplibregl from "maplibre-gl";
-import { CARTO_DARK_STYLE, WARD_CENTER } from "../../lib/twinGeo.ts";
 import type { ReactNode } from "react";
+import Map, { type MapRef } from "react-map-gl/maplibre";
+import { CARTO_DARK_STYLE, WARD_CENTER } from "../../lib/twinGeo.ts";
 
 interface Props {
   children?: ReactNode;

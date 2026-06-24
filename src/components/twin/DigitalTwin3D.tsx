@@ -1,3 +1,7 @@
+import { ColumnLayer, ScatterplotLayer } from "@deck.gl/layers";
+import DeckGL from "@deck.gl/react";
+import type { Issue, Quadrant } from "@shared/types.ts";
+import maplibregl from "maplibre-gl";
 // COMMONS — the 3D Digital Twin (deck.gl, the primary path).
 //
 // deck.gl is the controlling component: it owns the camera (pitched 3D) and
@@ -6,18 +10,18 @@
 // raster map underneath via react-map-gl/maplibre. Clicking a marker opens the
 // issue drawer. Fed by the SAME useTwinGeo data as the 2D fallback.
 import { useMemo, useState } from "react";
-import DeckGL from "@deck.gl/react";
-import { ColumnLayer, ScatterplotLayer } from "@deck.gl/layers";
 import { Map as MapGL } from "react-map-gl/maplibre";
-import maplibregl from "maplibre-gl";
 import {
-  CARTO_DARK_STYLE, QUADRANT_COLOR, type TwinGeo, type TwinMarker, WARD_CENTER,
+  CARTO_DARK_STYLE,
+  QUADRANT_COLOR,
+  type TwinGeo,
+  type TwinMarker,
+  WARD_CENTER,
 } from "../../lib/twinGeo.ts";
-import type { Issue, Quadrant } from "@shared/types.ts";
 
 // hex → [r,g,b] for deck.gl colour accessors.
 function rgb(hex: string): [number, number, number] {
-  const n = parseInt(hex.slice(1), 16);
+  const n = Number.parseInt(hex.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
 
@@ -76,7 +80,12 @@ export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
     getRadius: (m: TwinMarker) => 7 + (m.impactScore / 100) * 12,
     getFillColor: (m: TwinMarker) => [...rgb(m.color), 235] as [number, number, number, number],
     getLineColor: (m: TwinMarker) =>
-      (m.plusCellId === focusCellId ? [230, 237, 243, 255] : rgb(m.color)) as [number, number, number, number],
+      (m.plusCellId === focusCellId ? [230, 237, 243, 255] : rgb(m.color)) as [
+        number,
+        number,
+        number,
+        number,
+      ],
     getLineWidth: 2,
     lineWidthUnits: "pixels",
     stroked: true,
@@ -94,7 +103,11 @@ export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
         layers={[columnLayer, markerLayer]}
         getCursor={({ isHovering }) => (isHovering ? "pointer" : "grab")}
       >
-        <MapGL mapLib={maplibregl} mapStyle={CARTO_DARK_STYLE as maplibregl.StyleSpecification} attributionControl={false} />
+        <MapGL
+          mapLib={maplibregl}
+          mapStyle={CARTO_DARK_STYLE as maplibregl.StyleSpecification}
+          attributionControl={false}
+        />
       </DeckGL>
 
       {hover && (
@@ -104,8 +117,12 @@ export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
         >
           <div className="text-[13px] font-medium text-ink">{hover.m.title}</div>
           <div className="mt-1 flex gap-3 font-data text-[11px] text-ink-muted">
-            <span>impact <span className="text-ink">{hover.m.impactScore}</span></span>
-            <span>attention <span className="text-ink">{hover.m.attentionScore.toFixed(2)}</span></span>
+            <span>
+              impact <span className="text-ink">{hover.m.impactScore}</span>
+            </span>
+            <span>
+              attention <span className="text-ink">{hover.m.attentionScore.toFixed(2)}</span>
+            </span>
           </div>
         </div>
       )}
