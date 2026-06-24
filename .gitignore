@@ -1,0 +1,64 @@
+# ─────────────────────────────────────────────────────────────
+# COMMONS — .gitignore
+# Keeps secrets and private planning material OUT of the public repo.
+# ─────────────────────────────────────────────────────────────
+
+# Private planning workspace — NEVER commit (idea, architecture, seed design,
+# build plan, security layer, ledger, drafts, backup video, runbook).
+docs/
+
+# Secrets and credentials — committing any of these is a security incident.
+.env
+.env.*
+!.env.example
+*.local
+*serviceAccount*.json
+*service-account*.json
+*.pem
+*.key
+gha-creds-*.json
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+build/
+.vite/
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / OS noise
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Firebase / Cloud local artifacts
+.firebase/
+firebase-debug.log
+.firebaserc.local
+
+# Tooling caches
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Local agent/tooling state (not part of the product)
+.claude/
+.veris/

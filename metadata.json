@@ -1,0 +1,6 @@
+{
+  "name": "COMMONS",
+  "description": "The operating system for community attention — AI civic intelligence that finds the problems hidden between the reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

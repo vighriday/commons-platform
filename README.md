@@ -1,11 +1,19 @@
-<div align="center">
+# COMMONS
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+**The operating system for community attention.**
 
-  <h1>Built with AI Studio</h2>
+COMMONS is an AI civic-intelligence platform that finds the problems hidden
+*between* the reports — the quiet, dangerous issues a community is not paying
+attention to yet.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+> 🚧 **In active development.** This README grows as the project is built. More
+> detail (how it works, the technology behind it, how to run it) is added with
+> each step.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Status
 
-</div>
+Project foundation set up. Feature development in progress.
+
+## License
+
+[MIT](./LICENSE)
