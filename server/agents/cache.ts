@@ -7,8 +7,8 @@
 // hit returns the same bytes with zero RPD. The cache files are committed so the
 // freeze survives a clean checkout.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Cache lives under seed/ so it ships with the repo (committed, not gitignored —

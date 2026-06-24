@@ -1,3 +1,6 @@
+import { Type } from "@google/genai";
+import type { Schema } from "@google/genai";
+import type { Memory } from "@shared/types.ts";
 // Community-Memory agent — fills issue.memory (the "has this happened before"
 // field). Most meaningful for the recurrence issue, which names a systemic
 // failure rather than a one-off complaint.
@@ -7,12 +10,9 @@
 // model (Flash-Lite) writes only the priorTitles (how the same problem was
 // previously described) and the narrative prose; a golden fallback covers offline.
 import { z } from "zod";
-import { Type } from "@google/genai";
-import type { Schema } from "@google/genai";
-import type { Memory } from "@shared/types.ts";
-import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { generateStructured } from "../gemini.ts";
 import { stableHash } from "./stable.ts";
+import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { AgentOffline } from "./types.ts";
 
 const PROMPT_VERSION = "memory.v1";
@@ -38,7 +38,8 @@ function seasonalPattern(months: number[]): string {
   const monsoon = months.filter((m) => m >= 5 && m <= 9).length; // Jun..Oct (0-indexed)
   if (months.length === 0) return "No temporal pattern (single report).";
   const frac = monsoon / months.length;
-  if (frac >= 0.6) return `Monsoon-concentrated — ${monsoon}/${months.length} reports fall in Jun–Oct.`;
+  if (frac >= 0.6)
+    return `Monsoon-concentrated — ${monsoon}/${months.length} reports fall in Jun–Oct.`;
   if (frac === 0) return "Non-seasonal — reports fall outside the monsoon window.";
   return `Mixed seasonality — ${monsoon}/${months.length} reports in the monsoon window.`;
 }
@@ -64,7 +65,9 @@ export const memoryAgent: Agent = async (ctx: AgentContext): Promise<AgentResult
   const { issue, members } = ctx;
 
   // Deterministic timeline (chronological by createdAt).
-  const sorted = [...members].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  const sorted = [...members].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+  );
   const occurrenceTimeline = sorted.map((r) => ({
     reportId: r.reportId,
     date: r.createdAt,
@@ -74,7 +77,12 @@ export const memoryAgent: Agent = async (ctx: AgentContext): Promise<AgentResult
   const months = sorted.map((r) => new Date(r.createdAt).getMonth());
   const season = seasonalPattern(months);
 
-  const inputHash = stableHash({ v: PROMPT_VERSION, issue: issue.issueId, type: issue.type, n: members.length });
+  const inputHash = stableHash({
+    v: PROMPT_VERSION,
+    issue: issue.issueId,
+    type: issue.type,
+    n: members.length,
+  });
 
   const prompt =
     `You are a civic memory analyst. For this issue, give (a) priorTitles — 1-5 ways the SAME underlying ` +
@@ -114,9 +122,15 @@ export const memoryAgent: Agent = async (ctx: AgentContext): Promise<AgentResult
   return {
     handoff: {
       claim: `${issue.type === "recurrence" ? "Recurring" : "First-seen"} pattern for ${issue.title}; first seen ${firstSeen.slice(0, 10)}.`,
-      evidence: occurrenceTimeline.map((o) => ({ reportId: o.reportId, field: "occurrence", value: `${o.date.slice(0, 10)} @ ${o.plusCellId}` })),
+      evidence: occurrenceTimeline.map((o) => ({
+        reportId: o.reportId,
+        field: "occurrence",
+        value: `${o.date.slice(0, 10)} @ ${o.plusCellId}`,
+      })),
       confidence: issue.handoff.confidence,
-      uncertainty: offline ? "Narrative from the deterministic golden fallback (model offline)." : "Timeline is derived; narrative drafted by Flash-Lite.",
+      uncertainty: offline
+        ? "Narrative from the deterministic golden fallback (model offline)."
+        : "Timeline is derived; narrative drafted by Flash-Lite.",
     },
     patch: { memory },
     step: {

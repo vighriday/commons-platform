@@ -12,7 +12,11 @@ export function clamp01(x: number): number {
 }
 
 // ── Impact = round(severityNorm × exposure × vulnerability × 100) ────────────────
-export function computeImpact(severityNorm: number, exposure: number, vulnerability: number): number {
+export function computeImpact(
+  severityNorm: number,
+  exposure: number,
+  vulnerability: number,
+): number {
   return Math.round(clamp01(severityNorm) * clamp01(exposure) * clamp01(vulnerability) * 100);
 }
 
@@ -25,8 +29,14 @@ export interface AttentionInputs {
   recencyNorm: number; // 0..1 (1 = most recent)
 }
 export function computeAttention(i: AttentionInputs): number {
-  const engagementNorm = i.maxWardEngagement > 0 ? (i.upvotes + 2 * i.replies) / i.maxWardEngagement : 0;
-  return Math.round(clamp01(0.5 * i.alarmIntensityMean + 0.3 * clamp01(engagementNorm) + 0.2 * i.recencyNorm) * 100) / 100;
+  const engagementNorm =
+    i.maxWardEngagement > 0 ? (i.upvotes + 2 * i.replies) / i.maxWardEngagement : 0;
+  return (
+    Math.round(
+      clamp01(0.5 * i.alarmIntensityMean + 0.3 * clamp01(engagementNorm) + 0.2 * i.recencyNorm) *
+        100,
+    ) / 100
+  );
 }
 
 // ── Quadrant from (attention, impact) ────────────────────────────────────────────
@@ -40,7 +50,12 @@ export function computeQuadrant(attention: number, impact: number): Quadrant {
 }
 
 // ── Confidence (DERIVED, never LLM-rated) ────────────────────────────────────────
-const ADMIN_SCORE: Record<AdminLevel, number> = { ward: 1.0, subdistrict: 0.8, district: 0.6, state: 0.4 };
+const ADMIN_SCORE: Record<AdminLevel, number> = {
+  ward: 1.0,
+  subdistrict: 0.8,
+  district: 0.6,
+  state: 0.4,
+};
 export interface ConfidenceInputs {
   contributingCount: number;
   adminLevel: AdminLevel;
@@ -51,13 +66,17 @@ export function deriveConfidence(i: ConfidenceInputs): { value: number; singleSo
   const adminLevelScore = ADMIN_SCORE[i.adminLevel];
   const singleSource = i.contributingCount <= 1 || i.meanPairwiseCosine === null;
   const clusterTightness = singleSource ? 0.7 : clamp01(i.meanPairwiseCosine as number);
-  const value = Math.round((0.4 * sourceAgreement + 0.25 * adminLevelScore + 0.35 * clusterTightness) * 100) / 100;
+  const value =
+    Math.round((0.4 * sourceAgreement + 0.25 * adminLevelScore + 0.35 * clusterTightness) * 100) /
+    100;
   return { value, singleSource };
 }
 
 // ── Cosine similarity (in-process; no vector DB) ─────────────────────────────────
 export function cosine(a: number[], b: number[]): number {
-  let dot = 0, na = 0, nb = 0;
+  let dot = 0,
+    na = 0,
+    nb = 0;
   for (let k = 0; k < a.length; k++) {
     dot += a[k] * b[k];
     na += a[k] * a[k];
@@ -68,7 +87,8 @@ export function cosine(a: number[], b: number[]): number {
 
 export function meanPairwiseCosine(vectors: number[][]): number | null {
   if (vectors.length < 2) return null;
-  let sum = 0, n = 0;
+  let sum = 0,
+    n = 0;
   for (let i = 0; i < vectors.length; i++) {
     for (let j = i + 1; j < vectors.length; j++) {
       sum += cosine(vectors[i], vectors[j]);
@@ -84,6 +104,10 @@ export function isReversal(impactRank: number, attentionRank: number, delta = 5)
 }
 
 // ── Ranking: impact desc, attention as tiebreak ──────────────────────────────────
-export function finalRank<T extends { impactScore: number; attentionScore: number }>(issues: T[]): T[] {
-  return [...issues].sort((a, b) => b.impactScore - a.impactScore || b.attentionScore - a.attentionScore);
+export function finalRank<T extends { impactScore: number; attentionScore: number }>(
+  issues: T[],
+): T[] {
+  return [...issues].sort(
+    (a, b) => b.impactScore - a.impactScore || b.attentionScore - a.attentionScore,
+  );
 }

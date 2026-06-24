@@ -23,7 +23,9 @@ export function CivicPulse({ pulse, twin }: { pulse: CivicPulseData; twin: TwinD
         </div>
         <div className="shrink-0 text-right">
           <div className="label">Infra Health</div>
-          <div className="mt-0.5 font-data text-[32px] leading-none text-ink">{twin.infraHealth}</div>
+          <div className="mt-0.5 font-data text-[32px] leading-none text-ink">
+            {twin.infraHealth}
+          </div>
         </div>
       </div>
 

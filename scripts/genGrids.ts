@@ -13,9 +13,9 @@
 // task (scripts/genExposureFromOpenBuildings.ts); until then these committed
 // values stand in, labelled derived-from-real. Vulnerability deprivation (0.219)
 // is the real Census 2011 illiteracy rate for Bengaluru Urban.
-import { writeFileSync, mkdirSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { HSR_CELLS, PLANTED_CELLS, cellByKey } from "../seed/plusCodes.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -26,14 +26,45 @@ const DEPRIVATION_NORM = 0.219;
 const VULN_ADMIN_LEVEL = "district";
 
 // Locked exposure values for planted cells (seed-design §1 number table).
-const PLANTED_EXPOSURE: Record<string, { exposure: number; heightSlope: number; countSlope: number }> = {
-  [cellByKey(PLANTED_CELLS.hiddenCrisis1).plusCellId]: { exposure: 0.93, heightSlope: 0.42, countSlope: 1.9 },
-  [cellByKey(PLANTED_CELLS.hiddenCrisis2).plusCellId]: { exposure: 0.92, heightSlope: 0.55, countSlope: 2.3 },
-  [cellByKey(PLANTED_CELLS.hiddenCrisis3).plusCellId]: { exposure: 0.89, heightSlope: 0.31, countSlope: 1.4 },
-  [cellByKey(PLANTED_CELLS.synthesis).plusCellId]: { exposure: 0.56, heightSlope: 0.18, countSlope: 0.7 },
-  [cellByKey(PLANTED_CELLS.recurrence).plusCellId]: { exposure: 0.49, heightSlope: 0.12, countSlope: 0.5 },
-  [cellByKey(PLANTED_CELLS.noise).plusCellId]: { exposure: 0.55, heightSlope: 0.15, countSlope: 0.6 },
-  [cellByKey(PLANTED_CELLS.liveDemo).plusCellId]: { exposure: 0.61, heightSlope: 0.2, countSlope: 0.8 },
+const PLANTED_EXPOSURE: Record<
+  string,
+  { exposure: number; heightSlope: number; countSlope: number }
+> = {
+  [cellByKey(PLANTED_CELLS.hiddenCrisis1).plusCellId]: {
+    exposure: 0.93,
+    heightSlope: 0.42,
+    countSlope: 1.9,
+  },
+  [cellByKey(PLANTED_CELLS.hiddenCrisis2).plusCellId]: {
+    exposure: 0.92,
+    heightSlope: 0.55,
+    countSlope: 2.3,
+  },
+  [cellByKey(PLANTED_CELLS.hiddenCrisis3).plusCellId]: {
+    exposure: 0.89,
+    heightSlope: 0.31,
+    countSlope: 1.4,
+  },
+  [cellByKey(PLANTED_CELLS.synthesis).plusCellId]: {
+    exposure: 0.56,
+    heightSlope: 0.18,
+    countSlope: 0.7,
+  },
+  [cellByKey(PLANTED_CELLS.recurrence).plusCellId]: {
+    exposure: 0.49,
+    heightSlope: 0.12,
+    countSlope: 0.5,
+  },
+  [cellByKey(PLANTED_CELLS.noise).plusCellId]: {
+    exposure: 0.55,
+    heightSlope: 0.15,
+    countSlope: 0.6,
+  },
+  [cellByKey(PLANTED_CELLS.liveDemo).plusCellId]: {
+    exposure: 0.61,
+    heightSlope: 0.2,
+    countSlope: 0.8,
+  },
 };
 
 // High-vulnerability planted cells (vuln = 0.87). These are the dense, deprived,
@@ -60,7 +91,7 @@ const FLOOD_PRONE = new Set<string>([
 function backgroundExposure(id: string) {
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  const e = 0.35 + ((h % 30) / 100); // 0.35–0.64
+  const e = 0.35 + (h % 30) / 100; // 0.35–0.64
   return {
     exposure: Math.round(e * 100) / 100,
     heightSlope: Math.round(((h % 20) / 100) * 100) / 100,
@@ -76,7 +107,7 @@ const exposureGrid = HSR_CELLS.map((c) => {
     streetLabel: c.streetLabel,
     densityNorm: Math.round(Math.min(1, v.exposure + 0.05) * 100) / 100,
     heightNorm: Math.round(Math.min(1, v.heightSlope * 1.5) * 100) / 100,
-    changeNorm: Math.round(Math.min(1, (v.heightSlope + v.countSlope / 3)) * 100) / 100,
+    changeNorm: Math.round(Math.min(1, v.heightSlope + v.countSlope / 3) * 100) / 100,
     heightSlope: v.heightSlope,
     countSlope: v.countSlope,
     exposure: v.exposure,
@@ -123,7 +154,10 @@ const dataCommons = {
 
 mkdirSync(SEED_DIR, { recursive: true });
 writeFileSync(path.join(SEED_DIR, "exposureGrid.json"), JSON.stringify(exposureGrid, null, 2));
-writeFileSync(path.join(SEED_DIR, "vulnerabilityGrid.json"), JSON.stringify(vulnerabilityGrid, null, 2));
+writeFileSync(
+  path.join(SEED_DIR, "vulnerabilityGrid.json"),
+  JSON.stringify(vulnerabilityGrid, null, 2),
+);
 writeFileSync(path.join(SEED_DIR, "dataCommons.json"), JSON.stringify(dataCommons, null, 2));
 
 // eslint-disable-next-line no-console

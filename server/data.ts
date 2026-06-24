@@ -9,7 +9,13 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import type {
-  Issue, Report, Reporter, TwinDoc, ExposureGridCell, CivicPulse, AgentRun,
+  AgentRun,
+  CivicPulse,
+  ExposureGridCell,
+  Issue,
+  Report,
+  Reporter,
+  TwinDoc,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
 
@@ -53,7 +59,7 @@ function buildCivicPulse(): CivicPulse {
   return {
     status: "Stable, with one emerging risk",
     emergingRisk: top ? top.title : "—",
-    mostIgnoredProblem: blindSpot ? blindSpot.title : top?.title ?? "—",
+    mostIgnoredProblem: blindSpot ? blindSpot.title : (top?.title ?? "—"),
     attentionPattern: loudest ? `Over-focused on “${loudest.title}”` : "—",
     civicBlindSpot: blindSpot
       ? `Citizens rank “${loudest?.title}” loudest, but the AI-assessed top risk is “${blindSpot.title}”.`
@@ -80,7 +86,8 @@ function buildTwin(): TwinDoc {
     engagementIndex:
       Math.round(
         (reports.reduce((s, r) => s + r.engagement.upvotes + 2 * r.engagement.replies, 0) /
-          Math.max(reports.length, 1)) * 10,
+          Math.max(reports.length, 1)) *
+          10,
       ) / 10,
     resolutionEffectiveness: 0, // no issues resolved yet in the seed timeline
     emergingRisks: [...issues]

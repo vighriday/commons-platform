@@ -17,12 +17,7 @@ export type Category =
   | "traffic"
   | "other";
 
-export type IssueType =
-  | "single"
-  | "synthesis"
-  | "recurrence"
-  | "noise"
-  | "hidden_crisis";
+export type IssueType = "single" | "synthesis" | "recurrence" | "noise" | "hidden_crisis";
 
 export type Quadrant = "critical" | "noise" | "hidden_crisis" | "monitor";
 

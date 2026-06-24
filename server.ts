@@ -13,16 +13,16 @@
 // static paths from process.cwd() to match the Cloud Run / AI Studio runtime.
 import fs from "node:fs";
 import path from "node:path";
-import express from "express";
 import compression from "compression";
+import express from "express";
 import { rateLimit } from "express-rate-limit";
 import { config } from "./server/config.ts";
-import { logger } from "./server/lib/logger.ts";
-import { securityHeaders } from "./server/middleware/securityHeaders.ts";
-import { requestId } from "./server/middleware/requestId.ts";
-import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
-import { geminiPing, geminiUsage } from "./server/gemini.ts";
 import { data } from "./server/data.ts";
+import { geminiPing, geminiUsage } from "./server/gemini.ts";
+import { logger } from "./server/lib/logger.ts";
+import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
+import { requestId } from "./server/middleware/requestId.ts";
+import { securityHeaders } from "./server/middleware/securityHeaders.ts";
 
 async function startServer() {
   const app = express();

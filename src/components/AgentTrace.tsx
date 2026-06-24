@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import type { AgentRun, AgentStep, Issue } from "@shared/types.ts";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api.ts";
 import { IconReversal, IconTrace } from "./icons.tsx";
 
@@ -30,14 +30,25 @@ const AGENT_BLURB: Record<string, string> = {
   memory: "Builds the occurrence timeline and the recurrence narrative.",
 };
 
-export function AgentTrace({ issues, onSelect }: { issues: Issue[]; onSelect: (id: string) => void }) {
+export function AgentTrace({
+  issues,
+  onSelect,
+}: { issues: Issue[]; onSelect: (id: string) => void }) {
   const runQ = useQuery({ queryKey: ["agent-run"], queryFn: api.agentRun });
 
   if (runQ.isPending) {
-    return <PanelShell><span className="font-data text-xs text-ink-faint">Loading the agent trace…</span></PanelShell>;
+    return (
+      <PanelShell>
+        <span className="font-data text-xs text-ink-faint">Loading the agent trace…</span>
+      </PanelShell>
+    );
   }
   if (runQ.isError || !runQ.data) {
-    return <PanelShell><span className="font-data text-xs text-ink-faint">Agent trace unavailable.</span></PanelShell>;
+    return (
+      <PanelShell>
+        <span className="font-data text-xs text-ink-faint">Agent trace unavailable.</span>
+      </PanelShell>
+    );
   }
 
   const run = runQ.data;
@@ -56,7 +67,11 @@ export function AgentTrace({ issues, onSelect }: { issues: Issue[]; onSelect: (i
           </div>
           <h2
             className="mt-1 font-semibold text-ink"
-            style={{ fontSize: "var(--text-h2)", lineHeight: "var(--text-h2--line-height)", letterSpacing: "var(--text-h2--letter-spacing)" }}
+            style={{
+              fontSize: "var(--text-h2)",
+              lineHeight: "var(--text-h2--line-height)",
+              letterSpacing: "var(--text-h2--letter-spacing)",
+            }}
           >
             How each issue was reasoned
           </h2>
@@ -69,7 +84,8 @@ export function AgentTrace({ issues, onSelect }: { issues: Issue[]; onSelect: (i
 
       {/* The model legend. */}
       <div className="mb-4 mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-3 text-[11px]">
-        <ModelBadge tier="flash" /> <span className="text-ink-faint">deep reasoning · synthesis · critique · brief</span>
+        <ModelBadge tier="flash" />{" "}
+        <span className="text-ink-faint">deep reasoning · synthesis · critique · brief</span>
         <ModelBadge tier="flash-lite" /> <span className="text-ink-faint">the workhorse steps</span>
         <span className="ml-auto flex items-center gap-1.5 text-ink-faint">
           <Dot className="bg-brand" /> parallel fork
@@ -114,22 +130,48 @@ function ReversalPanel({ run, titleOf }: { run: AgentRun; titleOf: (id: string) 
       </div>
       <p className="mt-2 text-[13px] leading-relaxed text-ink">{r.reason}</p>
       <div className="mt-3 grid grid-cols-2 gap-3">
-        <RankColumn label="What the crowd sees" sub="by attention" order={r.beforeRanking} titleOf={titleOf} highlightId={r.overruledIssueId} tone="overruled" />
-        <RankColumn label="What impact says" sub="by measured impact" order={r.afterRanking} titleOf={titleOf} highlightId={r.promotedIssueId} tone="promoted" />
+        <RankColumn
+          label="What the crowd sees"
+          sub="by attention"
+          order={r.beforeRanking}
+          titleOf={titleOf}
+          highlightId={r.overruledIssueId}
+          tone="overruled"
+        />
+        <RankColumn
+          label="What impact says"
+          sub="by measured impact"
+          order={r.afterRanking}
+          titleOf={titleOf}
+          highlightId={r.promotedIssueId}
+          tone="promoted"
+        />
       </div>
     </div>
   );
 }
 
 function RankColumn({
-  label, sub, order, titleOf, highlightId, tone,
+  label,
+  sub,
+  order,
+  titleOf,
+  highlightId,
+  tone,
 }: {
-  label: string; sub: string; order: string[]; titleOf: (id: string) => string; highlightId: string; tone: "promoted" | "overruled";
+  label: string;
+  sub: string;
+  order: string[];
+  titleOf: (id: string) => string;
+  highlightId: string;
+  tone: "promoted" | "overruled";
 }) {
   return (
     <div className="rounded-md border border-line bg-surface p-3">
       <div className="label">{label}</div>
-      <div className="mb-2 text-[10px] font-medium uppercase tracking-wider text-ink-faint">{sub}</div>
+      <div className="mb-2 text-[10px] font-medium uppercase tracking-wider text-ink-faint">
+        {sub}
+      </div>
       <ol className="space-y-1">
         {order.slice(0, 6).map((id, n) => {
           const hot = id === highlightId;
@@ -161,12 +203,20 @@ interface Lane {
   steps: AgentStep[];
 }
 
-function PipelineLane({ lane, title, onSelect }: { lane: Lane; title: string; onSelect: () => void }) {
+function PipelineLane({
+  lane,
+  title,
+  onSelect,
+}: { lane: Lane; title: string; onSelect: () => void }) {
   // Split out the impact∥attention fork so it renders under one bracket.
   const ordered = orderSteps(lane.steps);
   return (
     <li className="rounded-lg border border-line bg-surface px-3.5 py-3">
-      <button type="button" onClick={onSelect} className="mb-2.5 block text-left text-[13px] font-medium text-ink hover:text-brand">
+      <button
+        type="button"
+        onClick={onSelect}
+        className="mb-2.5 block text-left text-[13px] font-medium text-ink hover:text-brand"
+      >
         {title}
       </button>
       <div className="flex flex-wrap items-stretch gap-1.5">
@@ -211,7 +261,9 @@ function StepChip({ step }: { step: AgentStep }) {
 function ForkBracket({ a, b }: { a: AgentStep; b: AgentStep }) {
   return (
     <span className="flex flex-col gap-1 rounded-md border border-brand/30 bg-brand/[0.04] p-1">
-      <span className="px-1 text-[9px] font-medium uppercase tracking-wider text-brand">parallel</span>
+      <span className="px-1 text-[9px] font-medium uppercase tracking-wider text-brand">
+        parallel
+      </span>
       <span className="flex gap-1">
         <StepChip step={a} />
         <StepChip step={b} />
@@ -222,7 +274,16 @@ function ForkBracket({ a, b }: { a: AgentStep; b: AgentStep }) {
 
 function Arrow() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="shrink-0 text-ink-faint" aria-hidden>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      className="shrink-0 text-ink-faint"
+      aria-hidden
+    >
       <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
@@ -233,7 +294,9 @@ function ModelBadge({ tier }: { tier: "flash" | "flash-lite" }) {
   return (
     <span className="flex items-center gap-1.5">
       <ModelDot tier={tier} />
-      <span className="font-data text-[11px] text-ink-muted">{tier === "flash" ? "Flash" : "Flash-Lite"}</span>
+      <span className="font-data text-[11px] text-ink-muted">
+        {tier === "flash" ? "Flash" : "Flash-Lite"}
+      </span>
     </span>
   );
 }
@@ -269,9 +332,7 @@ function groupByIssue(steps: AgentStep[]): Lane[] {
   return lanes;
 }
 
-type Node =
-  | { kind: "single"; step: AgentStep }
-  | { kind: "fork"; a: AgentStep; b: AgentStep };
+type Node = { kind: "single"; step: AgentStep } | { kind: "fork"; a: AgentStep; b: AgentStep };
 
 function orderSteps(steps: AgentStep[]): Node[] {
   const nodes: Node[] = [];

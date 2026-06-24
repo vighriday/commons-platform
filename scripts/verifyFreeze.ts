@@ -14,8 +14,8 @@
 // gate reads the spine correctly. Run it AFTER `npm run agents` and both lanes
 // pass (GREEN). It is the executable form of "agents add depth, never drift."
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Issue } from "../shared/types.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -37,10 +37,31 @@ function check(cond: boolean, msg: string): void {
 
 // The frozen numeric fingerprint of the spine. These are the committed values
 // the agents must reproduce exactly. (Source: seed/issues.json after Phase 1.)
-const FROZEN: Record<string, { impact: number; attention: number; quadrant: string; confidence: number; reversal: boolean }> = {
-  ISS_HC1: { impact: 81, attention: 0.17, quadrant: "hidden_crisis", confidence: 0.66, reversal: true },
-  ISS_HC2: { impact: 80, attention: 0.15, quadrant: "hidden_crisis", confidence: 0.5, reversal: true },
-  ISS_HC3: { impact: 62, attention: 0.23, quadrant: "hidden_crisis", confidence: 0.67, reversal: false },
+const FROZEN: Record<
+  string,
+  { impact: number; attention: number; quadrant: string; confidence: number; reversal: boolean }
+> = {
+  ISS_HC1: {
+    impact: 81,
+    attention: 0.17,
+    quadrant: "hidden_crisis",
+    confidence: 0.66,
+    reversal: true,
+  },
+  ISS_HC2: {
+    impact: 80,
+    attention: 0.15,
+    quadrant: "hidden_crisis",
+    confidence: 0.5,
+    reversal: true,
+  },
+  ISS_HC3: {
+    impact: 62,
+    attention: 0.23,
+    quadrant: "hidden_crisis",
+    confidence: 0.67,
+    reversal: false,
+  },
   ISS_SYN: { impact: 49, attention: 0.3, quadrant: "monitor", confidence: 0.79, reversal: false },
   ISS_REC: { impact: 34, attention: 0.51, quadrant: "noise", confidence: 0.76, reversal: false },
   ISS_NOISE: { impact: 19, attention: 0.78, quadrant: "noise", confidence: 0.86, reversal: false },
@@ -52,13 +73,24 @@ for (const [id, f] of Object.entries(FROZEN)) {
   check(!!iss, `${id} present`);
   if (!iss) continue;
   check(iss.impactScore === f.impact, `${id} impact ${iss.impactScore} === ${f.impact}`);
-  check(iss.attentionScore === f.attention, `${id} attention ${iss.attentionScore} === ${f.attention}`);
+  check(
+    iss.attentionScore === f.attention,
+    `${id} attention ${iss.attentionScore} === ${f.attention}`,
+  );
   check(iss.quadrant === f.quadrant, `${id} quadrant ${iss.quadrant} === ${f.quadrant}`);
-  check(iss.handoff.confidence === f.confidence, `${id} confidence ${iss.handoff.confidence} === ${f.confidence}`);
-  check(Boolean(iss.reversal?.overruledAttention) === f.reversal, `${id} reversal ${Boolean(iss.reversal?.overruledAttention)} === ${f.reversal}`);
+  check(
+    iss.handoff.confidence === f.confidence,
+    `${id} confidence ${iss.handoff.confidence} === ${f.confidence}`,
+  );
+  check(
+    Boolean(iss.reversal?.overruledAttention) === f.reversal,
+    `${id} reversal ${Boolean(iss.reversal?.overruledAttention)} === ${f.reversal}`,
+  );
 }
 
-console.log("\n[verifyFreeze] LANE B — enrichment must be present (RED before agents, GREEN after)…");
+console.log(
+  "\n[verifyFreeze] LANE B — enrichment must be present (RED before agents, GREEN after)…",
+);
 const nonNoise = issues.filter((i) => i.issueId !== "ISS_NOISE");
 for (const iss of nonNoise) {
   check(iss.resolution !== null, `${iss.issueId} resolution filled`);

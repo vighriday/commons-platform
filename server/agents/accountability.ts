@@ -1,3 +1,6 @@
+import { Type } from "@google/genai";
+import type { Schema } from "@google/genai";
+import type { Escalation } from "@shared/types.ts";
 // Accountability agent — fills issue.escalation (the "who is responsible + the
 // brief to send them" field).
 //
@@ -7,13 +10,10 @@
 // the impact math. A golden brief fallback (built from the same facts) is used
 // offline, so the escalation is always complete and never fabricates a contact.
 import { z } from "zod";
-import { Type } from "@google/genai";
-import type { Schema } from "@google/genai";
-import type { Escalation } from "@shared/types.ts";
-import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { authorityFor } from "../../seed/authorityMap.ts";
 import { generateStructured } from "../gemini.ts";
 import { stableHash } from "./stable.ts";
+import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { AgentOffline } from "./types.ts";
 
 const PROMPT_VERSION = "accountability.v1";
@@ -102,9 +102,15 @@ export const accountabilityAgent: Agent = async (ctx: AgentContext): Promise<Age
   return {
     handoff: {
       claim: `Accountable authority for ${issue.title}: ${auth.dept} (${auth.officialRole}).`,
-      evidence: auth.citations.map((c, n) => ({ reportId: issue.issueId, field: `citation${n + 1}`, value: c })),
+      evidence: auth.citations.map((c, n) => ({
+        reportId: issue.issueId,
+        field: `citation${n + 1}`,
+        value: c,
+      })),
       confidence: issue.handoff.confidence,
-      uncertainty: offline ? "Brief from the deterministic golden fallback (model offline)." : "Brief drafted by Flash; authority + contact are fixed facts from the authority map.",
+      uncertainty: offline
+        ? "Brief from the deterministic golden fallback (model offline)."
+        : "Brief drafted by Flash; authority + contact are fixed facts from the authority map.",
     },
     patch: { escalation },
     step: {

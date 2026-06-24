@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { api } from "./lib/api.ts";
-import { Quadrant } from "./components/Quadrant.tsx";
+import { useState } from "react";
+import { AgentTrace } from "./components/AgentTrace.tsx";
 import { CivicPulse } from "./components/CivicPulse.tsx";
 import { IssueDrawer } from "./components/IssueDrawer.tsx";
+import { Quadrant } from "./components/Quadrant.tsx";
 import { SeedBanner } from "./components/SeedBanner.tsx";
-import { AgentTrace } from "./components/AgentTrace.tsx";
-import { IconMatrix, IconLayers, IconTrace } from "./components/icons.tsx";
+import { IconLayers, IconMatrix, IconTrace } from "./components/icons.tsx";
+import { api } from "./lib/api.ts";
 
 const WARD = "blr-174-hsr";
 
@@ -21,8 +21,18 @@ function Rail({ view, onView }: { view: View; onView: (v: View) => void }) {
       <a href="/" aria-label="COMMONS home" className="mb-4">
         <img src="/logo.svg" width={30} height={30} alt="COMMONS" />
       </a>
-      <RailItem icon={<IconMatrix size={20} />} label="Matrix" active={view === "matrix"} onClick={() => onView("matrix")} />
-      <RailItem icon={<IconTrace size={20} />} label="Trace" active={view === "trace"} onClick={() => onView("trace")} />
+      <RailItem
+        icon={<IconMatrix size={20} />}
+        label="Matrix"
+        active={view === "matrix"}
+        onClick={() => onView("matrix")}
+      />
+      <RailItem
+        icon={<IconTrace size={20} />}
+        label="Trace"
+        active={view === "trace"}
+        onClick={() => onView("trace")}
+      />
       <RailItem icon={<IconLayers size={20} />} label="Twin" disabled />
     </nav>
   );
@@ -107,9 +117,7 @@ function PlaceLabel() {
         role="tooltip"
         className="invisible absolute left-0 top-6 z-30 w-[18rem] origin-top-left scale-95 rounded-lg border border-line-strong bg-surface-overlay p-3 opacity-0 shadow-[var(--shadow-overlay)] transition-all duration-150 group-hover:visible group-hover:scale-100 group-hover:opacity-100 group-focus-within:visible group-focus-within:scale-100 group-focus-within:opacity-100"
       >
-        <span className="block text-[13px] font-medium text-ink">
-          HSR Layout, Bengaluru, India
-        </span>
+        <span className="block text-[13px] font-medium text-ink">HSR Layout, Bengaluru, India</span>
         <span className="mt-1 block text-[12px] leading-snug text-ink-muted">
           South-east Bengaluru · <span className="font-data text-ink">63,033</span> residents ·{" "}
           <span className="font-data text-ink">7.1 km²</span> (2011 Census).
@@ -129,7 +137,10 @@ export default function App() {
   const [view, setView] = useState<View>("matrix");
 
   const issuesQ = useQuery({ queryKey: ["issues"], queryFn: api.issues });
-  const hoodQ = useQuery({ queryKey: ["neighborhood", WARD], queryFn: () => api.neighborhood(WARD) });
+  const hoodQ = useQuery({
+    queryKey: ["neighborhood", WARD],
+    queryFn: () => api.neighborhood(WARD),
+  });
 
   return (
     <div className="flex h-full bg-surface text-ink">
@@ -160,8 +171,8 @@ export default function App() {
                 by BBMP Ward 174, the smallest unit of the city government.
               </p>
               <p className="mt-3 max-w-2xl text-ink-muted">
-                Communities don't fail from under-reporting — they fail from fragmented
-                attention. COMMONS finds the problems hidden between the reports.
+                Communities don't fail from under-reporting — they fail from fragmented attention.
+                COMMONS finds the problems hidden between the reports.
               </p>
             </header>
 
@@ -214,16 +225,31 @@ function QuadrantSkeleton({ error }: { error?: boolean }) {
     <div className="flex h-[520px] flex-col items-center justify-center gap-4 rounded-2xl border border-line bg-surface-raised shadow-[var(--shadow-card)]">
       {/* A faint quartered-field glyph that previews the real matrix. */}
       <svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="text-line-strong">
-        <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" stroke="currentColor" strokeWidth={1.5} />
+        <rect
+          x="3.5"
+          y="3.5"
+          width="17"
+          height="17"
+          rx="2.5"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        />
         <path d="M12 3.5v17M3.5 12h17" stroke="currentColor" strokeWidth={1.5} />
         <circle cx="8" cy="16" r="1.5" className="text-hidden" fill="currentColor" stroke="none">
           {!error && (
-            <animate attributeName="opacity" values="0.4;1;0.4" dur="1.8s" repeatCount="indefinite" />
+            <animate
+              attributeName="opacity"
+              values="0.4;1;0.4"
+              dur="1.8s"
+              repeatCount="indefinite"
+            />
           )}
         </circle>
       </svg>
       <span className="font-data text-xs text-ink-faint">
-        {error ? "Could not load the Attention × Impact map." : "Building the Attention × Impact map…"}
+        {error
+          ? "Could not load the Attention × Impact map."
+          : "Building the Attention × Impact map…"}
       </span>
     </div>
   );

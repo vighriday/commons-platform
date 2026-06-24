@@ -5,11 +5,11 @@
 import { GoogleGenAI } from "@google/genai";
 import type { Schema } from "@google/genai";
 import type { ZodType } from "zod";
-import { config } from "./config.ts";
-import { logger } from "./lib/logger.ts";
-import { AgentOffline } from "./agents/types.ts";
 import type { AgentName, ModelTier } from "../shared/types.ts";
 import { readCache, writeCache } from "./agents/cache.ts";
+import { AgentOffline } from "./agents/types.ts";
+import { config } from "./config.ts";
+import { logger } from "./lib/logger.ts";
 
 let client: GoogleGenAI | null = null;
 
@@ -26,7 +26,12 @@ function getClient(): GoogleGenAI {
 // ── RPD accounting ───────────────────────────────────────────────────────────────
 // A live counter so the demo can prove it spends ~0 RPD off the frozen cache.
 const usage = { flash: 0, flashLite: 0, cacheHits: 0 };
-export function geminiUsage(): { flash: number; flashLite: number; cacheHits: number; total: number } {
+export function geminiUsage(): {
+  flash: number;
+  flashLite: number;
+  cacheHits: number;
+  total: number;
+} {
   return { ...usage, total: usage.flash + usage.flashLite };
 }
 
@@ -107,7 +112,8 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
   // overloaded (the 503 "high demand" the GA Flash model intermittently throws),
   // fall back to Flash-Lite — a real model answer beats the golden fallback. Each
   // model gets one parse-repair retry.
-  const attempts: ModelTier[] = call.tier === "flash" ? ["flash", "flash", "flash-lite"] : ["flash-lite", "flash-lite"];
+  const attempts: ModelTier[] =
+    call.tier === "flash" ? ["flash", "flash", "flash-lite"] : ["flash-lite", "flash-lite"];
 
   // 3) Live calls with model + repair fallback.
   let lastErr: unknown;
@@ -128,7 +134,10 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
       const parsed = call.validate.safeParse(json);
       if (!parsed.success) {
         lastErr = parsed.error;
-        logger.warn({ agent: call.agent, attempt, issues: parsed.error.issues.length }, "agent_validate_failed");
+        logger.warn(
+          { agent: call.agent, attempt, issues: parsed.error.issues.length },
+          "agent_validate_failed",
+        );
         continue; // try next attempt
       }
       writeCache(call.inputHash, parsed.data);

@@ -6,7 +6,12 @@
 // shared/types.ts and is the wire format. This file only adds the in-process
 // plumbing the orchestrator and agents share.
 import type {
-  AgentHandoff, AgentName, AgentStep, Issue, ModelTier, Report,
+  AgentHandoff,
+  AgentName,
+  AgentStep,
+  Issue,
+  ModelTier,
+  Report,
 } from "@shared/types.ts";
 
 // ── Model routing — the single source of truth ───────────────────────────────────

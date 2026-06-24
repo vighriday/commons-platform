@@ -46,7 +46,8 @@ export const attentionAgent: Agent = async (ctx: AgentContext): Promise<AgentRes
         value: `alarm ${r.alarmIntensity}, ${r.engagement.upvotes}↑ ${r.engagement.replies}↺ ${r.engagement.viewCount}👁`,
       })),
       confidence: issue.handoff.confidence,
-      uncertainty: "Attention reflects community signal only — it is deliberately independent of measured impact.",
+      uncertainty:
+        "Attention reflects community signal only — it is deliberately independent of measured impact.",
     },
     patch: {},
     step: {

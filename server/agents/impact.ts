@@ -12,7 +12,11 @@ import type { Agent, AgentContext, AgentResult } from "./types.ts";
 
 export const impactAgent: Agent = async (ctx: AgentContext): Promise<AgentResult> => {
   const { issue } = ctx;
-  const recomputed = computeImpact(issue.severity.norm, issue.exposure.value, issue.vulnerability.value);
+  const recomputed = computeImpact(
+    issue.severity.norm,
+    issue.exposure.value,
+    issue.vulnerability.value,
+  );
   if (recomputed !== issue.impactScore) {
     throw new Error(
       `[impact] drift on ${issue.issueId}: recomputed ${recomputed} != frozen ${issue.impactScore}`,
@@ -28,9 +32,21 @@ export const impactAgent: Agent = async (ctx: AgentContext): Promise<AgentResult
     handoff: {
       claim,
       evidence: [
-        { reportId: issue.issueId, field: "severity", value: `${issue.severity.row}/5 (${issue.severity.label})` },
-        { reportId: issue.issueId, field: "exposure", value: `${issue.exposure.value} — ${issue.exposure.provenance}` },
-        { reportId: issue.issueId, field: "vulnerability", value: `${issue.vulnerability.value} — ${issue.vulnerability.adminLevel}-level proxy` },
+        {
+          reportId: issue.issueId,
+          field: "severity",
+          value: `${issue.severity.row}/5 (${issue.severity.label})`,
+        },
+        {
+          reportId: issue.issueId,
+          field: "exposure",
+          value: `${issue.exposure.value} — ${issue.exposure.provenance}`,
+        },
+        {
+          reportId: issue.issueId,
+          field: "vulnerability",
+          value: `${issue.vulnerability.value} — ${issue.vulnerability.adminLevel}-level proxy`,
+        },
       ],
       confidence: issue.handoff.confidence,
       uncertainty: issue.vulnerability.lowGranularityWarning
@@ -42,7 +58,11 @@ export const impactAgent: Agent = async (ctx: AgentContext): Promise<AgentResult
       agent: "impact",
       status: "ok",
       parallelGroup: "impact-attention",
-      in: { severityNorm: issue.severity.norm, exposure: issue.exposure.value, vulnerability: issue.vulnerability.value },
+      in: {
+        severityNorm: issue.severity.norm,
+        exposure: issue.exposure.value,
+        vulnerability: issue.vulnerability.value,
+      },
       out: null,
       model: "flash-lite",
       callCount: 0,

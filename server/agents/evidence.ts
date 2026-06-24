@@ -15,9 +15,9 @@
 // the trace (flash for synthesis), but the evidence itself is deterministic.
 import { meanPairwiseCosine } from "@shared/scoring.ts";
 import type { EvidenceRef } from "@shared/types.ts";
+import { confidenceForIssue } from "./confidence.ts";
 import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { routeFor } from "./types.ts";
-import { confidenceForIssue } from "./confidence.ts";
 
 function clusterShape(ctx: AgentContext): { kind: string; claim: string } {
   const { issue, members } = ctx;

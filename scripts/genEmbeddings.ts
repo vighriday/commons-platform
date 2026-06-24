@@ -7,9 +7,9 @@
 //
 // Usage: node --env-file=.env --import tsx scripts/genEmbeddings.ts
 // Re-run only when report texts change.
-import { writeFileSync, readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { GoogleGenAI } from "@google/genai";
 import type { Report } from "../shared/types.ts";
 

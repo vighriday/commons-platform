@@ -1,9 +1,17 @@
+import type { Issue, Quadrant as QuadrantKey } from "@shared/types.ts";
 import { useState } from "react";
 import {
-  ScatterChart, Scatter, XAxis, YAxis, ZAxis, ReferenceLine, ReferenceArea,
-  ResponsiveContainer, Cell, Tooltip,
+  Cell,
+  ReferenceArea,
+  ReferenceLine,
+  ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  Tooltip,
+  XAxis,
+  YAxis,
+  ZAxis,
 } from "recharts";
-import type { Issue, Quadrant as QuadrantKey } from "@shared/types.ts";
 import { IconReversal } from "./icons.tsx";
 
 // The Contradiction Engine — Attention (x, 0–1) vs Impact (y, 0–100).
@@ -101,32 +109,124 @@ export function Quadrant({ issues, selectedId, onSelect }: Props) {
                 <ReferenceArea x1={0} x2={0.5} y1={0} y2={50} fill="#3ea6ff" fillOpacity={0.03} />
 
                 {/* In-plot quadrant captions — quiet, tracked, sit in the corners. */}
-                <ReferenceArea x1={0} x2={0.5} y1={50} y2={100} fill="none"
-                  label={{ value: "HIDDEN CRISIS", position: "insideTopLeft", fill: "#f5a623", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", dx: 6, dy: 6 }} />
-                <ReferenceArea x1={0.5} x2={1} y1={50} y2={100} fill="none"
-                  label={{ value: "CRITICAL", position: "insideTopRight", fill: "#ff5c5c", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", dx: -6, dy: 6 }} />
-                <ReferenceArea x1={0.5} x2={1} y1={0} y2={50} fill="none"
-                  label={{ value: "NOISE", position: "insideBottomRight", fill: "#6b7c93", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", dx: -6, dy: -6 }} />
-                <ReferenceArea x1={0} x2={0.5} y1={0} y2={50} fill="none"
-                  label={{ value: "MONITOR", position: "insideBottomLeft", fill: "#3ea6ff", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", dx: 6, dy: -6 }} />
+                <ReferenceArea
+                  x1={0}
+                  x2={0.5}
+                  y1={50}
+                  y2={100}
+                  fill="none"
+                  label={{
+                    value: "HIDDEN CRISIS",
+                    position: "insideTopLeft",
+                    fill: "#f5a623",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    dx: 6,
+                    dy: 6,
+                  }}
+                />
+                <ReferenceArea
+                  x1={0.5}
+                  x2={1}
+                  y1={50}
+                  y2={100}
+                  fill="none"
+                  label={{
+                    value: "CRITICAL",
+                    position: "insideTopRight",
+                    fill: "#ff5c5c",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    dx: -6,
+                    dy: 6,
+                  }}
+                />
+                <ReferenceArea
+                  x1={0.5}
+                  x2={1}
+                  y1={0}
+                  y2={50}
+                  fill="none"
+                  label={{
+                    value: "NOISE",
+                    position: "insideBottomRight",
+                    fill: "#6b7c93",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    dx: -6,
+                    dy: -6,
+                  }}
+                />
+                <ReferenceArea
+                  x1={0}
+                  x2={0.5}
+                  y1={0}
+                  y2={50}
+                  fill="none"
+                  label={{
+                    value: "MONITOR",
+                    position: "insideBottomLeft",
+                    fill: "#3ea6ff",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    dx: 6,
+                    dy: -6,
+                  }}
+                />
 
                 <ReferenceLine x={0.5} stroke="#1f2a37" strokeWidth={1} />
                 <ReferenceLine y={50} stroke="#1f2a37" strokeWidth={1} />
 
                 <XAxis
-                  type="number" dataKey="x" domain={[0, 1]} ticks={[0, 0.25, 0.5, 0.75, 1]}
-                  tick={{ fill: AXIS, fontSize: 11, fontFamily: MONO }} stroke="#1f2a37" tickLine={false}
-                  label={{ value: "COMMUNITY ATTENTION  →", position: "bottom", offset: 16, fill: AXIS, fontSize: 10.5, letterSpacing: "0.14em" }}
+                  type="number"
+                  dataKey="x"
+                  domain={[0, 1]}
+                  ticks={[0, 0.25, 0.5, 0.75, 1]}
+                  tick={{ fill: AXIS, fontSize: 11, fontFamily: MONO }}
+                  stroke="#1f2a37"
+                  tickLine={false}
+                  label={{
+                    value: "COMMUNITY ATTENTION  →",
+                    position: "bottom",
+                    offset: 16,
+                    fill: AXIS,
+                    fontSize: 10.5,
+                    letterSpacing: "0.14em",
+                  }}
                 />
                 <YAxis
-                  type="number" dataKey="y" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]}
-                  tick={{ fill: AXIS, fontSize: 11, fontFamily: MONO }} stroke="#1f2a37" tickLine={false}
-                  label={{ value: "IMPACT  →", angle: -90, position: "left", offset: -2, fill: AXIS, fontSize: 10.5, letterSpacing: "0.14em" }}
+                  type="number"
+                  dataKey="y"
+                  domain={[0, 100]}
+                  ticks={[0, 25, 50, 75, 100]}
+                  tick={{ fill: AXIS, fontSize: 11, fontFamily: MONO }}
+                  stroke="#1f2a37"
+                  tickLine={false}
+                  label={{
+                    value: "IMPACT  →",
+                    angle: -90,
+                    position: "left",
+                    offset: -2,
+                    fill: AXIS,
+                    fontSize: 10.5,
+                    letterSpacing: "0.14em",
+                  }}
                 />
                 <ZAxis type="number" dataKey="z" range={[140, 560]} />
-                <Tooltip cursor={{ stroke: "#3ddc97", strokeWidth: 1, strokeOpacity: 0.35 }} content={<PointTip />} />
+                <Tooltip
+                  cursor={{ stroke: "#3ddc97", strokeWidth: 1, strokeOpacity: 0.35 }}
+                  content={<PointTip />}
+                />
 
-                <Scatter data={points} isAnimationActive onClick={(p: { issue?: Issue }) => p.issue && onSelect(p.issue.issueId)}>
+                <Scatter
+                  data={points}
+                  isAnimationActive
+                  onClick={(p: { issue?: Issue }) => p.issue && onSelect(p.issue.issueId)}
+                >
                   {points.map((p) => {
                     const isSel = p.issue.issueId === selectedId;
                     const isHidden = p.issue.quadrant === "hidden_crisis";
@@ -170,7 +270,10 @@ export function Quadrant({ issues, selectedId, onSelect }: Props) {
 }
 
 function LegendItem({
-  color, label, count, emphasised,
+  color,
+  label,
+  count,
+  emphasised,
 }: { color: string; label: string; count: number; emphasised?: boolean }) {
   return (
     <div className="flex items-center gap-2">
@@ -220,7 +323,9 @@ function DataTable({ issues, selectedId, onSelect }: Props) {
         <thead className="sticky top-0 bg-surface-overlay">
           <tr className="border-b border-line">
             {["Issue", "Impact", "Attention", "Quadrant"].map((h) => (
-              <th key={h} className="label px-3 py-2.5 font-medium">{h}</th>
+              <th key={h} className="label px-3 py-2.5 font-medium">
+                {h}
+              </th>
             ))}
           </tr>
         </thead>
@@ -235,10 +340,18 @@ function DataTable({ issues, selectedId, onSelect }: Props) {
               >
                 <td className="px-3 py-2.5 text-[13px] text-ink">{i.title}</td>
                 <td className="px-3 py-2.5 font-data text-[13px] text-ink">{i.impactScore}</td>
-                <td className="px-3 py-2.5 font-data text-[13px] text-ink-muted">{i.attentionScore.toFixed(2)}</td>
+                <td className="px-3 py-2.5 font-data text-[13px] text-ink-muted">
+                  {i.attentionScore.toFixed(2)}
+                </td>
                 <td className="px-3 py-2.5">
-                  <span className="inline-flex items-center gap-1.5 text-[12px]" style={{ color: QUADRANT_COLOR[i.quadrant] }}>
-                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: QUADRANT_COLOR[i.quadrant] }} />
+                  <span
+                    className="inline-flex items-center gap-1.5 text-[12px]"
+                    style={{ color: QUADRANT_COLOR[i.quadrant] }}
+                  >
+                    <span
+                      className="h-1.5 w-1.5 rounded-full"
+                      style={{ background: QUADRANT_COLOR[i.quadrant] }}
+                    />
                     {QUADRANT_LABEL[i.quadrant]}
                   </span>
                 </td>

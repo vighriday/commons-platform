@@ -94,19 +94,69 @@ export interface PlusCell {
 // `key` is a stable semantic handle the seed generator uses to attach planted
 // patterns to a cell without hard-coding the computed OLC string.
 const CELL_SEEDS: (Omit<PlusCell, "plusCellId"> & { key: string })[] = [
-  { key: "main27_s1", streetLabel: "27th Main, Sector 1", centroidLat: 12.9116, centroidLng: 77.6411 },
+  {
+    key: "main27_s1",
+    streetLabel: "27th Main, Sector 1",
+    centroidLat: 12.9116,
+    centroidLng: 77.6411,
+  },
   { key: "agara_lake", streetLabel: "Agara Lake Rd", centroidLat: 12.9229, centroidLng: 77.6389 },
-  { key: "main14_s3", streetLabel: "14th Main x 1st Cross, Sector 3", centroidLat: 12.9148, centroidLng: 77.6385 },
-  { key: "cross17_s7", streetLabel: "17th Cross, Sector 7", centroidLat: 12.9081, centroidLng: 77.6452 },
-  { key: "somasundara", streetLabel: "Somasundarapalya Main Rd", centroidLat: 12.9168, centroidLng: 77.6502 },
-  { key: "orr_service", streetLabel: "ORR Service Rd (near bus stop)", centroidLat: 12.9205, centroidLng: 77.6475 },
-  { key: "main19_s4", streetLabel: "19th Main, Sector 4", centroidLat: 12.9098, centroidLng: 77.6435 },
+  {
+    key: "main14_s3",
+    streetLabel: "14th Main x 1st Cross, Sector 3",
+    centroidLat: 12.9148,
+    centroidLng: 77.6385,
+  },
+  {
+    key: "cross17_s7",
+    streetLabel: "17th Cross, Sector 7",
+    centroidLat: 12.9081,
+    centroidLng: 77.6452,
+  },
+  {
+    key: "somasundara",
+    streetLabel: "Somasundarapalya Main Rd",
+    centroidLat: 12.9168,
+    centroidLng: 77.6502,
+  },
+  {
+    key: "orr_service",
+    streetLabel: "ORR Service Rd (near bus stop)",
+    centroidLat: 12.9205,
+    centroidLng: 77.6475,
+  },
+  {
+    key: "main19_s4",
+    streetLabel: "19th Main, Sector 4",
+    centroidLat: 12.9098,
+    centroidLng: 77.6435,
+  },
   { key: "road100ft", streetLabel: "100ft Road", centroidLat: 12.9136, centroidLng: 77.6448 },
   { key: "bda_complex", streetLabel: "BDA Complex Rd", centroidLat: 12.9122, centroidLng: 77.6471 },
-  { key: "main5_s6", streetLabel: "5th Main, Sector 6", centroidLat: 12.9092, centroidLng: 77.6418 },
-  { key: "main24_s2", streetLabel: "24th Main, Sector 2", centroidLat: 12.9128, centroidLng: 77.6372 },
-  { key: "cross9_s5", streetLabel: "9th Cross, Sector 5", centroidLat: 12.9072, centroidLng: 77.6428 },
-  { key: "orr_junction", streetLabel: "Outer Ring Road junction", centroidLat: 12.9242, centroidLng: 77.6458 },
+  {
+    key: "main5_s6",
+    streetLabel: "5th Main, Sector 6",
+    centroidLat: 12.9092,
+    centroidLng: 77.6418,
+  },
+  {
+    key: "main24_s2",
+    streetLabel: "24th Main, Sector 2",
+    centroidLat: 12.9128,
+    centroidLng: 77.6372,
+  },
+  {
+    key: "cross9_s5",
+    streetLabel: "9th Cross, Sector 5",
+    centroidLat: 12.9072,
+    centroidLng: 77.6428,
+  },
+  {
+    key: "orr_junction",
+    streetLabel: "Outer Ring Road junction",
+    centroidLat: 12.9242,
+    centroidLng: 77.6458,
+  },
   { key: "bda_park", streetLabel: "HSR BDA Park edge", centroidLat: 12.9145, centroidLng: 77.6415 },
 ];
 

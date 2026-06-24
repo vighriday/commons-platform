@@ -1,3 +1,6 @@
+import { Type } from "@google/genai";
+import type { Schema } from "@google/genai";
+import type { Resolution } from "@shared/types.ts";
 // Resolution agent — fills issue.resolution (the "what to do about it" field).
 //
 // Deterministic facts come from the authority map (responsibleDept, slaDays,
@@ -6,13 +9,10 @@
 // action list as prose; a per-category golden fallback validates against the same
 // zod schema, so a failed/offline call still yields a complete, valid Resolution.
 import { z } from "zod";
-import { Type } from "@google/genai";
-import type { Schema } from "@google/genai";
-import type { Resolution } from "@shared/types.ts";
-import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { authorityFor } from "../../seed/authorityMap.ts";
 import { generateStructured } from "../gemini.ts";
 import { stableHash } from "./stable.ts";
+import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { AgentOffline } from "./types.ts";
 
 const PROMPT_VERSION = "resolution.v1";
@@ -45,36 +45,68 @@ function effectiveness(severityRow: number, depCount: number): number {
 function goldenActions(category: string): ModelOut {
   const byCat: Record<string, ModelOut> = {
     drainage: {
-      recommendedActions: ["Dispatch a desilting crew to clear the choke point", "Camera-survey the drain run for collapse", "Add the cell to the pre-monsoon priority list"],
-      dependencies: ["Jetting truck availability", "Coordination with the lake-overflow channel owner"],
+      recommendedActions: [
+        "Dispatch a desilting crew to clear the choke point",
+        "Camera-survey the drain run for collapse",
+        "Add the cell to the pre-monsoon priority list",
+      ],
+      dependencies: [
+        "Jetting truck availability",
+        "Coordination with the lake-overflow channel owner",
+      ],
     },
     water: {
-      recommendedActions: ["Pressure-test the trunk main section", "Isolate and replace the failing pipe length", "Notify affected connections before shutoff"],
+      recommendedActions: [
+        "Pressure-test the trunk main section",
+        "Isolate and replace the failing pipe length",
+        "Notify affected connections before shutoff",
+      ],
       dependencies: ["BWSSB pipeline crew", "Temporary supply tankers during repair"],
     },
     structural: {
-      recommendedActions: ["Issue an immediate structural-safety inspection notice", "Cordon the at-risk frontage", "Order shoring or evacuation per the engineer's finding"],
+      recommendedActions: [
+        "Issue an immediate structural-safety inspection notice",
+        "Cordon the at-risk frontage",
+        "Order shoring or evacuation per the engineer's finding",
+      ],
       dependencies: ["Licensed structural engineer", "Occupant relocation if unsafe"],
     },
     streetlights: {
-      recommendedActions: ["Restore the dark feeder section", "Audit the full stretch for further outages", "Prioritise the pedestrian-risk span"],
+      recommendedActions: [
+        "Restore the dark feeder section",
+        "Audit the full stretch for further outages",
+        "Prioritise the pedestrian-risk span",
+      ],
       dependencies: ["BESCOM feeder access", "Replacement luminaires in stock"],
     },
     roads: {
-      recommendedActions: ["Patch the pothole on the next maintenance round", "Log it on the ward road-defect register"],
+      recommendedActions: [
+        "Patch the pothole on the next maintenance round",
+        "Log it on the ward road-defect register",
+      ],
       dependencies: ["Hot-mix availability"],
     },
   };
-  return byCat[category] ?? {
-    recommendedActions: ["Triage at the ward office and route to the owning department", "Schedule a site inspection"],
-    dependencies: ["Ward engineer availability"],
-  };
+  return (
+    byCat[category] ?? {
+      recommendedActions: [
+        "Triage at the ward office and route to the owning department",
+        "Schedule a site inspection",
+      ],
+      dependencies: ["Ward engineer availability"],
+    }
+  );
 }
 
 export const resolutionAgent: Agent = async (ctx: AgentContext): Promise<AgentResult> => {
   const { issue } = ctx;
   const auth = authorityFor(issue.category);
-  const inputHash = stableHash({ v: PROMPT_VERSION, issue: issue.issueId, title: issue.title, category: issue.category });
+  const inputHash = stableHash({
+    v: PROMPT_VERSION,
+    issue: issue.issueId,
+    title: issue.title,
+    category: issue.category,
+  });
 
   const prompt =
     `You are a municipal operations planner for Bengaluru (BBMP). For this civic issue, list 2-6 concrete ` +
@@ -115,9 +147,15 @@ export const resolutionAgent: Agent = async (ctx: AgentContext): Promise<AgentRe
   return {
     handoff: {
       claim: `Recommended resolution path for ${issue.title}: ${auth.dept}, SLA ${auth.slaDays}d.`,
-      evidence: resolution.recommendedActions.map((a, n) => ({ reportId: issue.issueId, field: `action${n + 1}`, value: a })),
+      evidence: resolution.recommendedActions.map((a, n) => ({
+        reportId: issue.issueId,
+        field: `action${n + 1}`,
+        value: a,
+      })),
       confidence: issue.handoff.confidence,
-      uncertainty: offline ? "Action list from the deterministic golden fallback (model offline)." : "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts.",
+      uncertainty: offline
+        ? "Action list from the deterministic golden fallback (model offline)."
+        : "Action list drafted by Flash-Lite; department/SLA/cost are fixed facts.",
     },
     patch: { resolution },
     step: {

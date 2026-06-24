@@ -37,7 +37,8 @@
   --color-brand-dim: #2bbd80;
 
   /* ── Type families ── self-hosted, loaded in main.tsx ── */
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ── Type scale ── intentional jumps, not a flat 14-16px band ── */

@@ -1,7 +1,7 @@
+import type { Issue } from "@shared/types.ts";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api.ts";
-import type { Issue } from "@shared/types.ts";
-import { CATEGORY_ICON, IconReversal, IconAlert, IconEscalate } from "./icons.tsx";
+import { CATEGORY_ICON, IconAlert, IconEscalate, IconReversal } from "./icons.tsx";
 
 // Issue detail — slides from the right, keeps the quadrant in view. Shows the
 // AUDITABLE impact breakdown (Severity × Exposure × Vulnerability, each cited),
@@ -67,7 +67,15 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
             aria-label="Close"
             className="-mr-1 rounded-md p-1.5 text-ink-faint transition-colors hover:bg-surface-overlay hover:text-ink"
           >
-            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+            <svg
+              width={18}
+              height={18}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+              strokeLinecap="round"
+            >
               <path d="m6 6 12 12M18 6 6 18" />
             </svg>
           </button>
@@ -85,11 +93,22 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
   );
 }
 
-function Stat({ label, value, sub, lead }: { label: string; value: string; sub?: string; lead?: boolean }) {
+function Stat({
+  label,
+  value,
+  sub,
+  lead,
+}: { label: string; value: string; sub?: string; lead?: boolean }) {
   return (
-    <div className={`rounded-lg border px-3 py-2.5 ${lead ? "border-line-strong bg-surface-overlay" : "border-line bg-surface"}`}>
+    <div
+      className={`rounded-lg border px-3 py-2.5 ${lead ? "border-line-strong bg-surface-overlay" : "border-line bg-surface"}`}
+    >
       <div className="label">{label}</div>
-      <div className={`mt-1 font-data ${lead ? "text-[22px] text-ink" : "text-lg text-ink"} leading-none`}>{value}</div>
+      <div
+        className={`mt-1 font-data ${lead ? "text-[22px] text-ink" : "text-lg text-ink"} leading-none`}
+      >
+        {value}
+      </div>
       {sub && <div className="mt-1 text-[11px] text-ink-faint">{sub}</div>}
     </div>
   );
@@ -103,11 +122,16 @@ function ImpactBreakdown({ issue }: { issue: Issue }) {
         <Stat label="Impact" value={String(issue.impactScore)} sub="of 100" lead />
         <Stat label="Severity" value={`${issue.severity.row}/5`} sub={issue.severity.label} />
         <Stat label="Exposure" value={issue.exposure.value.toFixed(2)} sub="Open Buildings" />
-        <Stat label="Vuln." value={issue.vulnerability.value.toFixed(2)} sub={issue.vulnerability.adminLevel} />
+        <Stat
+          label="Vuln."
+          value={issue.vulnerability.value.toFixed(2)}
+          sub={issue.vulnerability.adminLevel}
+        />
       </div>
       <p className="mt-2.5 rounded-md bg-surface px-3 py-2 font-data text-[11px] leading-relaxed text-ink-muted">
         <span className="text-ink-faint">impact</span>{" "}
-        <span className="text-ink">{issue.impactScore}</span>{" = "}
+        <span className="text-ink">{issue.impactScore}</span>
+        {" = "}
         {issue.severity.norm.toFixed(2)} × {issue.exposure.value.toFixed(2)} ×{" "}
         {issue.vulnerability.value.toFixed(2)} × 100
       </p>
