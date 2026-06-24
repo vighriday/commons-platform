@@ -83,7 +83,7 @@ export interface Embedding {
   reportId: string;
   wardId: string;
   model: string; // "gemini-embedding-001"
-  dim: number; // 768
+  dim: number; // 3072 (gemini-embedding-001 default)
   vector: number[];
   precomputed: boolean;
 }
