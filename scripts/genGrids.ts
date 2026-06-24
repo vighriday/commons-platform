@@ -36,11 +36,24 @@ const PLANTED_EXPOSURE: Record<string, { exposure: number; heightSlope: number; 
   [cellByKey(PLANTED_CELLS.liveDemo).plusCellId]: { exposure: 0.61, heightSlope: 0.2, countSlope: 0.8 },
 };
 
-// Flood-prone cells (curated from BBMP flood maps — low-lying / lake catchment).
+// High-vulnerability planted cells (vuln = 0.87). These are the dense, deprived,
+// flood-prone or pedestrian-exposed micro-areas the Data Commons district proxy +
+// curated local context flag as most vulnerable. All planted-issue cells qualify,
+// which is what makes their Impact (Severity × Exposure × Vulnerability) land on
+// the locked self-consistent values (HC-1 81, HC-2 80, HC-3 62, etc.).
+const HIGH_VULN_CELLS = new Set<string>([
+  cellByKey(PLANTED_CELLS.hiddenCrisis1).plusCellId, // Agara Lake catchment — flood-prone
+  cellByKey(PLANTED_CELLS.hiddenCrisis2).plusCellId, // Somasundarapalya — deprived, dense
+  cellByKey(PLANTED_CELLS.hiddenCrisis3).plusCellId, // ORR service rd — night pedestrian risk
+  cellByKey(PLANTED_CELLS.synthesis).plusCellId, // 27th Main — subsurface failure zone
+  cellByKey(PLANTED_CELLS.recurrence).plusCellId, // 14th Main — chronic drainage
+  cellByKey(PLANTED_CELLS.noise).plusCellId, // 17th Cross — keeps vuln constant so the
+  // demotion is purely Exposure-driven (low exposure → low impact → NOISE)
+]);
 const FLOOD_PRONE = new Set<string>([
-  cellByKey(PLANTED_CELLS.hiddenCrisis1).plusCellId, // Agara Lake catchment
-  cellByKey(PLANTED_CELLS.recurrence).plusCellId, // 14th Main drainage
-  cellByKey(PLANTED_CELLS.synthesis).plusCellId, // 27th Main subsurface
+  cellByKey(PLANTED_CELLS.hiddenCrisis1).plusCellId,
+  cellByKey(PLANTED_CELLS.recurrence).plusCellId,
+  cellByKey(PLANTED_CELLS.synthesis).plusCellId,
 ]);
 
 // Deterministic mid-range exposure for a background cell, from its id (stable).
@@ -74,11 +87,12 @@ const exposureGrid = HSR_CELLS.map((c) => {
 
 const vulnerabilityGrid = HSR_CELLS.map((c) => {
   const floodProneFlag = FLOOD_PRONE.has(c.plusCellId) ? 1 : 0;
-  // vulnerability = clamp01(0.40*deprivation + 0.30*density(folded into exposure, set 0) + 0.30*flood)
-  // Per audit C6, density is folded into exposure to avoid double-count; here the
-  // ward-constant deprivation + per-cell flood flag yield the planted 0.87 on flood cells.
-  const raw = 0.62 * DEPRIVATION_NORM + 0.38 * (floodProneFlag ? 1 : 0.45);
-  const value = floodProneFlag ? 0.87 : Math.round(Math.max(0.3, raw) * 100) / 100;
+  // Planted high-vulnerability cells resolve to the locked 0.87 (deprivation +
+  // local flood/density/pedestrian context). Background cells get a deterministic
+  // mid-low value derived from the ward deprivation rate. Density is folded into
+  // exposure (audit C6) to avoid double-counting.
+  const bg = Math.round(Math.max(0.3, 0.62 * DEPRIVATION_NORM + 0.38 * 0.45) * 100) / 100;
+  const value = HIGH_VULN_CELLS.has(c.plusCellId) ? 0.87 : bg;
   return {
     plusCellId: c.plusCellId,
     streetLabel: c.streetLabel,
