@@ -21,7 +21,7 @@ import { logger } from "./server/lib/logger.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
-import { geminiPing } from "./server/gemini.ts";
+import { geminiPing, geminiUsage } from "./server/gemini.ts";
 import { data } from "./server/data.ts";
 
 async function startServer() {
@@ -101,6 +101,21 @@ async function startServer() {
       return;
     }
     res.json(data.getNeighborhood());
+  });
+
+  // The frozen 7-agent trace (Agentic Depth). Served as-is; 0 live model calls.
+  api.get("/agent-run", (req, res) => {
+    const run = data.getAgentRun();
+    if (!run) {
+      res.status(404).json({ error: "AGENT_RUN_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    res.json(run);
+  });
+
+  // Live RPD counter — proves the demo path spends ~0 quota off the frozen cache.
+  api.get("/agent-run/usage", (_req, res) => {
+    res.json(geminiUsage());
   });
 
   app.use("/api", api);

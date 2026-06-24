@@ -5,22 +5,25 @@ import { Quadrant } from "./components/Quadrant.tsx";
 import { CivicPulse } from "./components/CivicPulse.tsx";
 import { IssueDrawer } from "./components/IssueDrawer.tsx";
 import { SeedBanner } from "./components/SeedBanner.tsx";
+import { AgentTrace } from "./components/AgentTrace.tsx";
 import { IconMatrix, IconLayers, IconTrace } from "./components/icons.tsx";
 
 const WARD = "blr-174-hsr";
 
+type View = "matrix" | "trace";
+
 // ── Left rail ── logo + primary nav, icon over a tracked label. The active item
-// carries the brand; the rest sit quiet until hovered. Phase-2/3 surfaces are
-// present but disabled, so the rail honestly shows the product's shape.
-function Rail() {
+// carries the brand; the rest sit quiet until hovered. The Twin surface is
+// Phase 3 (disabled); Matrix and Trace switch the main canvas.
+function Rail({ view, onView }: { view: View; onView: (v: View) => void }) {
   return (
     <nav className="flex w-[68px] shrink-0 flex-col items-center gap-1 border-r border-line bg-surface py-4">
       <a href="/" aria-label="COMMONS home" className="mb-4">
         <img src="/logo.svg" width={30} height={30} alt="COMMONS" />
       </a>
-      <RailItem icon={<IconMatrix size={20} />} label="Matrix" active />
+      <RailItem icon={<IconMatrix size={20} />} label="Matrix" active={view === "matrix"} onClick={() => onView("matrix")} />
+      <RailItem icon={<IconTrace size={20} />} label="Trace" active={view === "trace"} onClick={() => onView("trace")} />
       <RailItem icon={<IconLayers size={20} />} label="Twin" disabled />
-      <RailItem icon={<IconTrace size={20} />} label="Trace" disabled />
     </nav>
   );
 }
@@ -30,11 +33,13 @@ function RailItem({
   label,
   active = false,
   disabled = false,
+  onClick,
 }: {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
   disabled?: boolean;
+  onClick?: () => void;
 }) {
   const base =
     "group relative flex w-full flex-col items-center gap-1 rounded-lg py-2 transition-colors duration-150";
@@ -49,6 +54,7 @@ function RailItem({
       aria-label={label}
       aria-current={active ? "page" : undefined}
       disabled={disabled}
+      onClick={onClick}
       className={`${base} ${state} ${disabled ? "cursor-default" : ""}`}
     >
       {/* Active indicator — a hairline bar on the rail edge, not a filled pill. */}
@@ -120,13 +126,14 @@ function PlaceLabel() {
 
 export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [view, setView] = useState<View>("matrix");
 
   const issuesQ = useQuery({ queryKey: ["issues"], queryFn: api.issues });
   const hoodQ = useQuery({ queryKey: ["neighborhood", WARD], queryFn: () => api.neighborhood(WARD) });
 
   return (
     <div className="flex h-full bg-surface text-ink">
-      <Rail />
+      <Rail view={view} onView={setView} />
       <div className="flex min-w-0 flex-1 flex-col">
         <ContextBar />
         <main className="flex-1 overflow-auto">
@@ -158,28 +165,39 @@ export default function App() {
               </p>
             </header>
 
-            {/* Canvas — the quadrant leads (3/5), the Civic Pulse reads alongside (2/5).
-                Not three equal cards; an intentional asymmetric split. */}
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-              <div className="animate-rise lg:col-span-3" style={{ animationDelay: "120ms" }}>
+            {view === "matrix" ? (
+              /* Canvas — the quadrant leads (3/5), the Civic Pulse reads alongside (2/5).
+                 Not three equal cards; an intentional asymmetric split. */
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+                <div className="animate-rise lg:col-span-3" style={{ animationDelay: "120ms" }}>
+                  {issuesQ.data ? (
+                    <Quadrant
+                      issues={issuesQ.data.issues}
+                      selectedId={selectedId}
+                      onSelect={setSelectedId}
+                    />
+                  ) : (
+                    <QuadrantSkeleton error={issuesQ.isError} />
+                  )}
+                </div>
+                <div className="animate-rise lg:col-span-2" style={{ animationDelay: "200ms" }}>
+                  {hoodQ.data ? (
+                    <CivicPulse pulse={hoodQ.data.civicPulse} twin={hoodQ.data.twin} />
+                  ) : (
+                    <PanelSkeleton error={hoodQ.isError} label="Civic Pulse" />
+                  )}
+                </div>
+              </div>
+            ) : (
+              /* Trace — the 7-agent pipeline, the Agentic-Depth artifact. */
+              <div className="animate-rise" style={{ animationDelay: "120ms" }}>
                 {issuesQ.data ? (
-                  <Quadrant
-                    issues={issuesQ.data.issues}
-                    selectedId={selectedId}
-                    onSelect={setSelectedId}
-                  />
+                  <AgentTrace issues={issuesQ.data.issues} onSelect={setSelectedId} />
                 ) : (
-                  <QuadrantSkeleton error={issuesQ.isError} />
+                  <PanelSkeleton error={issuesQ.isError} label="Agent Trace" />
                 )}
               </div>
-              <div className="animate-rise lg:col-span-2" style={{ animationDelay: "200ms" }}>
-                {hoodQ.data ? (
-                  <CivicPulse pulse={hoodQ.data.civicPulse} twin={hoodQ.data.twin} />
-                ) : (
-                  <PanelSkeleton error={hoodQ.isError} label="Civic Pulse" />
-                )}
-              </div>
-            </div>
+            )}
           </div>
         </main>
       </div>

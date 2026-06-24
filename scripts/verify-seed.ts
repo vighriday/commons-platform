@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { computeImpact, finalRank } from "../shared/scoring.ts";
 import { severityNorm } from "../seed/severityTable.ts";
-import type { Issue, Report } from "../shared/types.ts";
+import type { AgentRun, AgentStep, Issue, Report } from "../shared/types.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SEED = path.resolve(__dirname, "../seed");
@@ -59,6 +59,36 @@ if (hc1) {
   const recomputed = computeImpact(severityNorm(hc1.severity.row), hc1.exposure.value, hc1.vulnerability.value);
   check(recomputed === hc1.impactScore, `HC-1 impact recomputes from factors (${recomputed} === ${hc1.impactScore})`);
 }
+
+// ── Phase 2: the agent pipeline enriched the spine; verify the trace + fields ────
+console.log("[verify-seed] checking agent-pipeline invariants…");
+
+// Every non-noise issue carries the three agent-filled fields.
+for (const iss of issues.filter((i) => i.issueId !== "ISS_NOISE")) {
+  check(!!iss.resolution?.responsibleDept, `${iss.issueId} has a resolution (dept: ${iss.resolution?.responsibleDept ?? "—"})`);
+  check(!!iss.escalation?.dept, `${iss.issueId} has an escalation authority`);
+  check(!!iss.memory?.firstSeen, `${iss.issueId} has a community-memory record`);
+}
+
+// The frozen agent run exists and reads correctly.
+const agentRun = JSON.parse(readFileSync(path.join(SEED, "agentRun.json"), "utf8")) as AgentRun;
+check(agentRun.steps.length === issues.length * 7, `agentRun has ${issues.length * 7} steps (got ${agentRun.steps.length})`);
+check(agentRun.reversal?.promotedIssueId === "ISS_HC1", "run reversal promotes ISS_HC1");
+check(agentRun.reversal?.overruledIssueId === "ISS_NOISE", "run reversal overrules ISS_NOISE (the loudest)");
+check(
+  agentRun.steps.some((s: AgentStep) => s.parallelGroup === "impact-attention"),
+  "trace contains the impact∥attention parallel fork",
+);
+
+// Model routing: Flash is reserved for exactly the three allowed agents.
+const FLASH_ALLOWED = new Set<string>(["evidence", "hidden_crisis", "accountability"]);
+const flashAgents = agentRun.modelRoute
+  .filter((m: AgentRun["modelRoute"][number]) => m.model === "flash")
+  .map((m: AgentRun["modelRoute"][number]) => m.agent);
+check(
+  flashAgents.every((a) => FLASH_ALLOWED.has(a)),
+  `Flash reserved for allowed agents only (got: ${flashAgents.join(", ") || "none"})`,
+);
 
 if (failures > 0) {
   console.error(`\n[verify-seed] FAILED: ${failures} invariant(s) violated.`);

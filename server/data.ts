@@ -9,7 +9,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import type {
-  Issue, Report, Reporter, TwinDoc, ExposureGridCell, CivicPulse,
+  Issue, Report, Reporter, TwinDoc, ExposureGridCell, CivicPulse, AgentRun,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
 
@@ -33,6 +33,9 @@ const reports = load<Report[]>("reports.json", []);
 const reporters = load<Reporter[]>("reporters.json", []);
 const issues = load<Issue[]>("issues.json", []);
 const exposureGrid = load<ExposureGridCell[]>("exposureGrid.json", []);
+// The frozen agent-pipeline trace (Phase 2). Null until `npm run agents` has run;
+// the read path serves it as-is (the demo trace, 0 RPD).
+const agentRun = load<AgentRun | null>("agentRun.json", null);
 
 logger.info(
   { reports: reports.length, issues: issues.length, cells: exposureGrid.length },
@@ -110,5 +113,8 @@ export const data = {
   },
   getNeighborhood(): { twin: TwinDoc; civicPulse: CivicPulse } {
     return { twin, civicPulse };
+  },
+  getAgentRun(): AgentRun | null {
+    return agentRun;
   },
 };
