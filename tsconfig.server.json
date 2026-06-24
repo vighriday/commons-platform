@@ -4,13 +4,12 @@
     "lib": ["ES2023"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "moduleDetection": "force",
 
-    "outDir": "./dist-server",
-    "rootDir": ".",
-    "noEmit": false,
+    "noEmit": true,
 
     "strict": true,
     "noUnusedLocals": true,

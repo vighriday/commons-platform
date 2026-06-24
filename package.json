@@ -10,10 +10,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:server": "tsx watch server/index.ts",
-    "build": "tsc -b && vite build",
-    "build:server": "tsc -p tsconfig.server.json",
-    "start": "node dist-server/index.js",
+    "dev:server": "node --env-file=.env --import tsx --watch server/index.ts",
+    "build": "vite build",
+    "start": "node --import tsx server/index.ts",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit && tsc -p tsconfig.server.json --noEmit",
     "lint": "biome check .",

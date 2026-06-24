@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="COMMONS">
+  <!-- The mark: a 3x3 grid of community signals. Eight sit quiet in muted ink;
+       one — low and to the side, where no one is looking — burns amber.
+       That is the Hidden Crisis. The product's whole idea, in the logo. -->
+  <rect x="1" y="1" width="30" height="30" rx="7" stroke="#1f2a37" stroke-width="1.5"/>
+  <g fill="#5d7184">
+    <circle cx="9.5" cy="9.5" r="1.7"/>
+    <circle cx="16" cy="9.5" r="1.7"/>
+    <circle cx="22.5" cy="9.5" r="1.7"/>
+    <circle cx="9.5" cy="16" r="1.7"/>
+    <circle cx="16" cy="16" r="1.7"/>
+    <circle cx="22.5" cy="16" r="1.7"/>
+    <circle cx="16" cy="22.5" r="1.7"/>
+    <circle cx="9.5" cy="22.5" r="1.7"/>
+  </g>
+  <!-- The overlooked signal, lower-right, larger and lit. -->
+  <circle cx="22.5" cy="22.5" r="2.8" fill="#f5a623"/>
+  <circle cx="22.5" cy="22.5" r="5.2" stroke="#f5a623" stroke-width="1.2" stroke-opacity="0.4"/>
+</svg>

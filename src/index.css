@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * COMMONS base styles. Dark "civic command center" surface, calm and precise.
+ * Fonts: Inter for UI, JetBrains Mono for data. These are loaded as web fonts
+ * in a later step; until then the stack falls back to high-quality system
+ * equivalents so nothing looks like a default serif.
+ */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-surface text-ink antialiased;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Numbers, IDs, codes — always monospace so data reads as engineered. */
+  .font-data {
+    @apply font-mono tabular-nums;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Small uppercase section labels. */
+  .label {
+    @apply text-[11px] uppercase tracking-[0.12em] text-ink-faint font-medium;
+  }
+
+  /* Hairline divider used throughout the structure. */
+  .hairline {
+    @apply border-line;
+  }
+
+  /* Visible, branded focus — never removed. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-surface;
+  }
+
+  ::selection {
+    background: rgba(61, 220, 151, 0.25);
+  }
+
+  /* Quiet, thin scrollbars that match the surface. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #1f2a37 transparent;
+  }
+}

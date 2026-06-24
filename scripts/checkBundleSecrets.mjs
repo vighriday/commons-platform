@@ -20,7 +20,8 @@ const liveKey = process.env.GEMINI_API_KEY?.trim();
 const forbiddenPatterns = [
   /VITE_GEMINI_API_KEY/,
   /VITE_GOOGLE_API_KEY/,
-  /AIza[0-9A-Za-z_-]{35}/, // Google API key shape
+  /AIza[0-9A-Za-z_-]{35}/, // legacy Google API key shape
+  /AQ\.[A-Za-z0-9_-]{30,}/, // current (2026) Gemini AI Studio key shape ("AQ." prefix)
 ];
 
 function walk(dir) {
