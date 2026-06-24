@@ -1,0 +1,14 @@
+{
+  "place": "wikidataId/Q806463",
+  "placeName": "Bengaluru Urban district",
+  "adminLevel": "district",
+  "censusYear": 2011,
+  "provenance": "real",
+  "source": "Data Commons v2 (cached at build time)",
+  "vars": {
+    "Count_Person": 9621551,
+    "Count_Person_Literate": 7522893,
+    "illiteracyRate": 0.219
+  },
+  "note": "Finest admin level that resolves for this ward; applied as a district-level proxy with lowGranularityWarning + confidence penalty."
+}

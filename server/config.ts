@@ -1,17 +1,19 @@
-// Typed, validated configuration. Reads from the environment once at boot and
-// fails fast with a clear message if something required is missing. Every other
-// module imports `config` from here instead of touching process.env directly.
+// Typed, validated configuration. Reads from the environment once at boot.
+//
+// Design note: in a managed container (Cloud Run via AI Studio) the process must
+// ALWAYS reach `listen()` quickly, or the health check fails. So this never
+// calls process.exit on a config problem — it logs a warning and falls back to
+// safe defaults. A bad env degrades a feature; it never prevents the server from
+// starting and answering /api/health.
 import { z } from "zod";
 
 const rawSchema = z.object({
-  NODE_ENV: z
-    .enum(["development", "production", "test"])
-    .default("development"),
-  PORT: z.coerce.number().int().positive().default(8080),
+  NODE_ENV: z.string().default("development"),
+  PORT: z.coerce.number().int().positive().default(3000),
 
-  // Server-side secret. Present in real runs; optional here so the server can
-  // still boot for a pure static/health check without a key (the /api/gemini
-  // route reports its own "not configured" state rather than crashing boot).
+  // Server-side secret. Optional so the server boots even without a key (the
+  // /api/gemini route reports its own "not configured" state rather than
+  // crashing boot). On AI Studio this is injected at runtime.
   GEMINI_API_KEY: z.string().optional(),
 
   // Model IDs — GA strings verified available on the project's account.
@@ -23,16 +25,13 @@ const rawSchema = z.object({
 const parsed = rawSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  // Fail fast, loudly, with the exact fields that are wrong.
-  const issues = parsed.error.issues
-    .map((i) => `  - ${i.path.join(".") || "(root)"}: ${i.message}`)
-    .join("\n");
+  // Log, but do NOT exit — always proceed to listen() with defaults.
   // eslint-disable-next-line no-console
-  console.error(`\n[config] Invalid environment configuration:\n${issues}\n`);
-  process.exit(1);
+  console.warn("[config] Some env values were invalid; using safe defaults.");
 }
 
-const env = parsed.data;
+// Use parsed data when valid, otherwise parse an empty object to get pure defaults.
+const env = parsed.success ? parsed.data : rawSchema.parse({});
 
 export const config = {
   nodeEnv: env.NODE_ENV,

@@ -1,0 +1,3487 @@
+[
+  {
+    "reportId": "RB135",
+    "category": "drainage",
+    "text": "Drain slow to clear on HSR BDA Park edge.",
+    "createdAt": "2024-12-02T21:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.91495,
+      "lng": 77.640445,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 3,
+      "viewCount": 23
+    },
+    "alarmIntensity": 0.51,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB135",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB102",
+    "category": "roads",
+    "text": "Road surface cracking on 19th Main, Sector 4.",
+    "createdAt": "2024-12-14T12:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.909435,
+      "lng": 77.642793,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 2,
+      "viewCount": 31
+    },
+    "alarmIntensity": 0.27,
+    "isGenuine": true,
+    "spamScore": 0,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB102",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB154",
+    "category": "streetlights",
+    "text": "Flickering light near BDA Complex Rd.",
+    "createdAt": "2024-12-27T13:00:00.000Z",
+    "reporterId": "U19",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.911043,
+      "lng": 77.645945,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 3,
+      "viewCount": 36
+    },
+    "alarmIntensity": 0.6,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB154",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R028",
+    "category": "drainage",
+    "text": "Drain overflowing onto road at 14th Main 1st Cross, sewage smell.",
+    "createdAt": "2025-01-08T11:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "14th Main x 1st Cross, Sector 3",
+      "lat": 12.915003,
+      "lng": 77.638625,
+      "plusCode": "7J4VWJ7Q+QC",
+      "plusCellId": "7J4VWJ7Q"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 1,
+      "viewCount": 20
+    },
+    "alarmIntensity": 0.3,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R028",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "recurrence"
+    }
+  },
+  {
+    "reportId": "RB172",
+    "category": "traffic",
+    "text": "Signal timing too short at 24th Main, Sector 2.",
+    "createdAt": "2025-01-17T10:00:00.000Z",
+    "reporterId": "U21",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.912913,
+      "lng": 77.637868,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 3,
+      "viewCount": 6
+    },
+    "alarmIntensity": 0.21,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB172",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R033",
+    "category": "drainage",
+    "text": "Drain near Agara Lake Rd full of silt and plastic, water not moving.",
+    "createdAt": "2025-01-19T10:05:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "Agara Lake Rd",
+      "lat": 12.923343,
+      "lng": 77.638095,
+      "plusCode": "7J4VWJFQ+QC",
+      "plusCellId": "7J4VWJFQ"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "silted storm drain",
+        "extracted": {
+          "observedFeatures": [
+            "silt+plastic occlusion",
+            "stagnant water"
+          ],
+          "severitySignal": 5,
+          "confidence": 0.83
+        }
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 9
+    },
+    "alarmIntensity": 0.18,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R033",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "hiddenCrisis1"
+    }
+  },
+  {
+    "reportId": "RB167",
+    "category": "parks",
+    "text": "Broken bench at Outer Ring Road junction park.",
+    "createdAt": "2025-02-08T11:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.923638,
+      "lng": 77.64462,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 1,
+      "viewCount": 24
+    },
+    "alarmIntensity": 0.65,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB167",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB170",
+    "category": "traffic",
+    "text": "Signal timing too short at HSR BDA Park edge.",
+    "createdAt": "2025-02-09T18:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914018,
+      "lng": 77.642745,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Signal timing too short at HSR BDA Park edge.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 0,
+      "viewCount": 30
+    },
+    "alarmIntensity": 0.32,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB170",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R041",
+    "category": "water",
+    "text": "Water pressure very low past few days in 27th Main, second tap barely runs in morning.",
+    "createdAt": "2025-02-11T09:14:00.000Z",
+    "reporterId": "U05",
+    "location": {
+      "streetLabel": "27th Main, Sector 1",
+      "lat": 12.91149,
+      "lng": 77.64058,
+      "plusCode": "7J4VWJ6R+QC",
+      "plusCellId": "7J4VWJ6R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 8
+    },
+    "alarmIntensity": 0.22,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R041",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "synthesis"
+    }
+  },
+  {
+    "reportId": "R047",
+    "category": "roads",
+    "text": "DANGEROUS pothole on 17th Cross Sector 7, almost fell off my scooter!",
+    "createdAt": "2025-02-20T00:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.907275,
+      "lng": 77.645445,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "pothole on 17th Cross",
+        "extracted": {
+          "observedFeatures": [
+            "pothole ~30cm",
+            "surface only"
+          ],
+          "severitySignal": 2,
+          "confidence": 0.78
+        }
+      }
+    ],
+    "engagement": {
+      "upvotes": 12,
+      "replies": 3,
+      "viewCount": 75
+    },
+    "alarmIntensity": 0.8445085341855884,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R047",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "RB168",
+    "category": "traffic",
+    "text": "Missing signboard near 9th Cross, Sector 5.",
+    "createdAt": "2025-02-26T12:00:00.000Z",
+    "reporterId": "U08",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.906995,
+      "lng": 77.643738,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 1,
+      "viewCount": 21
+    },
+    "alarmIntensity": 0.64,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB168",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R049",
+    "category": "streetlights",
+    "text": "Streetlights off again on ORR service road near bus stop, very dark.",
+    "createdAt": "2025-02-28T19:50:00.000Z",
+    "reporterId": "U11",
+    "location": {
+      "streetLabel": "ORR Service Rd (near bus stop)",
+      "lat": 12.92027,
+      "lng": 77.647168,
+      "plusCode": "7J4VWJCW+QC",
+      "plusCellId": "7J4VWJCW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 10
+    },
+    "alarmIntensity": 0.22,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R049",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "hiddenCrisis3"
+    }
+  },
+  {
+    "reportId": "R051",
+    "category": "roads",
+    "text": "When will this 17th Cross pothole be fixed?? Reported weeks ago.",
+    "createdAt": "2025-03-05T00:00:00.000Z",
+    "reporterId": "U07",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.908583,
+      "lng": 77.646228,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 9,
+      "replies": 4,
+      "viewCount": 64
+    },
+    "alarmIntensity": 0.7980606050789356,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R051",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "R052",
+    "category": "roads",
+    "text": "Same big pothole on 17th Cross still not repaired, ridiculous.",
+    "createdAt": "2025-03-12T00:00:00.000Z",
+    "reporterId": "U07",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.90894,
+      "lng": 77.645845,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 7,
+      "replies": 2,
+      "viewCount": 66
+    },
+    "alarmIntensity": 0.842769344355911,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R052",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "RB115",
+    "category": "roads",
+    "text": "Pothole near Outer Ring Road junction.",
+    "createdAt": "2025-03-12T14:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.925025,
+      "lng": 77.64699,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 21
+    },
+    "alarmIntensity": 0.55,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB115",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB117",
+    "category": "water",
+    "text": "Tap water muddy on 24th Main, Sector 2 this week.",
+    "createdAt": "2025-03-18T13:00:00.000Z",
+    "reporterId": "U08",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.91303,
+      "lng": 77.636468,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 0,
+      "viewCount": 37
+    },
+    "alarmIntensity": 0.56,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB117",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R055",
+    "category": "drainage",
+    "text": "Same drain at 14th Main overflowing again, third time this season.",
+    "createdAt": "2025-03-21T17:30:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "14th Main x 1st Cross, Sector 3",
+      "lat": 12.914092,
+      "lng": 77.638185,
+      "plusCode": "7J4VWJ7Q+QC",
+      "plusCellId": "7J4VWJ7Q"
+    },
+    "media": [
+      {
+        "type": "voice",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "voice note: drain floods every monsoon, third year now",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 25
+    },
+    "alarmIntensity": 0.27,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R055",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "recurrence"
+    }
+  },
+  {
+    "reportId": "RB116",
+    "category": "roads",
+    "text": "Pothole near 24th Main, Sector 2.",
+    "createdAt": "2025-03-24T20:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.912078,
+      "lng": 77.63743,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Pothole near 24th Main, Sector 2.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 3,
+      "viewCount": 36
+    },
+    "alarmIntensity": 0.64,
+    "isGenuine": true,
+    "spamScore": 0.06,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB116",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R058",
+    "category": "roads",
+    "text": "Small depression forming on road near 27th Main / 5th Cross junction, getting bigger.",
+    "createdAt": "2025-03-26T18:40:00.000Z",
+    "reporterId": "U09",
+    "location": {
+      "streetLabel": "27th Main, Sector 1",
+      "lat": 12.910655,
+      "lng": 77.64098,
+      "plusCode": "7J4VWJ6R+QC",
+      "plusCellId": "7J4VWJ6R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "road subsidence near junction",
+        "extracted": {
+          "observedFeatures": [
+            "asphalt depression ~40cm",
+            "edge cracking"
+          ],
+          "severitySignal": 4,
+          "confidence": 0.86
+        }
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 1,
+      "viewCount": 14
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R058",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "synthesis"
+    }
+  },
+  {
+    "reportId": "R060",
+    "category": "roads",
+    "text": "Pothole on 17th Cross getting worse, cars swerving into oncoming traffic.",
+    "createdAt": "2025-04-02T00:00:00.000Z",
+    "reporterId": "U04",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.907513,
+      "lng": 77.644143,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 8,
+      "replies": 2,
+      "viewCount": 57
+    },
+    "alarmIntensity": 0.8187768663652242,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R060",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "R064",
+    "category": "structural",
+    "text": "Crack running up the wall of the building near Somasundarapalya Main Rd, getting longer.",
+    "createdAt": "2025-04-15T08:30:00.000Z",
+    "reporterId": "U17",
+    "location": {
+      "streetLabel": "Somasundarapalya Main Rd",
+      "lat": 12.917403,
+      "lng": 77.650485,
+      "plusCode": "7J4VWM82+QC",
+      "plusCellId": "7J4VWM82"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "diagonal wall crack",
+        "extracted": {
+          "observedFeatures": [
+            "diagonal crack",
+            ">3mm width",
+            "load-bearing wall"
+          ],
+          "severitySignal": 5,
+          "confidence": 0.81
+        }
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 7
+    },
+    "alarmIntensity": 0.2,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R064",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "hiddenCrisis2"
+    }
+  },
+  {
+    "reportId": "RB113",
+    "category": "roads",
+    "text": "Uneven patch repair on 19th Main, Sector 4.",
+    "createdAt": "2025-04-20T10:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.90872,
+      "lng": 77.644113,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 40
+    },
+    "alarmIntensity": 0.41,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB113",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB141",
+    "category": "waste",
+    "text": "Mixed waste dumped at HSR BDA Park edge.",
+    "createdAt": "2025-04-21T15:00:00.000Z",
+    "reporterId": "U12",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914178,
+      "lng": 77.641335,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 1,
+      "viewCount": 21
+    },
+    "alarmIntensity": 0.55,
+    "isGenuine": true,
+    "spamScore": 0.1,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB141",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB120",
+    "category": "water",
+    "text": "Tap water muddy on 9th Cross, Sector 5 this week.",
+    "createdAt": "2025-04-23T15:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.907785,
+      "lng": 77.64242,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 3,
+      "viewCount": 22
+    },
+    "alarmIntensity": 0.49,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB120",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R068",
+    "category": "roads",
+    "text": "17th Cross pothole — third complaint. BBMP please act.",
+    "createdAt": "2025-04-25T00:00:00.000Z",
+    "reporterId": "U11",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.907633,
+      "lng": 77.643955,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 4,
+      "viewCount": 71
+    },
+    "alarmIntensity": 0.7959110814332963,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R068",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "RB143",
+    "category": "waste",
+    "text": "Litter piling near 5th Main, Sector 6.",
+    "createdAt": "2025-04-26T12:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909473,
+      "lng": 77.641058,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 0,
+      "viewCount": 21
+    },
+    "alarmIntensity": 0.49,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB143",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB130",
+    "category": "drainage",
+    "text": "Minor water pooling at 24th Main, Sector 2.",
+    "createdAt": "2025-04-28T20:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913488,
+      "lng": 77.63595,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 24
+    },
+    "alarmIntensity": 0.57,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB130",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R069",
+    "category": "streetlights",
+    "text": "Still no streetlights on the ORR service road stretch, unsafe walking at night.",
+    "createdAt": "2025-04-29T20:15:00.000Z",
+    "reporterId": "U19",
+    "location": {
+      "streetLabel": "ORR Service Rd (near bus stop)",
+      "lat": 12.920985,
+      "lng": 77.647793,
+      "plusCode": "7J4VWJCW+QC",
+      "plusCellId": "7J4VWJCW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 1,
+      "viewCount": 12
+    },
+    "alarmIntensity": 0.22,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R069",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "hiddenCrisis3"
+    }
+  },
+  {
+    "reportId": "R072",
+    "category": "water",
+    "text": "Brown / rusty water from tap on Tuesday morning, cleared by evening.",
+    "createdAt": "2025-05-09T07:55:00.000Z",
+    "reporterId": "U12",
+    "location": {
+      "streetLabel": "27th Main, Sector 1",
+      "lat": 12.911505,
+      "lng": 77.640333,
+      "plusCode": "7J4VWJ6R+QC",
+      "plusCellId": "7J4VWJ6R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 6
+    },
+    "alarmIntensity": 0.25,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R072",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "synthesis"
+    }
+  },
+  {
+    "reportId": "RB163",
+    "category": "parks",
+    "text": "Dead tree branch over path at 24th Main, Sector 2.",
+    "createdAt": "2025-05-09T11:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913428,
+      "lng": 77.637365,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 0,
+      "viewCount": 33
+    },
+    "alarmIntensity": 0.24,
+    "isGenuine": true,
+    "spamScore": 0.05,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB163",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB146",
+    "category": "waste",
+    "text": "Mixed waste dumped at 5th Main, Sector 6.",
+    "createdAt": "2025-05-11T15:00:00.000Z",
+    "reporterId": "U20",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909115,
+      "lng": 77.64144,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 12
+    },
+    "alarmIntensity": 0.41,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB146",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB105",
+    "category": "roads",
+    "text": "Uneven patch repair on 9th Cross, Sector 5.",
+    "createdAt": "2025-05-12T11:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.906598,
+      "lng": 77.642288,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 2,
+      "viewCount": 16
+    },
+    "alarmIntensity": 0.21,
+    "isGenuine": true,
+    "spamScore": 0.04,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB105",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB140",
+    "category": "waste",
+    "text": "Garbage not collected on 5th Main, Sector 6.",
+    "createdAt": "2025-05-12T20:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.90983,
+      "lng": 77.640675,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 2,
+      "viewCount": 7
+    },
+    "alarmIntensity": 0.25,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB140",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB126",
+    "category": "water",
+    "text": "Pipe leak on the footpath at 19th Main, Sector 4.",
+    "createdAt": "2025-05-13T20:00:00.000Z",
+    "reporterId": "U09",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.91098,
+      "lng": 77.642543,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 0,
+      "viewCount": 14
+    },
+    "alarmIntensity": 0.26,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB126",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R074",
+    "category": "roads",
+    "text": "Massive pothole 17th Cross Sector 7, dangerous at night.",
+    "createdAt": "2025-05-15T00:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.9086,
+      "lng": 77.646355,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 73
+    },
+    "alarmIntensity": 0.8025647193938494,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R074",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "RB104",
+    "category": "roads",
+    "text": "Speed bump worn out near Outer Ring Road junction.",
+    "createdAt": "2025-05-17T10:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.92455,
+      "lng": 77.646825,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 2,
+      "viewCount": 26
+    },
+    "alarmIntensity": 0.38,
+    "isGenuine": true,
+    "spamScore": 0.05,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB104",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R077",
+    "category": "waste",
+    "text": "Garbage dumped in the storm drain again on Agara Lake Rd.",
+    "createdAt": "2025-05-30T16:20:00.000Z",
+    "reporterId": "U14",
+    "location": {
+      "streetLabel": "Agara Lake Rd",
+      "lat": 12.923043,
+      "lng": 77.637938,
+      "plusCode": "7J4VWJFQ+QC",
+      "plusCellId": "7J4VWJFQ"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 5
+    },
+    "alarmIntensity": 0.16,
+    "isGenuine": true,
+    "spamScore": 0.04,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R077",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "hiddenCrisis1"
+    }
+  },
+  {
+    "reportId": "R081",
+    "category": "roads",
+    "text": "Still waiting on the 17th Cross pothole repair. Disappointing.",
+    "createdAt": "2025-06-08T00:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "17th Cross, Sector 7",
+      "lat": 12.90884,
+      "lng": 77.645425,
+      "plusCode": "7J4VWJ5W+QC",
+      "plusCellId": "7J4VWJ5W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 3,
+      "viewCount": 71
+    },
+    "alarmIntensity": 0.7837270949408413,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R081",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "noise"
+    }
+  },
+  {
+    "reportId": "R083",
+    "category": "drainage",
+    "text": "Drain at 14th Main 1st Cross blocked and overflowing yet again, monsoon starting.",
+    "createdAt": "2025-06-19T09:40:00.000Z",
+    "reporterId": "U08",
+    "location": {
+      "streetLabel": "14th Main x 1st Cross, Sector 3",
+      "lat": 12.913635,
+      "lng": 77.638147,
+      "plusCode": "7J4VWJ7Q+QC",
+      "plusCellId": "7J4VWJ7Q"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 30
+    },
+    "alarmIntensity": 0.27,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R083",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "recurrence"
+    }
+  },
+  {
+    "reportId": "RB136",
+    "category": "drainage",
+    "text": "Blocked gutter on 5th Main, Sector 6.",
+    "createdAt": "2025-06-24T14:00:00.000Z",
+    "reporterId": "U09",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909293,
+      "lng": 77.641128,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 0,
+      "viewCount": 33
+    },
+    "alarmIntensity": 0.69,
+    "isGenuine": true,
+    "spamScore": 0,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB136",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB118",
+    "category": "water",
+    "text": "Tap water muddy on HSR BDA Park edge this week.",
+    "createdAt": "2025-06-28T13:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.915443,
+      "lng": 77.642682,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 1,
+      "viewCount": 27
+    },
+    "alarmIntensity": 0.55,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB118",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R086",
+    "category": "drainage",
+    "text": "Patch of road stays wet even when no rain for 3 days, near the depression.",
+    "createdAt": "2025-07-02T21:10:00.000Z",
+    "reporterId": "U05",
+    "location": {
+      "streetLabel": "27th Main, Sector 1",
+      "lat": 12.910793,
+      "lng": 77.640365,
+      "plusCode": "7J4VWJ6R+QC",
+      "plusCellId": "7J4VWJ6R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 4
+    },
+    "alarmIntensity": 0.2,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R086",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "synthesis"
+    }
+  },
+  {
+    "reportId": "RB171",
+    "category": "traffic",
+    "text": "Missing signboard near 19th Main, Sector 4.",
+    "createdAt": "2025-07-05T15:00:00.000Z",
+    "reporterId": "U08",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.91027,
+      "lng": 77.643783,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 1,
+      "viewCount": 36
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB171",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB157",
+    "category": "streetlights",
+    "text": "One streetlight out on HSR BDA Park edge.",
+    "createdAt": "2025-07-07T08:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.9137,
+      "lng": 77.64246,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "One streetlight out on HSR BDA Park edge.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 0,
+      "viewCount": 17
+    },
+    "alarmIntensity": 0.48,
+    "isGenuine": true,
+    "spamScore": 0.1,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB157",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB149",
+    "category": "streetlights",
+    "text": "Streetlight pole leaning on BDA Complex Rd.",
+    "createdAt": "2025-07-11T12:00:00.000Z",
+    "reporterId": "U14",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.911998,
+      "lng": 77.646747,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 3,
+      "viewCount": 35
+    },
+    "alarmIntensity": 0.3,
+    "isGenuine": true,
+    "spamScore": 0.1,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB149",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB139",
+    "category": "waste",
+    "text": "Bin overflowing at 19th Main, Sector 4.",
+    "createdAt": "2025-07-12T21:00:00.000Z",
+    "reporterId": "U12",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.90906,
+      "lng": 77.643603,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 2,
+      "viewCount": 14
+    },
+    "alarmIntensity": 0.66,
+    "isGenuine": true,
+    "spamScore": 0.05,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB139",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB164",
+    "category": "parks",
+    "text": "Dead tree branch over path at 9th Cross, Sector 5.",
+    "createdAt": "2025-07-14T13:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.908185,
+      "lng": 77.64258,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 1,
+      "viewCount": 12
+    },
+    "alarmIntensity": 0.67,
+    "isGenuine": true,
+    "spamScore": 0,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB164",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB161",
+    "category": "structural",
+    "text": "Loose plaster on culvert at Outer Ring Road junction.",
+    "createdAt": "2025-07-17T13:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.925423,
+      "lng": 77.645385,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 25
+    },
+    "alarmIntensity": 0.27,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB161",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB147",
+    "category": "waste",
+    "text": "Litter piling near BDA Complex Rd.",
+    "createdAt": "2025-07-23T20:00:00.000Z",
+    "reporterId": "U14",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.911163,
+      "lng": 77.647703,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 1,
+      "viewCount": 22
+    },
+    "alarmIntensity": 0.36,
+    "isGenuine": true,
+    "spamScore": 0.06,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB147",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB138",
+    "category": "waste",
+    "text": "Bin overflowing at 24th Main, Sector 2.",
+    "createdAt": "2025-07-25T09:00:00.000Z",
+    "reporterId": "U17",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913608,
+      "lng": 77.638263,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 0,
+      "viewCount": 36
+    },
+    "alarmIntensity": 0.32,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB138",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB144",
+    "category": "waste",
+    "text": "Litter piling near 24th Main, Sector 2.",
+    "createdAt": "2025-08-01T15:00:00.000Z",
+    "reporterId": "U08",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.91212,
+      "lng": 77.63742,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 3,
+      "viewCount": 23
+    },
+    "alarmIntensity": 0.39,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB144",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB137",
+    "category": "waste",
+    "text": "Bin overflowing at 5th Main, Sector 6.",
+    "createdAt": "2025-08-05T14:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.910245,
+      "lng": 77.642668,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 4
+    },
+    "alarmIntensity": 0.38,
+    "isGenuine": true,
+    "spamScore": 0.06,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB137",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB153",
+    "category": "streetlights",
+    "text": "Flickering light near 9th Cross, Sector 5.",
+    "createdAt": "2025-08-06T10:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.90771,
+      "lng": 77.642418,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 23
+    },
+    "alarmIntensity": 0.24,
+    "isGenuine": true,
+    "spamScore": 0.04,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB153",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB109",
+    "category": "roads",
+    "text": "Pothole near 24th Main, Sector 2.",
+    "createdAt": "2025-08-11T07:00:00.000Z",
+    "reporterId": "U13",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913268,
+      "lng": 77.638218,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Pothole near 24th Main, Sector 2.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 2,
+      "viewCount": 16
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB109",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB145",
+    "category": "waste",
+    "text": "Mixed waste dumped at 24th Main, Sector 2.",
+    "createdAt": "2025-08-11T14:00:00.000Z",
+    "reporterId": "U19",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913668,
+      "lng": 77.63838,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 20
+    },
+    "alarmIntensity": 0.5,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB145",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB122",
+    "category": "water",
+    "text": "Tap water muddy on BDA Complex Rd this week.",
+    "createdAt": "2025-08-25T07:00:00.000Z",
+    "reporterId": "U17",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.91219,
+      "lng": 77.647298,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 0,
+      "viewCount": 32
+    },
+    "alarmIntensity": 0.36,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB122",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB129",
+    "category": "drainage",
+    "text": "Minor water pooling at HSR BDA Park edge.",
+    "createdAt": "2025-08-26T17:00:00.000Z",
+    "reporterId": "U15",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914253,
+      "lng": 77.641893,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 0,
+      "viewCount": 32
+    },
+    "alarmIntensity": 0.51,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB129",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB158",
+    "category": "structural",
+    "text": "Damaged footpath slab on 5th Main, Sector 6.",
+    "createdAt": "2025-08-26T17:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909473,
+      "lng": 77.641613,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 21
+    },
+    "alarmIntensity": 0.21,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB158",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB166",
+    "category": "parks",
+    "text": "Overgrown bushes in park near 24th Main, Sector 2.",
+    "createdAt": "2025-09-01T16:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.91319,
+      "lng": 77.63756,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 2,
+      "viewCount": 38
+    },
+    "alarmIntensity": 0.37,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB166",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB148",
+    "category": "waste",
+    "text": "Litter piling near Outer Ring Road junction.",
+    "createdAt": "2025-09-03T20:00:00.000Z",
+    "reporterId": "U18",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.92495,
+      "lng": 77.646988,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 2,
+      "viewCount": 34
+    },
+    "alarmIntensity": 0.37,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB148",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB124",
+    "category": "water",
+    "text": "Pipe leak on the footpath at HSR BDA Park edge.",
+    "createdAt": "2025-09-05T18:00:00.000Z",
+    "reporterId": "U22",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.913775,
+      "lng": 77.642463,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 2,
+      "viewCount": 34
+    },
+    "alarmIntensity": 0.35,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB124",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB111",
+    "category": "roads",
+    "text": "Road surface cracking on Outer Ring Road junction.",
+    "createdAt": "2025-09-09T16:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.923715,
+      "lng": 77.645833,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 1,
+      "viewCount": 7
+    },
+    "alarmIntensity": 0.44,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB111",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB156",
+    "category": "streetlights",
+    "text": "Dark patch on 9th Cross, Sector 5 at night.",
+    "createdAt": "2025-09-19T15:00:00.000Z",
+    "reporterId": "U22",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.907947,
+      "lng": 77.642222,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Dark patch on 9th Cross, Sector 5 at night.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 1,
+      "viewCount": 27
+    },
+    "alarmIntensity": 0.53,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB156",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB150",
+    "category": "streetlights",
+    "text": "One streetlight out on 5th Main, Sector 6.",
+    "createdAt": "2025-09-24T14:00:00.000Z",
+    "reporterId": "U20",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909353,
+      "lng": 77.6418,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 3,
+      "viewCount": 5
+    },
+    "alarmIntensity": 0.43,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB150",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB132",
+    "category": "drainage",
+    "text": "Drain slow to clear on HSR BDA Park edge.",
+    "createdAt": "2025-09-28T10:00:00.000Z",
+    "reporterId": "U07",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.913283,
+      "lng": 77.642172,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 0,
+      "viewCount": 13
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.06,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB132",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB110",
+    "category": "roads",
+    "text": "Pothole near 24th Main, Sector 2.",
+    "createdAt": "2025-10-04T21:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913863,
+      "lng": 77.638195,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Pothole near 24th Main, Sector 2.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 0,
+      "viewCount": 25
+    },
+    "alarmIntensity": 0.31,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB110",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB125",
+    "category": "water",
+    "text": "Tap water muddy on HSR BDA Park edge this week.",
+    "createdAt": "2025-10-06T09:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.915323,
+      "lng": 77.640925,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 0,
+      "viewCount": 37
+    },
+    "alarmIntensity": 0.36,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB125",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB169",
+    "category": "traffic",
+    "text": "Signal timing too short at Outer Ring Road junction.",
+    "createdAt": "2025-10-07T15:00:00.000Z",
+    "reporterId": "U21",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.923043,
+      "lng": 77.645198,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 30
+    },
+    "alarmIntensity": 0.26,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB169",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB121",
+    "category": "water",
+    "text": "No water supply since morning on 5th Main, Sector 6.",
+    "createdAt": "2025-10-09T17:00:00.000Z",
+    "reporterId": "U22",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.908833,
+      "lng": 77.64238,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "No water supply since morning on 5th Main, Sector 6.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 2,
+      "viewCount": 12
+    },
+    "alarmIntensity": 0.57,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB121",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB152",
+    "category": "streetlights",
+    "text": "Dark patch on 24th Main, Sector 2 at night.",
+    "createdAt": "2025-10-13T13:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.912358,
+      "lng": 77.637778,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Dark patch on 24th Main, Sector 2 at night.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 0,
+      "viewCount": 29
+    },
+    "alarmIntensity": 0.32,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB152",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB165",
+    "category": "parks",
+    "text": "Overgrown bushes in park near HSR BDA Park edge.",
+    "createdAt": "2025-10-17T09:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914533,
+      "lng": 77.642243,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 0,
+      "viewCount": 19
+    },
+    "alarmIntensity": 0.38,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB165",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB100",
+    "category": "roads",
+    "text": "Road surface cracking on 24th Main, Sector 2.",
+    "createdAt": "2025-10-22T10:00:00.000Z",
+    "reporterId": "U22",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.91184,
+      "lng": 77.63707,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 0,
+      "viewCount": 18
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB100",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB112",
+    "category": "roads",
+    "text": "Road surface cracking on 24th Main, Sector 2.",
+    "createdAt": "2025-10-23T10:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.913268,
+      "lng": 77.636273,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Road surface cracking on 24th Main, Sector 2.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 3,
+      "viewCount": 13
+    },
+    "alarmIntensity": 0.5,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB112",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB160",
+    "category": "structural",
+    "text": "Damaged footpath slab on 5th Main, Sector 6.",
+    "createdAt": "2025-10-26T15:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.908875,
+      "lng": 77.642925,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Damaged footpath slab on 5th Main, Sector 6.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 2,
+      "viewCount": 39
+    },
+    "alarmIntensity": 0.67,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB160",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB119",
+    "category": "water",
+    "text": "Pipe leak on the footpath at 24th Main, Sector 2.",
+    "createdAt": "2025-11-05T19:00:00.000Z",
+    "reporterId": "U21",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.912195,
+      "lng": 77.637423,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 3,
+      "viewCount": 33
+    },
+    "alarmIntensity": 0.69,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB119",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB151",
+    "category": "streetlights",
+    "text": "One streetlight out on 19th Main, Sector 4.",
+    "createdAt": "2025-11-10T21:00:00.000Z",
+    "reporterId": "U20",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.910905,
+      "lng": 77.64254,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "One streetlight out on 19th Main, Sector 4.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 1,
+      "viewCount": 8
+    },
+    "alarmIntensity": 0.64,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB151",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB131",
+    "category": "drainage",
+    "text": "Drain slow to clear on 24th Main, Sector 2.",
+    "createdAt": "2025-11-11T19:00:00.000Z",
+    "reporterId": "U12",
+    "location": {
+      "streetLabel": "24th Main, Sector 2",
+      "lat": 12.91194,
+      "lng": 77.63749,
+      "plusCode": "7J4VWJ7P+QC",
+      "plusCellId": "7J4VWJ7P"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 0,
+      "viewCount": 31
+    },
+    "alarmIntensity": 0.63,
+    "isGenuine": true,
+    "spamScore": 0.1,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB131",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB107",
+    "category": "roads",
+    "text": "Uneven patch repair on Outer Ring Road junction.",
+    "createdAt": "2025-11-26T18:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.924193,
+      "lng": 77.644708,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 1,
+      "viewCount": 10
+    },
+    "alarmIntensity": 0.44,
+    "isGenuine": true,
+    "spamScore": 0.1,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB107",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB142",
+    "category": "waste",
+    "text": "Bin overflowing at 5th Main, Sector 6.",
+    "createdAt": "2025-12-20T19:00:00.000Z",
+    "reporterId": "U13",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.910425,
+      "lng": 77.642598,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 5,
+      "replies": 0,
+      "viewCount": 10
+    },
+    "alarmIntensity": 0.53,
+    "isGenuine": true,
+    "spamScore": 0,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB142",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB106",
+    "category": "roads",
+    "text": "Road surface cracking on 19th Main, Sector 4.",
+    "createdAt": "2025-12-23T18:00:00.000Z",
+    "reporterId": "U10",
+    "location": {
+      "streetLabel": "19th Main, Sector 4",
+      "lat": 12.910745,
+      "lng": 77.643948,
+      "plusCode": "7J4VWJ5V+QC",
+      "plusCellId": "7J4VWJ5V"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Road surface cracking on 19th Main, Sector 4.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 2,
+      "viewCount": 29
+    },
+    "alarmIntensity": 0.6,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB106",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB159",
+    "category": "structural",
+    "text": "Cracked compound wall near BDA Complex Rd.",
+    "createdAt": "2026-01-03T20:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.913425,
+      "lng": 77.645953,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 0,
+      "viewCount": 24
+    },
+    "alarmIntensity": 0.32,
+    "isGenuine": true,
+    "spamScore": 0.04,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB159",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB162",
+    "category": "structural",
+    "text": "Loose plaster on culvert at 9th Cross, Sector 5.",
+    "createdAt": "2026-01-10T12:00:00.000Z",
+    "reporterId": "U04",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.90628,
+      "lng": 77.642002,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 1,
+      "viewCount": 11
+    },
+    "alarmIntensity": 0.65,
+    "isGenuine": true,
+    "spamScore": 0.05,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB162",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB127",
+    "category": "water",
+    "text": "Pipe leak on the footpath at HSR BDA Park edge.",
+    "createdAt": "2026-01-13T12:00:00.000Z",
+    "reporterId": "U07",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914728,
+      "lng": 77.641502,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 2,
+      "viewCount": 18
+    },
+    "alarmIntensity": 0.59,
+    "isGenuine": true,
+    "spamScore": 0.03,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB127",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB133",
+    "category": "drainage",
+    "text": "Drain cover loose near BDA Complex Rd.",
+    "createdAt": "2026-01-22T10:00:00.000Z",
+    "reporterId": "U16",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.911935,
+      "lng": 77.646813,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 1,
+      "viewCount": 4
+    },
+    "alarmIntensity": 0.22,
+    "isGenuine": true,
+    "spamScore": 0.07,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB133",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB128",
+    "category": "water",
+    "text": "Pipe leak on the footpath at 9th Cross, Sector 5.",
+    "createdAt": "2026-02-10T21:00:00.000Z",
+    "reporterId": "U13",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.907905,
+      "lng": 77.642232,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Pipe leak on the footpath at 9th Cross, Sector 5.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 1,
+      "viewCount": 14
+    },
+    "alarmIntensity": 0.2,
+    "isGenuine": true,
+    "spamScore": 0.01,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB128",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB155",
+    "category": "streetlights",
+    "text": "Dark patch on 5th Main, Sector 6 at night.",
+    "createdAt": "2026-02-13T16:00:00.000Z",
+    "reporterId": "U10",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.908995,
+      "lng": 77.642183,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 3,
+      "viewCount": 6
+    },
+    "alarmIntensity": 0.43,
+    "isGenuine": true,
+    "spamScore": 0.06,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB155",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R096",
+    "category": "other",
+    "text": "asdf test test ignore",
+    "createdAt": "2026-02-14T09:00:00.000Z",
+    "reporterId": "U21",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.91536,
+      "lng": 77.640983,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 1
+    },
+    "alarmIntensity": 0.1,
+    "isGenuine": false,
+    "spamScore": 0.75,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R096",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "spam"
+    }
+  },
+  {
+    "reportId": "R095",
+    "category": "other",
+    "text": "Best plumbing service in HSR!! Call 99999 99999 for 50% off!!!",
+    "createdAt": "2026-03-02T13:00:00.000Z",
+    "reporterId": "U20",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.912703,
+      "lng": 77.646965,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 0,
+      "viewCount": 3
+    },
+    "alarmIntensity": 0.4,
+    "isGenuine": false,
+    "spamScore": 0.92,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R095",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "spam"
+    }
+  },
+  {
+    "reportId": "RB108",
+    "category": "roads",
+    "text": "Road surface cracking on BDA Complex Rd.",
+    "createdAt": "2026-03-05T21:00:00.000Z",
+    "reporterId": "U03",
+    "location": {
+      "streetLabel": "BDA Complex Rd",
+      "lat": 12.91112,
+      "lng": 77.647157,
+      "plusCode": "7J4VWJ6W+QC",
+      "plusCellId": "7J4VWJ6W"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 0,
+      "replies": 1,
+      "viewCount": 32
+    },
+    "alarmIntensity": 0.54,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB108",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB101",
+    "category": "roads",
+    "text": "Pothole near 5th Main, Sector 6.",
+    "createdAt": "2026-03-12T18:00:00.000Z",
+    "reporterId": "U06",
+    "location": {
+      "streetLabel": "5th Main, Sector 6",
+      "lat": 12.909788,
+      "lng": 77.64263,
+      "plusCode": "7J4VWJ5R+QC",
+      "plusCellId": "7J4VWJ5R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 6,
+      "replies": 2,
+      "viewCount": 40
+    },
+    "alarmIntensity": 0.29,
+    "isGenuine": true,
+    "spamScore": 0.08,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB101",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB134",
+    "category": "drainage",
+    "text": "Drain slow to clear on HSR BDA Park edge.",
+    "createdAt": "2026-04-05T20:00:00.000Z",
+    "reporterId": "U20",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.913998,
+      "lng": 77.641408,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 1,
+      "replies": 3,
+      "viewCount": 34
+    },
+    "alarmIntensity": 0.41,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB134",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R090",
+    "category": "drainage",
+    "text": "Drain blocked near 100ft Road, water pooling on the road edge.",
+    "createdAt": "2026-04-12T10:00:00.000Z",
+    "reporterId": "U07",
+    "location": {
+      "streetLabel": "100ft Road",
+      "lat": 12.913865,
+      "lng": 77.644863,
+      "plusCode": "7J4VWJ7V+QC",
+      "plusCellId": "7J4VWJ7V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 0,
+      "viewCount": 12
+    },
+    "alarmIntensity": 0.28,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R090",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "liveDemo"
+    }
+  },
+  {
+    "reportId": "RB114",
+    "category": "roads",
+    "text": "Road surface cracking on HSR BDA Park edge.",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "reporterId": "U01",
+    "location": {
+      "streetLabel": "HSR BDA Park edge",
+      "lat": 12.914373,
+      "lng": 77.64115,
+      "plusCode": "7J4VWJ7R+QC",
+      "plusCellId": "7J4VWJ7R"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Road surface cracking on HSR BDA Park edge.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 2,
+      "replies": 3,
+      "viewCount": 36
+    },
+    "alarmIntensity": 0.26,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB114",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "RB123",
+    "category": "water",
+    "text": "No water supply since morning on 9th Cross, Sector 5.",
+    "createdAt": "2026-05-12T16:00:00.000Z",
+    "reporterId": "U19",
+    "location": {
+      "streetLabel": "9th Cross, Sector 5",
+      "lat": 12.906238,
+      "lng": 77.643958,
+      "plusCode": "7J4VWJ4V+QC",
+      "plusCellId": "7J4VWJ4V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 4,
+      "replies": 1,
+      "viewCount": 29
+    },
+    "alarmIntensity": 0.33,
+    "isGenuine": true,
+    "spamScore": 0.09,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB123",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  },
+  {
+    "reportId": "R093",
+    "category": "drainage",
+    "text": "Same 100ft Road drain overflowing again after light rain.",
+    "createdAt": "2026-05-18T14:30:00.000Z",
+    "reporterId": "U10",
+    "location": {
+      "streetLabel": "100ft Road",
+      "lat": 12.914818,
+      "lng": 77.6439,
+      "plusCode": "7J4VWJ7V+QC",
+      "plusCellId": "7J4VWJ7V"
+    },
+    "media": [
+      {
+        "type": "none",
+        "ref": null,
+        "caption": null,
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 1,
+      "viewCount": 16
+    },
+    "alarmIntensity": 0.3,
+    "isGenuine": true,
+    "spamScore": 0.02,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_R093",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": "liveDemo"
+    }
+  },
+  {
+    "reportId": "RB103",
+    "category": "roads",
+    "text": "Uneven patch repair on Outer Ring Road junction.",
+    "createdAt": "2026-05-22T13:00:00.000Z",
+    "reporterId": "U02",
+    "location": {
+      "streetLabel": "Outer Ring Road junction",
+      "lat": 12.925383,
+      "lng": 77.646053,
+      "plusCode": "7J4VWJFW+QC",
+      "plusCellId": "7J4VWJFW"
+    },
+    "media": [
+      {
+        "type": "photo",
+        "ref": "seed/photos/placeholder.svg",
+        "caption": "Uneven patch repair on Outer Ring Road junction.",
+        "extracted": null
+      }
+    ],
+    "engagement": {
+      "upvotes": 3,
+      "replies": 1,
+      "viewCount": 13
+    },
+    "alarmIntensity": 0.69,
+    "isGenuine": true,
+    "spamScore": 0,
+    "wardId": "blr-174-hsr",
+    "embeddingId": "E_RB103",
+    "seed": {
+      "isSynthetic": true,
+      "plantedPatternId": null
+    }
+  }
+]

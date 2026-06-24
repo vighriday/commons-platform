@@ -1,26 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath, URL } from "node:url";
 
 // COMMONS frontend build config.
 // - Builds the React SPA into dist/ (served by the Express server in production).
-// - In development, proxies /api/* to the local Express server so the browser
-//   only ever talks to one origin (matches the same-origin production posture).
+// - Tailwind v4 runs via its Vite plugin (no postcss config needed).
+// - In production the Express server serves the build; in development the server
+//   mounts Vite as middleware, so the browser always talks to one origin.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       "@shared": fileURLToPath(new URL("./shared", import.meta.url)),
-    },
-  },
-  server: {
-    port: 5173,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8080",
-        changeOrigin: true,
-      },
     },
   },
   build: {

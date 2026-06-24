@@ -59,6 +59,9 @@ firebase-debug.log
 .eslintcache
 *.tsbuildinfo
 
+# Deploy / export artifacts (zips are built on demand, never committed)
+*.zip
+
 # Local agent/tooling state (not part of the product)
 .claude/
 .veris/
