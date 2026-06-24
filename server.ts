@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import compression from "compression";
 import express from "express";
 import { rateLimit } from "express-rate-limit";
@@ -12,9 +11,6 @@ import { logger } from "./server/lib/logger.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
@@ -100,7 +96,7 @@ async function startServer() {
     app.use("*", async (req, res, next) => {
       const url = req.originalUrl;
       try {
-        let template = fs.readFileSync(path.resolve(__dirname, "index.html"), "utf-8");
+        let template = fs.readFileSync(path.resolve(process.cwd(), "index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
         res.status(200).set({ "Content-Type": "text/html" }).end(template);
       } catch (e) {
@@ -110,7 +106,7 @@ async function startServer() {
     });
   } else {
     // Production: Serve statically built assets
-    const distPath = path.resolve(__dirname, "dist");
+    const distPath = path.resolve(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.resolve(distPath, "index.html"));

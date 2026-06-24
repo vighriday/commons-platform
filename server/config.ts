@@ -35,7 +35,7 @@ const env = parsed.data;
 export const config = {
   nodeEnv: env.NODE_ENV,
   isProduction: env.NODE_ENV === "production",
-  port: 3000, // ALWAYS run on port 3000 as required by AI Studio infrastructure proxy
+  port: env.PORT,
   gemini: {
     apiKey: env.GEMINI_API_KEY ?? "",
     isConfigured: Boolean(env.GEMINI_API_KEY && env.GEMINI_API_KEY.length > 8),
