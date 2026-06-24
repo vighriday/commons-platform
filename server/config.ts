@@ -30,7 +30,6 @@ if (!parsed.success) {
   console.warn("[config] Some env values were invalid; using safe defaults.");
 }
 
-// Use parsed data when valid, otherwise parse an empty object to get pure defaults.
 const env = parsed.success ? parsed.data : rawSchema.parse({});
 
 export const config = {

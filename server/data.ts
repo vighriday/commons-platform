@@ -7,15 +7,16 @@
 // and merged on read — but the seed always backs the response. For Phase 1 the
 // read path is pure seed JSON; the Firestore merge seam is marked below.
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
 import type {
   Issue, Report, Reporter, TwinDoc, ExposureGridCell, CivicPulse,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SEED = path.resolve(__dirname, "../seed");
+// Seed JSON lives at <repo>/seed and is committed, so it ships with the build.
+// Resolve from process.cwd() (the container working dir) so this works whether
+// the server runs via tsx (dev) or as the esbuild CJS bundle (production).
+const SEED = path.resolve(process.cwd(), "seed");
 const WARD = "blr-174-hsr";
 
 function load<T>(file: string, fallback: T): T {

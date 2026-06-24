@@ -1,22 +1,21 @@
 // COMMONS server entry.
 //
-// Serves the built React SPA and a small same-origin /api surface. In this
-// Phase-0 "de-risk" form it exposes three endpoints that prove the deployment
-// works end to end:
-//   GET /api/health       — liveness, no dependencies
-//   GET /api/_smoke        — confirms the server can read its own config
-//   GET /api/gemini-ping   — proves the server-side Gemini key works
+// Serves the built React SPA and a same-origin /api surface:
+//   GET /api/health             — liveness
+//   GET /api/_smoke              — config echo
+//   GET /api/gemini-ping        — proves the server-side Gemini key works
+//   GET /api/issues             — the Attention×Impact issue set
+//   GET /api/issues/:id         — one issue (auditable breakdown)
+//   GET /api/neighborhood/:ward — Digital Twin + Civic Pulse
 //
-// Security headers, request ids, structured logging, error hygiene, and graceful
-// shutdown are wired from the very first commit — not bolted on later.
-//
-// Lives at the repo root and binds 0.0.0.0:$PORT to match the Google AI Studio /
-// Cloud Run runtime contract.
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+// Security headers, request ids, structured logging, error hygiene, rate
+// limiting, and graceful shutdown are wired in. Binds 0.0.0.0:$PORT and resolves
+// static paths from process.cwd() to match the Cloud Run / AI Studio runtime.
 import fs from "node:fs";
+import path from "node:path";
 import express from "express";
 import compression from "compression";
+import { rateLimit } from "express-rate-limit";
 import { config } from "./server/config.ts";
 import { logger } from "./server/lib/logger.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
@@ -25,8 +24,6 @@ import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.
 import { geminiPing } from "./server/gemini.ts";
 import { data } from "./server/data.ts";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 async function startServer() {
   const app = express();
 
@@ -34,13 +31,28 @@ async function startServer() {
   app.set("trust proxy", 1);
   app.disable("x-powered-by");
 
-  // Order matters: security headers first, then ids, then body/compression.
+  // Order: security headers first, then ids, then body/compression.
   app.use(securityHeaders);
   app.use(requestId);
   app.use(compression());
   app.use(express.json({ limit: "1mb" }));
 
-  // ── API ──────────────────────────────────────────────────────────────────
+  // Generous rate limit on the API; the demo path is well within it, and abuse
+  // (which would burn Gemini quota) is throttled to an IP.
+  app.use(
+    "/api/",
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      limit: 300,
+      standardHeaders: "draft-7",
+      legacyHeaders: false,
+      handler: (req, res) => {
+        logger.warn({ ip: req.ip, path: req.path }, "rate_limit_exceeded");
+        res.status(429).json({ error: "TOO_MANY_REQUESTS", requestId: req.requestId });
+      },
+    }),
+  );
+
   const api = express.Router();
 
   api.get("/health", (_req, res) => {
@@ -59,24 +71,17 @@ async function startServer() {
 
   api.get("/gemini-ping", async (req, res) => {
     if (!config.gemini.isConfigured) {
-      res.status(503).json({
-        ok: false,
-        error: "GEMINI_NOT_CONFIGURED",
-        requestId: req.requestId,
-      });
+      res.status(503).json({ ok: false, error: "GEMINI_NOT_CONFIGURED", requestId: req.requestId });
       return;
     }
     try {
       const text = await geminiPing();
       res.json({ ok: true, model: config.gemini.models.flashLite, text });
     } catch {
-      res
-        .status(502)
-        .json({ ok: false, error: "GEMINI_CALL_FAILED", requestId: req.requestId });
+      res.status(502).json({ ok: false, error: "GEMINI_CALL_FAILED", requestId: req.requestId });
     }
   });
 
-  // Issues — the Attention×Impact issue set.
   api.get("/issues", (_req, res) => {
     res.json({ ward: data.ward, issues: data.listIssues() });
   });
@@ -90,7 +95,6 @@ async function startServer() {
     res.json(issue);
   });
 
-  // Neighborhood — the Digital Twin + Civic Pulse for a ward.
   api.get("/neighborhood/:ward", (req, res) => {
     if (req.params.ward !== data.ward) {
       res.status(404).json({ error: "WARD_NOT_FOUND", requestId: req.requestId });
@@ -102,30 +106,25 @@ async function startServer() {
   app.use("/api", api);
 
   // ── Frontend ───────────────────────────────────────────────────────────────
+  // Paths resolved from process.cwd() (the container working dir) for reliable
+  // resolution regardless of how the server module is bundled/run.
   if (config.isProduction) {
-    // Production: serve the statically built client from dist/.
-    const dist = path.resolve(__dirname, "dist");
+    const dist = path.resolve(process.cwd(), "dist");
     app.use(express.static(dist));
     app.use("/api", notFoundHandler);
     app.get(/^(?!\/api).*/, (_req, res) => {
       res.sendFile(path.join(dist, "index.html"));
     });
   } else {
-    // Development: mount Vite as middleware so the client + API share one origin
-    // (mirrors the production same-origin posture). Vite is imported lazily so it
-    // is never bundled into the production server.
     const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "custom",
-    });
+    const vite = await createViteServer({ server: { middlewareMode: true }, appType: "custom" });
     app.use(vite.middlewares);
     app.use("/api", notFoundHandler);
     app.use(/^(?!\/api).*/, async (req, res, next) => {
       try {
         const template = await vite.transformIndexHtml(
           req.originalUrl,
-          fs.readFileSync(path.resolve(__dirname, "index.html"), "utf-8"),
+          fs.readFileSync(path.resolve(process.cwd(), "index.html"), "utf-8"),
         );
         res.status(200).set({ "Content-Type": "text/html" }).end(template);
       } catch (e) {
@@ -135,17 +134,11 @@ async function startServer() {
     });
   }
 
-  // ── Error handling (last) ────────────────────────────────────────────────────
   app.use(errorHandler);
 
-  // ── Boot + graceful shutdown ─────────────────────────────────────────────────
   const server = app.listen(config.port, "0.0.0.0", () => {
     logger.info(
-      {
-        port: config.port,
-        env: config.nodeEnv,
-        geminiConfigured: config.gemini.isConfigured,
-      },
+      { port: config.port, env: config.nodeEnv, geminiConfigured: config.gemini.isConfigured },
       "server_started",
     );
   });
@@ -158,7 +151,6 @@ async function startServer() {
     });
     setTimeout(() => process.exit(1), 10_000).unref();
   }
-
   process.on("SIGTERM", () => shutdown("SIGTERM"));
   process.on("SIGINT", () => shutdown("SIGINT"));
 }

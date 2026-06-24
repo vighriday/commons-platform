@@ -1,3 +1,4 @@
+import type { RequestHandler } from "express";
 // Security headers, including a Content-Security-Policy tuned for COMMONS.
 //
 // The CSP is deliberately explicit rather than helmet's defaults, because the
@@ -5,7 +6,6 @@
 // come from a specific CDN. Gemini is intentionally ABSENT from connect-src —
 // the browser never calls Gemini directly; all model calls go through our server.
 import helmet from "helmet";
-import type { RequestHandler } from "express";
 
 // CARTO basemap CDN used by the card-free MapLibre style. Adjust here if the
 // basemap source changes — this is the single place tile origins are allowed.

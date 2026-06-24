@@ -1,7 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { URL, fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
-import { fileURLToPath, URL } from "node:url";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 // COMMONS frontend build config.
 // - Builds the React SPA into dist/ (served by the Express server in production).
