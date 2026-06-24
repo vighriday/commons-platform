@@ -118,6 +118,15 @@ async function startServer() {
     res.json(geminiUsage());
   });
 
+  // Time Machine snapshots (month-end frames of the quadrant state).
+  api.get("/snapshots/:ward", (req, res) => {
+    if (req.params.ward !== data.ward) {
+      res.status(404).json({ error: "WARD_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    res.json({ ward: data.ward, snapshots: data.listSnapshots() });
+  });
+
   app.use("/api", api);
 
   // ── Frontend ───────────────────────────────────────────────────────────────

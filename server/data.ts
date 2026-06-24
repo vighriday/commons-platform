@@ -15,6 +15,7 @@ import type {
   Issue,
   Report,
   Reporter,
+  Snapshot,
   TwinDoc,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
@@ -42,6 +43,8 @@ const exposureGrid = load<ExposureGridCell[]>("exposureGrid.json", []);
 // The frozen agent-pipeline trace (Phase 2). Null until `npm run agents` has run;
 // the read path serves it as-is (the demo trace, 0 RPD).
 const agentRun = load<AgentRun | null>("agentRun.json", null);
+// Time Machine snapshots (Phase 3) — month-end frames of the quadrant state.
+const snapshots = load<Snapshot[]>("snapshots.json", []);
 
 logger.info(
   { reports: reports.length, issues: issues.length, cells: exposureGrid.length },
@@ -123,5 +126,8 @@ export const data = {
   },
   getAgentRun(): AgentRun | null {
     return agentRun;
+  },
+  listSnapshots(): Snapshot[] {
+    return snapshots;
   },
 };

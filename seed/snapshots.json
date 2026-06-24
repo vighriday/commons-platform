@@ -1,0 +1,410 @@
+[
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-02-28T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.09,
+        "impactScore": 69,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0,
+        "impactScore": 0,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.12,
+        "impactScore": 53,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.08,
+        "impactScore": 38,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.17,
+        "impactScore": 27,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.11,
+        "impactScore": 14,
+        "quadrant": "monitor"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 60,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Streetlight blackout on ORR service road — pedestrian risk",
+        "Failing trunk water main under 27th Main, Sector 1 — pre-rupture"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "mostIgnoredProblem": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "attentionPattern": "Loudest: Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
+      "civicBlindSpot": "Loudest is \"Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross\", but the top risk is \"Stormwater drain choke near Agara Lake — silent flood risk\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "narrative": "As of 2025-02-28, 5 issues have surfaced in HSR Layout."
+    }
+  },
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-03-31T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.09,
+        "impactScore": 69,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0,
+        "impactScore": 0,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.12,
+        "impactScore": 53,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.15,
+        "impactScore": 42,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.34,
+        "impactScore": 31,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.33,
+        "impactScore": 16,
+        "quadrant": "monitor"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 58,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Streetlight blackout on ORR service road — pedestrian risk",
+        "Failing trunk water main under 27th Main, Sector 1 — pre-rupture"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "mostIgnoredProblem": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "attentionPattern": "Loudest: Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
+      "civicBlindSpot": "Loudest is \"Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross\", but the top risk is \"Stormwater drain choke near Agara Lake — silent flood risk\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "narrative": "As of 2025-03-31, 5 issues have surfaced in HSR Layout."
+    }
+  },
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-04-30T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.09,
+        "impactScore": 69,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0.15,
+        "impactScore": 80,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.23,
+        "impactScore": 62,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.15,
+        "impactScore": 42,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.34,
+        "impactScore": 31,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.56,
+        "impactScore": 17,
+        "quadrant": "noise"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 50,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Load-bearing wall crack, Somasundarapalya tenement block",
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Streetlight blackout on ORR service road — pedestrian risk"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Load-bearing wall crack, Somasundarapalya tenement block",
+      "mostIgnoredProblem": "Load-bearing wall crack, Somasundarapalya tenement block",
+      "attentionPattern": "Loudest: Pothole on 17th Cross, Sector 7",
+      "civicBlindSpot": "Loudest is \"Pothole on 17th Cross, Sector 7\", but the top risk is \"Load-bearing wall crack, Somasundarapalya tenement block\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Load-bearing wall crack, Somasundarapalya tenement block",
+      "narrative": "As of 2025-04-30, 6 issues have surfaced in HSR Layout."
+    }
+  },
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-05-31T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.17,
+        "impactScore": 81,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0.15,
+        "impactScore": 80,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.23,
+        "impactScore": 62,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.22,
+        "impactScore": 45,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.34,
+        "impactScore": 31,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.67,
+        "impactScore": 18,
+        "quadrant": "noise"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 47,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Load-bearing wall crack, Somasundarapalya tenement block",
+        "Streetlight blackout on ORR service road — pedestrian risk"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "mostIgnoredProblem": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "attentionPattern": "Loudest: Pothole on 17th Cross, Sector 7",
+      "civicBlindSpot": "Loudest is \"Pothole on 17th Cross, Sector 7\", but the top risk is \"Stormwater drain choke near Agara Lake — silent flood risk\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "narrative": "As of 2025-05-31, 6 issues have surfaced in HSR Layout."
+    }
+  },
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-06-30T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.17,
+        "impactScore": 81,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0.15,
+        "impactScore": 80,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.23,
+        "impactScore": 62,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.22,
+        "impactScore": 45,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.51,
+        "impactScore": 34,
+        "quadrant": "noise"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.78,
+        "impactScore": 19,
+        "quadrant": "noise"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 47,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Load-bearing wall crack, Somasundarapalya tenement block",
+        "Streetlight blackout on ORR service road — pedestrian risk"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "mostIgnoredProblem": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "attentionPattern": "Loudest: Pothole on 17th Cross, Sector 7",
+      "civicBlindSpot": "Loudest is \"Pothole on 17th Cross, Sector 7\", but the top risk is \"Stormwater drain choke near Agara Lake — silent flood risk\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "narrative": "As of 2025-06-30, 6 issues have surfaced in HSR Layout."
+    }
+  },
+  {
+    "wardId": "blr-174-hsr",
+    "takenAt": "2025-07-31T23:59:59.000Z",
+    "quadrantState": [
+      {
+        "issueId": "ISS_HC1",
+        "attentionScore": 0.17,
+        "impactScore": 81,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC2",
+        "attentionScore": 0.15,
+        "impactScore": 80,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_HC3",
+        "attentionScore": 0.23,
+        "impactScore": 62,
+        "quadrant": "hidden_crisis"
+      },
+      {
+        "issueId": "ISS_SYN",
+        "attentionScore": 0.3,
+        "impactScore": 49,
+        "quadrant": "monitor"
+      },
+      {
+        "issueId": "ISS_REC",
+        "attentionScore": 0.51,
+        "impactScore": 34,
+        "quadrant": "noise"
+      },
+      {
+        "issueId": "ISS_NOISE",
+        "attentionScore": 0.78,
+        "impactScore": 19,
+        "quadrant": "noise"
+      }
+    ],
+    "twin": {
+      "wardId": "blr-174-hsr",
+      "name": "HSR Layout (BBMP Ward 174)",
+      "infraHealth": 46,
+      "issueVelocity": 0,
+      "issueDensity": 0,
+      "engagementIndex": 0,
+      "resolutionEffectiveness": 0,
+      "emergingRisks": [
+        "Stormwater drain choke near Agara Lake — silent flood risk",
+        "Load-bearing wall crack, Somasundarapalya tenement block",
+        "Streetlight blackout on ORR service road — pedestrian risk"
+      ],
+      "exposureGrid": [],
+      "lastSnapshotId": ""
+    },
+    "summary": {
+      "status": "Active",
+      "emergingRisk": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "mostIgnoredProblem": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "attentionPattern": "Loudest: Pothole on 17th Cross, Sector 7",
+      "civicBlindSpot": "Loudest is \"Pothole on 17th Cross, Sector 7\", but the top risk is \"Stormwater drain choke near Agara Lake — silent flood risk\".",
+      "resolutionBottleneck": "—",
+      "priorityRecommendation": "Stormwater drain choke near Agara Lake — silent flood risk",
+      "narrative": "As of 2025-07-31, 6 issues have surfaced in HSR Layout."
+    }
+  }
+]
