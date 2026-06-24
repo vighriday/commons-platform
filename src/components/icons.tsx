@@ -64,6 +64,14 @@ export const IconTrace = (p: IconProps) => (
   </Icon>
 );
 
+// Time — the Time Machine snapshot scrubber.
+export const IconClock = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7v5l3.5 2" />
+  </Icon>
+);
+
 // ── Semantic / state ────────────────────────────────────────────────────────
 
 // Reversal — attention overruled by impact. A measured rotation, not the ⟲ glyph.

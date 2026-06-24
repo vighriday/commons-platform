@@ -1,7 +1,9 @@
+import { useState } from "react";
 import type { Issue } from "@shared/types.ts";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api.ts";
-import { CATEGORY_ICON, IconAlert, IconEscalate, IconReversal } from "./icons.tsx";
+import { useTwinStore } from "../lib/twinStore.ts";
+import { CATEGORY_ICON, IconAlert, IconEscalate, IconLayers, IconReversal } from "./icons.tsx";
 
 // Issue detail — slides from the right, keeps the quadrant in view. Shows the
 // AUDITABLE impact breakdown (Severity × Exposure × Vulnerability, each cited),
@@ -26,6 +28,15 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
     queryKey: ["issue", id],
     queryFn: () => api.issue(id),
   });
+  const focusIssue = useTwinStore((s) => s.focusIssue);
+
+  // Cross-wire: fly the Twin to this issue's cell + set the Time Machine to its
+  // emergence date, then close the drawer so the map is unobstructed.
+  function viewOnMap(): void {
+    if (!issue) return;
+    focusIssue(issue.plusCellId, issue.memory?.firstSeen ?? issue.createdAt);
+    onClose();
+  }
 
   const Cat = issue ? CATEGORY_ICON[issue.category] : null;
   const accent = issue ? QUADRANT_COLOR[issue.quadrant] : "#5d7184";
@@ -83,13 +94,64 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
 
         {issue && (
           <div className="flex-1 space-y-6 overflow-auto px-5 py-5">
+            <button
+              type="button"
+              onClick={viewOnMap}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface-overlay py-2 text-[13px] text-ink-muted transition-colors hover:border-brand hover:text-ink"
+            >
+              <IconLayers size={15} />
+              View on the Digital Twin
+            </button>
             <ImpactBreakdown issue={issue} />
             {issue.reversal?.overruledAttention && <ReversalCard issue={issue} />}
+            {issue.escalation && <EscalationCard issue={issue} />}
             <Evidence issue={issue} />
           </div>
         )}
       </aside>
     </div>
+  );
+}
+
+// The Accountability agent's escalation brief — the shareable, named-authority
+// output. Copy-to-clipboard for sending; the brief itself is real Gemini prose.
+function EscalationCard({ issue }: { issue: Issue }) {
+  const esc = issue.escalation!;
+  const [copied, setCopied] = useState(false);
+  function copy(): void {
+    navigator.clipboard?.writeText(esc.briefMarkdown).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      },
+      () => {},
+    );
+  }
+  return (
+    <section>
+      <div className="label mb-2.5 flex items-center justify-between">
+        <span className="flex items-center gap-1.5">
+          <IconEscalate size={13} />
+          Escalation brief
+        </span>
+        <button
+          type="button"
+          onClick={copy}
+          className="rounded-md border border-line px-2 py-0.5 font-data text-[11px] normal-case tracking-normal text-ink-muted transition-colors hover:border-brand hover:text-ink"
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+      <div className="rounded-lg border border-line bg-surface px-3.5 py-3">
+        <div className="text-[12px] text-ink-muted">
+          <span className="text-ink-faint">To:</span>{" "}
+          <span className="text-ink">{esc.officialRole}</span>, {esc.dept}
+        </div>
+        <p className="mt-2 whitespace-pre-wrap font-data text-[11px] leading-relaxed text-ink-muted">
+          {esc.briefMarkdown}
+        </p>
+      </div>
+    </section>
   );
 }
 

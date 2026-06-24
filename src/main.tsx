@@ -8,6 +8,8 @@ import "@fontsource-variable/inter";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 import "@fontsource/jetbrains-mono/600.css";
+// MapLibre base styles (Digital Twin + Time Machine maps).
+import "maplibre-gl/dist/maplibre-gl.css";
 import App from "./App.tsx";
 import "./index.css";
 

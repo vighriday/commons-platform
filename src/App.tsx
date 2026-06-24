@@ -5,35 +5,29 @@ import { CivicPulse } from "./components/CivicPulse.tsx";
 import { IssueDrawer } from "./components/IssueDrawer.tsx";
 import { Quadrant } from "./components/Quadrant.tsx";
 import { SeedBanner } from "./components/SeedBanner.tsx";
-import { IconLayers, IconMatrix, IconTrace } from "./components/icons.tsx";
+import { DigitalTwin } from "./components/twin/DigitalTwin.tsx";
+import { TimeMachine } from "./components/twin/TimeMachine.tsx";
+import { IconClock, IconLayers, IconMatrix, IconTrace } from "./components/icons.tsx";
 import { api } from "./lib/api.ts";
+import { useTwinStore } from "./lib/twinStore.ts";
 
 const WARD = "blr-174-hsr";
 
-type View = "matrix" | "trace";
-
 // ── Left rail ── logo + primary nav, icon over a tracked label. The active item
-// carries the brand; the rest sit quiet until hovered. The Twin surface is
-// Phase 3 (disabled); Matrix and Trace switch the main canvas.
-function Rail({ view, onView }: { view: View; onView: (v: View) => void }) {
+// carries the brand; the rest sit quiet until hovered. All four views switch the
+// main canvas; the store owns the active view (so a Matrix click can drive Twin).
+function Rail() {
+  const view = useTwinStore((s) => s.view);
+  const setView = useTwinStore((s) => s.setView);
   return (
     <nav className="flex w-[68px] shrink-0 flex-col items-center gap-1 border-r border-line bg-surface py-4">
       <a href="/" aria-label="COMMONS home" className="mb-4">
         <img src="/logo.svg" width={30} height={30} alt="COMMONS" />
       </a>
-      <RailItem
-        icon={<IconMatrix size={20} />}
-        label="Matrix"
-        active={view === "matrix"}
-        onClick={() => onView("matrix")}
-      />
-      <RailItem
-        icon={<IconTrace size={20} />}
-        label="Trace"
-        active={view === "trace"}
-        onClick={() => onView("trace")}
-      />
-      <RailItem icon={<IconLayers size={20} />} label="Twin" disabled />
+      <RailItem icon={<IconMatrix size={20} />} label="Matrix" active={view === "matrix"} onClick={() => setView("matrix")} />
+      <RailItem icon={<IconTrace size={20} />} label="Trace" active={view === "trace"} onClick={() => setView("trace")} />
+      <RailItem icon={<IconLayers size={20} />} label="Twin" active={view === "twin"} onClick={() => setView("twin")} />
+      <RailItem icon={<IconClock size={20} />} label="Time" active={view === "time"} onClick={() => setView("time")} />
     </nav>
   );
 }
@@ -134,7 +128,7 @@ function PlaceLabel() {
 
 export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [view, setView] = useState<View>("matrix");
+  const view = useTwinStore((s) => s.view);
 
   const issuesQ = useQuery({ queryKey: ["issues"], queryFn: api.issues });
   const hoodQ = useQuery({
@@ -142,74 +136,93 @@ export default function App() {
     queryFn: () => api.neighborhood(WARD),
   });
 
+  // Twin + Time are full-bleed map surfaces; Matrix + Trace sit in the titled
+  // reading column. The frame (rail + context bar) is shared.
+  const isMap = view === "twin" || view === "time";
+
   return (
     <div className="flex h-full bg-surface text-ink">
-      <Rail view={view} onView={setView} />
+      <Rail />
       <div className="flex min-w-0 flex-1 flex-col">
         <ContextBar />
-        <main className="flex-1 overflow-auto">
-          <div className="mx-auto max-w-[1400px] px-7 py-7">
-            {/* Title block — a real display-tier headline, generous air below. */}
-            <header className="mb-7 animate-rise" style={{ animationDelay: "40ms" }}>
-              <PlaceLabel />
-              <h1
-                className="mt-2 max-w-3xl font-semibold text-ink"
-                style={{
-                  fontSize: "var(--text-display)",
-                  lineHeight: "var(--text-display--line-height)",
-                  letterSpacing: "var(--text-display--letter-spacing)",
-                }}
-              >
-                What should this community pay attention to?
-              </h1>
-              {/* Plain-language place context — a judge has no reason to know what
-                  "HSR Layout" or "BBMP Ward 174" is, so we say it outright. */}
-              <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-ink-faint">
-                A dense residential neighbourhood of{" "}
-                <span className="font-data text-ink-muted">63,033</span> people in{" "}
-                <span className="text-ink-muted">Bengaluru, India</span> — its civic affairs are run
-                by BBMP Ward 174, the smallest unit of the city government.
-              </p>
-              <p className="mt-3 max-w-2xl text-ink-muted">
-                Communities don't fail from under-reporting — they fail from fragmented attention.
-                COMMONS finds the problems hidden between the reports.
-              </p>
-            </header>
+        <main className="min-h-0 flex-1 overflow-auto">
+          {isMap ? (
+            <div className="h-full">
+              {view === "twin" ? (
+                <DigitalTwin
+                  ward={WARD}
+                  twin={hoodQ.data?.twin ?? null}
+                  issues={issuesQ.data?.issues ?? []}
+                  onSelect={setSelectedId}
+                />
+              ) : (
+                <TimeMachine ward={WARD} issues={issuesQ.data?.issues ?? []} />
+              )}
+            </div>
+          ) : (
+            <div className="mx-auto max-w-[1400px] px-7 py-7">
+              {/* Title block — a real display-tier headline, generous air below. */}
+              <header className="mb-7 animate-rise" style={{ animationDelay: "40ms" }}>
+                <PlaceLabel />
+                <h1
+                  className="mt-2 max-w-3xl font-semibold text-ink"
+                  style={{
+                    fontSize: "var(--text-display)",
+                    lineHeight: "var(--text-display--line-height)",
+                    letterSpacing: "var(--text-display--letter-spacing)",
+                  }}
+                >
+                  What should this community pay attention to?
+                </h1>
+                {/* Plain-language place context — a judge has no reason to know what
+                    "HSR Layout" or "BBMP Ward 174" is, so we say it outright. */}
+                <p className="mt-2 max-w-2xl text-[13px] leading-relaxed text-ink-faint">
+                  A dense residential neighbourhood of{" "}
+                  <span className="font-data text-ink-muted">63,033</span> people in{" "}
+                  <span className="text-ink-muted">Bengaluru, India</span> — its civic affairs are
+                  run by BBMP Ward 174, the smallest unit of the city government.
+                </p>
+                <p className="mt-3 max-w-2xl text-ink-muted">
+                  Communities don't fail from under-reporting — they fail from fragmented attention.
+                  COMMONS finds the problems hidden between the reports.
+                </p>
+              </header>
 
-            {view === "matrix" ? (
-              /* Canvas — the quadrant leads (3/5), the Civic Pulse reads alongside (2/5).
-                 Not three equal cards; an intentional asymmetric split. */
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-                <div className="animate-rise lg:col-span-3" style={{ animationDelay: "120ms" }}>
+              {view === "matrix" ? (
+                /* Canvas — the quadrant leads (3/5), the Civic Pulse reads alongside (2/5).
+                   Not three equal cards; an intentional asymmetric split. */
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+                  <div className="animate-rise lg:col-span-3" style={{ animationDelay: "120ms" }}>
+                    {issuesQ.data ? (
+                      <Quadrant
+                        issues={issuesQ.data.issues}
+                        selectedId={selectedId}
+                        onSelect={setSelectedId}
+                      />
+                    ) : (
+                      <QuadrantSkeleton error={issuesQ.isError} />
+                    )}
+                  </div>
+                  <div className="animate-rise lg:col-span-2" style={{ animationDelay: "200ms" }}>
+                    {hoodQ.data ? (
+                      <CivicPulse pulse={hoodQ.data.civicPulse} twin={hoodQ.data.twin} />
+                    ) : (
+                      <PanelSkeleton error={hoodQ.isError} label="Civic Pulse" />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* Trace — the 7-agent pipeline, the Agentic-Depth artifact. */
+                <div className="animate-rise" style={{ animationDelay: "120ms" }}>
                   {issuesQ.data ? (
-                    <Quadrant
-                      issues={issuesQ.data.issues}
-                      selectedId={selectedId}
-                      onSelect={setSelectedId}
-                    />
+                    <AgentTrace issues={issuesQ.data.issues} onSelect={setSelectedId} />
                   ) : (
-                    <QuadrantSkeleton error={issuesQ.isError} />
+                    <PanelSkeleton error={issuesQ.isError} label="Agent Trace" />
                   )}
                 </div>
-                <div className="animate-rise lg:col-span-2" style={{ animationDelay: "200ms" }}>
-                  {hoodQ.data ? (
-                    <CivicPulse pulse={hoodQ.data.civicPulse} twin={hoodQ.data.twin} />
-                  ) : (
-                    <PanelSkeleton error={hoodQ.isError} label="Civic Pulse" />
-                  )}
-                </div>
-              </div>
-            ) : (
-              /* Trace — the 7-agent pipeline, the Agentic-Depth artifact. */
-              <div className="animate-rise" style={{ animationDelay: "120ms" }}>
-                {issuesQ.data ? (
-                  <AgentTrace issues={issuesQ.data.issues} onSelect={setSelectedId} />
-                ) : (
-                  <PanelSkeleton error={issuesQ.isError} label="Agent Trace" />
-                )}
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </main>
       </div>
 
