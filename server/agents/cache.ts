@@ -8,13 +8,13 @@
 // freeze survives a clean checkout.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Cache lives under seed/ so it ships with the repo (committed, not gitignored —
-// it IS the frozen prose). Resolve from this module, not cwd, so build scripts
-// and the server agree.
-const CACHE_DIR = path.resolve(__dirname, "../../seed/agentRuns");
+// Cache lives under seed/agentRuns (committed — it IS the frozen prose). Resolve
+// from process.cwd() (the container/working dir), NOT import.meta.url: this
+// module is pulled into the esbuild CJS bundle, where import.meta.url is
+// undefined and fileURLToPath(undefined) crashes the server on boot. Using cwd
+// matches server/data.ts and works under both tsx dev and the prod bundle.
+const CACHE_DIR = path.resolve(process.cwd(), "seed/agentRuns");
 
 function cachePath(inputHash: string): string {
   return path.join(CACHE_DIR, `${inputHash}.json`);
