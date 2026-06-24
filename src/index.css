@@ -2,43 +2,71 @@
 
 /*
  * COMMONS design system — a calm, high-contrast "civic command center".
- * Dark surface, restrained ink, and four semantic accents that map directly
- * onto the four quadrants of the Attention-vs-Impact matrix, so the product's
- * core idea is legible in the colour language itself.
  *
- * Tailwind v4: design tokens live here in @theme rather than a JS config.
+ * The aesthetic is a deliberate synthesis: Linear/Vercel dark seriousness,
+ * Stripe typographic discipline, gov.uk authority. Restraint is the point — a
+ * civic instrument a judge trusts on sight, not a template dashboard. Four
+ * semantic accents map onto the four quadrants of the Attention×Impact matrix,
+ * so the product's core idea is legible in the colour language itself.
+ *
+ * Tailwind v4: tokens live here in @theme rather than a JS config.
  */
 @theme {
-  /* Surfaces */
+  /* ── Surfaces ── deep, layered, never pure black ── */
   --color-surface: #0b0f14;
   --color-surface-raised: #121821;
   --color-surface-overlay: #1a2330;
 
-  /* Ink */
+  /* ── Ink ── three-step legible hierarchy ── */
   --color-ink: #e6edf3;
   --color-ink-muted: #9bb0c3;
   --color-ink-faint: #5d7184;
 
-  /* Structure */
+  /* ── Structure ── hairlines do the structural work ── */
   --color-line: #1f2a37;
+  --color-line-strong: #2a3a4d;
 
-  /* Quadrant semantics (Attention × Impact) */
+  /* ── Quadrant semantics (Attention × Impact) — color carries meaning ── */
   --color-critical: #ff5c5c; /* high attention + high impact */
   --color-hidden: #f5a623; /* low attention + high impact — the Hidden Crisis */
   --color-noise: #6b7c93; /* high attention + low impact */
   --color-monitor: #3ea6ff; /* low attention + low impact */
 
-  /* Brand */
+  /* ── Brand ── */
   --color-brand: #3ddc97;
   --color-brand-dim: #2bbd80;
 
-  /* Type */
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* ── Type families ── self-hosted, loaded in main.tsx ── */
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Radius */
+  /* ── Type scale ── intentional jumps, not a flat 14-16px band ── */
+  --text-display: 2rem; /* 32 */
+  --text-display--line-height: 2.5rem; /* 40 */
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 1.5rem; /* 24 */
+  --text-h1--line-height: 2rem; /* 32 */
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: 1.125rem; /* 18 */
+  --text-h2--line-height: 1.625rem; /* 26 */
+  --text-h2--letter-spacing: -0.01em;
+  --text-body: 0.875rem; /* 14 */
+  --text-body--line-height: 1.375rem; /* 22 */
+  --text-label: 0.75rem; /* 12 */
+  --text-label--line-height: 1rem; /* 16 */
+
+  /* ── Radius ── */
+  --radius-lg: 0.625rem;
   --radius-xl: 0.875rem;
   --radius-2xl: 1.125rem;
+
+  /* ── Elevation ── subtle, non-glow (the spec forbids glow); borders still
+     carry the primary structure, shadow only lifts panels off the surface ── */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.32), 0 8px 28px -12px rgba(0, 0, 0, 0.6);
+  --shadow-overlay: 0 1px 2px rgba(0, 0, 0, 0.4), 0 24px 64px -20px rgba(0, 0, 0, 0.7);
+
+  /* ── Motion ── purposeful only ── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -55,7 +83,11 @@
   body {
     background-color: var(--color-surface);
     color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
     -webkit-font-smoothing: antialiased;
+    /* Inter character variants: cv11 = single-storey a, ss01 = stylistic set */
     font-feature-settings: "cv11", "ss01";
     text-rendering: optimizeLegibility;
   }
@@ -67,26 +99,110 @@
   :focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
+    border-radius: 3px;
   }
 
+  /* Thin, on-theme scrollbars (WebKit + Firefox). */
   * {
     scrollbar-width: thin;
     scrollbar-color: #1f2a37 transparent;
   }
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+    border: 2px solid var(--color-surface);
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-line-strong);
+  }
 }
 
-/* Small uppercase section label. */
+/* ── Typographic utilities ── reusable, so hierarchy is systematic not ad-hoc ── */
+
+/* Small uppercase section label — the quiet tracked caption that organises the UI. */
 .label {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   font-weight: 500;
   color: var(--color-ink-faint);
 }
 
-/* Numbers, IDs, codes — always monospace so data reads as engineered. */
+/* Numbers, IDs, codes — always monospace + tabular so data reads as engineered. */
 .font-data {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── Motion ── one orchestrated entrance; nothing bounces, pulses, or glows ── */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* The single restrained signal motion the spec allows: the Hidden-Crisis marker
+   draws the eye with a slow, calm breath — not a pulse, not a glow. */
+@keyframes hidden-breath {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.18);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.5s var(--ease-out) both;
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.18s var(--ease-out) both;
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

@@ -1,6 +1,13 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+// Self-hosted fonts (no external CDN — CSP-clean, offline-proof for the demo).
+// Inter variable carries the whole UI weight range; JetBrains Mono is pinned to
+// the three weights the data UI actually uses, to keep the bundle lean.
+import "@fontsource-variable/inter";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/jetbrains-mono/600.css";
 import App from "./App.tsx";
 import "./index.css";
 
