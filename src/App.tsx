@@ -34,7 +34,15 @@ function StatusDot({ state }: { state: "ok" | "warn" | "down" | "pending" }) {
     <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
       <circle cx="5" cy="5" r="4" fill={color} />
       {state === "ok" && (
-        <circle cx="5" cy="5" r="4.5" fill="none" stroke={color} strokeOpacity="0.35" strokeWidth="3" />
+        <circle
+          cx="5"
+          cy="5"
+          r="4.5"
+          fill="none"
+          stroke={color}
+          strokeOpacity="0.35"
+          strokeWidth="3"
+        />
       )}
     </svg>
   );
@@ -90,7 +98,13 @@ function SystemStatus() {
         <Row
           label="Web server"
           state={healthState}
-          detail={health.data ? `${health.data.service} · live` : health.isError ? "unreachable" : "checking…"}
+          detail={
+            health.data
+              ? `${health.data.service} · live`
+              : health.isError
+                ? "unreachable"
+                : "checking…"
+          }
         />
         <Row
           label="Server config"
@@ -155,10 +169,9 @@ export default function App() {
               The system is live.
             </h1>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              This is the deployed foundation of COMMONS. The panel below confirms the
-              web server, server configuration, and the server-side Gemini connection
-              are all working end to end. The community-intelligence features are built
-              on top of this, step by step.
+              This is the deployed foundation of COMMONS. The panel below confirms the web server,
+              server configuration, and the server-side Gemini connection are all working end to
+              end. The community-intelligence features are built on top of this, step by step.
             </p>
             <div className="mt-8">
               <SystemStatus />

@@ -7,7 +7,7 @@
 // any accidental VITE_-prefixed Gemini key, and exits non-zero if found.
 // Run automatically via `npm run predeploy`.
 // ─────────────────────────────────────────────────────────────
-import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const DIST = "dist";
