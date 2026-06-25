@@ -20,6 +20,13 @@ const rawSchema = z.object({
   GEMINI_MODEL_FLASH_LITE: z.string().default("gemini-3.1-flash-lite"),
   GEMINI_MODEL_FLASH: z.string().default("gemini-3.5-flash"),
   GEMINI_MODEL_EMBED: z.string().default("gemini-embedding-001"),
+  // Last-resort model when the Gemini RPD budget is nearly spent — Gemma is a
+  // separate free-tier quota pool, so a degraded-but-real answer still beats
+  // dropping to the golden offline fallback.
+  GEMINI_MODEL_GEMMA: z.string().default("gemma-3-27b-it"),
+  // Soft RPD ceiling: once live Gemini calls this turn reach it, new calls route
+  // to Gemma instead. Defaults high enough to never trigger in the cached demo.
+  GEMINI_RPD_SOFT_CAP: z.coerce.number().int().positive().default(180),
 });
 
 const parsed = rawSchema.safeParse(process.env);
@@ -43,7 +50,9 @@ export const config = {
       flashLite: env.GEMINI_MODEL_FLASH_LITE,
       flash: env.GEMINI_MODEL_FLASH,
       embed: env.GEMINI_MODEL_EMBED,
+      gemma: env.GEMINI_MODEL_GEMMA,
     },
+    rpdSoftCap: env.GEMINI_RPD_SOFT_CAP,
   },
 } as const;
 

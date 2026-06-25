@@ -25,18 +25,47 @@ function getClient(): GoogleGenAI {
 
 // ── RPD accounting ───────────────────────────────────────────────────────────────
 // A live counter so the demo can prove it spends ~0 RPD off the frozen cache.
-const usage = { flash: 0, flashLite: 0, cacheHits: 0 };
+// Gemma is tracked separately — it draws on a different free-tier quota pool, so
+// it does not count against the Gemini RPD soft cap.
+const usage = { flash: 0, flashLite: 0, gemma: 0, cacheHits: 0 };
 export function geminiUsage(): {
   flash: number;
   flashLite: number;
+  gemma: number;
   cacheHits: number;
   total: number;
+  geminiTotal: number;
+  rpdSoftCap: number;
 } {
-  return { ...usage, total: usage.flash + usage.flashLite };
+  const geminiTotal = usage.flash + usage.flashLite;
+  return {
+    ...usage,
+    total: geminiTotal + usage.gemma,
+    geminiTotal,
+    rpdSoftCap: config.gemini.rpdSoftCap,
+  };
+}
+
+// True once this turn's live Gemini calls (Flash + Flash-Lite, NOT Gemma) reach
+// the soft cap — the signal to route remaining work to Gemma's separate pool.
+function geminiBudgetSpent(): boolean {
+  return usage.flash + usage.flashLite >= config.gemini.rpdSoftCap;
 }
 
 function modelFor(tier: ModelTier): string {
+  if (tier === "gemma") return config.gemini.models.gemma;
   return tier === "flash" ? config.gemini.models.flash : config.gemini.models.flashLite;
+}
+
+// Gemma (no JSON mode) often wraps output in a ```json … ``` fence. Strip it so
+// JSON.parse succeeds. A no-op on the clean JSON the Gemini models return.
+function stripJsonFence(text: string): string {
+  const t = text.trim();
+  if (!t.startsWith("```")) return t;
+  return t
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/, "")
+    .trim();
 }
 
 /**
@@ -112,8 +141,15 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
   // overloaded (the 503 "high demand" the GA Flash model intermittently throws),
   // fall back to Flash-Lite — a real model answer beats the golden fallback. Each
   // model gets one parse-repair retry.
-  const attempts: ModelTier[] =
-    call.tier === "flash" ? ["flash", "flash", "flash-lite"] : ["flash-lite", "flash-lite"];
+  //
+  // RPD-wall gate: once this turn's live Gemini calls hit the soft cap, route to
+  // Gemma instead (a separate free-tier pool). In the cached demo the cap is
+  // never reached, so this is a graceful-degradation path, not the default.
+  const attempts: ModelTier[] = geminiBudgetSpent()
+    ? ["gemma", "gemma"]
+    : call.tier === "flash"
+      ? ["flash", "flash", "flash-lite", "gemma"]
+      : ["flash-lite", "flash-lite", "gemma"];
 
   // 3) Live calls with model + repair fallback.
   let lastErr: unknown;
@@ -121,15 +157,22 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
     const tier = attempts[attempt];
     const model = modelFor(tier);
     try {
+      // Gemma on the Gemini API does not accept a responseSchema/JSON mime config
+      // — ask for JSON in the prompt and lean on the zod parse below instead.
+      const genConfig =
+        tier === "gemma"
+          ? undefined
+          : { responseMimeType: "application/json", responseSchema: call.responseSchema };
       const response = await ai.models.generateContent({
         model,
         contents: contents as never,
-        config: { responseMimeType: "application/json", responseSchema: call.responseSchema },
+        ...(genConfig ? { config: genConfig } : {}),
       });
       if (tier === "flash") usage.flash++;
+      else if (tier === "gemma") usage.gemma++;
       else usage.flashLite++;
 
-      const text = response.text ?? "";
+      const text = stripJsonFence(response.text ?? "");
       const json = JSON.parse(text) as unknown;
       const parsed = call.validate.safeParse(json);
       if (!parsed.success) {

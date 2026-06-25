@@ -16,6 +16,7 @@ import path from "node:path";
 import compression from "compression";
 import express from "express";
 import { rateLimit } from "express-rate-limit";
+import { buildAgentCard } from "./server/agentCard.ts";
 import { config } from "./server/config.ts";
 import { data } from "./server/data.ts";
 import { geminiPing, geminiUsage } from "./server/gemini.ts";
@@ -23,6 +24,14 @@ import { logger } from "./server/lib/logger.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
+
+// The request's own origin (scheme + host), trusting the Cloud Run proxy headers
+// so the A2A card advertises the public URL, not the internal container address.
+function originOf(req: express.Request): string {
+  const proto = (req.headers["x-forwarded-proto"] as string)?.split(",")[0] || req.protocol;
+  const host = req.get("host") ?? "localhost";
+  return `${proto}://${host}`;
+}
 
 async function startServer() {
   const app = express();
@@ -119,9 +128,16 @@ async function startServer() {
     res.json(run);
   });
 
-  // Live RPD counter — proves the demo path spends ~0 quota off the frozen cache.
+  // Live RPD counter — proves the demo path spends ~0 quota off the frozen cache,
+  // and surfaces the Gemma soft-cap state (the RPD-wall fallback).
   api.get("/agent-run/usage", (_req, res) => {
     res.json(geminiUsage());
+  });
+
+  // A2A Agent Card (friendly alias). The canonical discovery path is
+  // /.well-known/agent.json, registered below before the SPA catch-all.
+  api.get("/agent-card", (req, res) => {
+    res.json(buildAgentCard(originOf(req)));
   });
 
   // Time Machine snapshots (month-end frames of the quadrant state).
@@ -134,6 +150,12 @@ async function startServer() {
   });
 
   app.use("/api", api);
+
+  // A2A discovery — the canonical well-known path. Must be registered before the
+  // SPA catch-all (which would otherwise serve index.html for this path).
+  app.get("/.well-known/agent.json", (req, res) => {
+    res.json(buildAgentCard(originOf(req)));
+  });
 
   // ── Frontend ───────────────────────────────────────────────────────────────
   // Paths resolved from process.cwd() (the container working dir) for reliable
