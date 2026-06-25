@@ -2,8 +2,8 @@
 // config, and is never sent to the browser. This module is the single chokepoint
 // for every model call so routing, structured-output validation, caching, and
 // quota accounting all happen in one place.
-import { GoogleGenAI } from "@google/genai";
-import type { Schema } from "@google/genai";
+import { GoogleGenAI, HarmBlockThreshold, HarmCategory } from "@google/genai";
+import type { SafetySetting, Schema } from "@google/genai";
 import type { ZodType } from "zod";
 import type { AgentName, ModelTier } from "../shared/types.ts";
 import { readCache, writeCache } from "./agents/cache.ts";
@@ -28,6 +28,22 @@ function getClient(): GoogleGenAI {
 // Gemma is tracked separately — it draws on a different free-tier quota pool, so
 // it does not count against the Gemini RPD soft cap.
 const usage = { flash: 0, flashLite: 0, gemma: 0, cacheHits: 0 };
+
+// C9 · the circuit-breaker has two thresholds:
+//   soft cap  → stop spending Gemini, route to Gemma's separate free-tier pool.
+//   hard cap  → open the breaker: stop ALL live model calls, degrade to the
+//               seed/golden read path (AgentOffline → each agent's golden value).
+// The hard cap also bounds total Gemma spend (Gemma counts toward it). This is the
+// "trap-survival" behaviour as real code: near the quota wall the app stops paying
+// and serves the frozen data, so a quota exhaustion can never brick the demo.
+const HARD_CAP_MULTIPLIER = 2;
+function hardCap(): number {
+  return config.gemini.rpdSoftCap * HARD_CAP_MULTIPLIER;
+}
+function circuitOpen(): boolean {
+  return usage.flash + usage.flashLite + usage.gemma >= hardCap();
+}
+
 export function geminiUsage(): {
   flash: number;
   flashLite: number;
@@ -36,6 +52,8 @@ export function geminiUsage(): {
   total: number;
   geminiTotal: number;
   rpdSoftCap: number;
+  rpdHardCap: number;
+  circuitOpen: boolean;
 } {
   const geminiTotal = usage.flash + usage.flashLite;
   return {
@@ -43,6 +61,8 @@ export function geminiUsage(): {
     total: geminiTotal + usage.gemma,
     geminiTotal,
     rpdSoftCap: config.gemini.rpdSoftCap,
+    rpdHardCap: hardCap(),
+    circuitOpen: circuitOpen(),
   };
 }
 
@@ -55,6 +75,36 @@ function geminiBudgetSpent(): boolean {
 function modelFor(tier: ModelTier): string {
   if (tier === "gemma") return config.gemini.models.gemma;
   return tier === "flash" ? config.gemini.models.flash : config.gemini.models.flashLite;
+}
+
+// ── C5 · Gemini safety settings ──────────────────────────────────────────────────
+// Safety filtering defaults to OFF on Gemini 2.5/3 (a real change from earlier
+// generations) — so we set thresholds EXPLICITLY. The agents that draft prose an
+// official will read (the escalation brief, the resolution plan, the recurrence
+// narrative) block medium-and-above harassment / hate / sexual content, so a slur
+// in a citizen report can never flow into an authority-facing document. Ingestion
+// agents stay permissive: civic complaints legitimately describe violence, floods,
+// and danger, and over-blocking there would drop real evidence.
+const BRIEF_SAFETY: SafetySetting[] = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+];
+
+// The prose-drafting agents whose output reaches an official document.
+const BRIEF_AGENTS = new Set<AgentName>(["accountability", "resolution", "memory"]);
+
+function safetyFor(agent: AgentName): SafetySetting[] | undefined {
+  return BRIEF_AGENTS.has(agent) ? BRIEF_SAFETY : undefined;
 }
 
 // Gemma (no JSON mode) often wraps output in a ```json … ``` fence. Strip it so
@@ -134,6 +184,13 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
     throw new AgentOffline(call.agent);
   }
 
+  // C9 · circuit-breaker open → stop spending entirely, degrade to the seed/golden
+  // path. The agent's AgentOffline handler serves its frozen value (0 RPD).
+  if (circuitOpen()) {
+    logger.warn({ agent: call.agent, hardCap: hardCap() }, "quota_circuit_open");
+    throw new AgentOffline(call.agent);
+  }
+
   const ai = getClient();
   const contents = call.parts?.length ? [call.prompt, ...call.parts] : call.prompt;
 
@@ -159,10 +216,19 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
     try {
       // Gemma on the Gemini API does not accept a responseSchema/JSON mime config
       // — ask for JSON in the prompt and lean on the zod parse below instead.
+      // Safety settings (C5) are applied to the brief/summary agents on both the
+      // Gemini and Gemma paths; the JSON-mode config is Gemini-only.
+      const safetySettings = safetyFor(call.agent);
       const genConfig =
         tier === "gemma"
-          ? undefined
-          : { responseMimeType: "application/json", responseSchema: call.responseSchema };
+          ? safetySettings
+            ? { safetySettings }
+            : undefined
+          : {
+              responseMimeType: "application/json",
+              responseSchema: call.responseSchema,
+              ...(safetySettings ? { safetySettings } : {}),
+            };
       const response = await ai.models.generateContent({
         model,
         contents: contents as never,
@@ -171,6 +237,12 @@ export async function generateStructured<T>(call: StructuredCall<T>): Promise<St
       if (tier === "flash") usage.flash++;
       else if (tier === "gemma") usage.gemma++;
       else usage.flashLite++;
+
+      // Audit the safety verdict (C5/C19) — proves filtering is ON and inspectable.
+      const safetyRatings = response.candidates?.[0]?.safetyRatings;
+      if (safetyRatings?.length) {
+        logger.info({ agent: call.agent, model, safetyRatings }, "agent_safety_ratings");
+      }
 
       const text = stripJsonFence(response.text ?? "");
       const json = JSON.parse(text) as unknown;

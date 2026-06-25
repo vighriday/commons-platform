@@ -12,6 +12,8 @@ import type { Escalation } from "@shared/types.ts";
 import { z } from "zod";
 import { authorityFor } from "../../seed/authorityMap.ts";
 import { generateStructured } from "../gemini.ts";
+import { logger } from "../lib/logger.ts";
+import { stripUrls } from "./guardrails.ts";
 import { stableHash } from "./stable.ts";
 import type { Agent, AgentContext, AgentResult } from "./types.ts";
 import { AgentOffline } from "./types.ts";
@@ -88,6 +90,17 @@ export const accountabilityAgent: Agent = async (ctx: AgentContext): Promise<Age
     if (!(err instanceof AgentOffline)) throw err;
     briefMarkdown = goldenBrief(ctx);
     offline = true;
+  }
+
+  // C4 guardrail — strip any URL the model put into an authority-facing brief
+  // (we keep no allow-list, so a link in a councillor's brief is never trusted).
+  const scrub = stripUrls(briefMarkdown);
+  if (scrub.removed > 0) {
+    logger.warn(
+      { agent: "accountability", issue: issue.issueId, removed: scrub.removed },
+      "brief_url_stripped",
+    );
+    briefMarkdown = scrub.text;
   }
 
   const escalation: Escalation = {

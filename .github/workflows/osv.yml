@@ -1,0 +1,28 @@
+# OSV-Scanner — Google's open-source vulnerability scanner (C18).
+#
+# Scans the committed lockfile against the OSV database (osv.dev) on every PR and
+# weekly. This is the card-free Google security-tech flex: a clickable, scheduled
+# supply-chain check whose run log is an inspectable artifact in the public repo.
+name: osv-scanner
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly, Monday 06:00 UTC — catches newly-disclosed vulns in pinned deps.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  scan:
+    # Google's maintained reusable workflow — scans lockfiles, uploads SARIF.
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.2.2
+    with:
+      scan-args: |-
+        --lockfile=package-lock.json

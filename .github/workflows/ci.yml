@@ -1,0 +1,39 @@
+# Continuous integration — the quality + security gate (C18).
+#
+# Runs on every push and PR to main: a clean install, a typecheck, the production
+# build (the real artifact, the lesson learned), and a dependency audit that FAILS
+# on a high-or-critical vulnerability. Green CI is the inspectable proof that the
+# tree builds and ships no known-high vulns.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # Reproducible install from the committed lockfile.
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Build the production artifact — the only proof the bundle actually compiles.
+      - name: Build
+        run: npm run build
+
+      # Fail the build on any high or critical dependency vulnerability.
+      - name: Dependency audit (fail on high)
+        run: npm run audit:security
