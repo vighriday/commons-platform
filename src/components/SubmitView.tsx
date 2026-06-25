@@ -8,14 +8,9 @@
 // computed, and a flagged prompt-injection is shown as a blocked attack.
 import type { Issue } from "@shared/types.ts";
 import { useState } from "react";
-import {
-  type AICategorization,
-  type LiveStep,
-  SubmitError,
-  type SubmitResult,
-  api,
-} from "../lib/api.ts";
+import { type LiveStep, SubmitError, type SubmitResult, api } from "../lib/api.ts";
 import { WARD_CENTER } from "../lib/twinGeo.ts";
+import { useTwinStore } from "../lib/twinStore.ts";
 import { IconAlert, IconSubmit } from "./icons.tsx";
 
 const CATEGORIES = [
@@ -38,24 +33,39 @@ type Status =
   | { kind: "error"; message: string };
 
 export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) => void }) {
-  const [text, setText] = useState("");
-  const [category, setCategory] = useState<string>("drainage");
-  const [lat, setLat] = useState(WARD_CENTER.lat);
-  const [lng, setLng] = useState(WARD_CENTER.lng);
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
-  // The AI's read of the category from the typed text — a real Gemini call, shown
-  // as a suggestion the citizen can apply with one tap (never silently applied).
-  const [suggest, setSuggest] = useState<AICategorization | null>(null);
+  // The form draft lives in the store so it survives tab switches (this component
+  // unmounts when another view shows). The transient run/spinner state stays local.
+  const draft = useTwinStore((s) => s.submitDraft);
+  const setDraft = useTwinStore((s) => s.setSubmitDraft);
+  const resetDraft = useTwinStore((s) => s.resetSubmitDraft);
+
+  const text = draft?.text ?? "";
+  const category = draft?.category ?? "drainage";
+  const lat = draft?.lat || WARD_CENTER.lat;
+  const lng = draft?.lng || WARD_CENTER.lng;
+  const photo = draft?.photo ?? null;
+  const suggest = draft?.suggest ?? null;
+
+  const setText = (v: string) => setDraft({ text: v });
+  const setCategory = (v: string) => setDraft({ category: v });
+  const setLat = (v: number) => setDraft({ lat: v });
+  const setLng = (v: number) => setDraft({ lng: v });
+  const setPhoto = (v: File | null) => setDraft({ photo: v });
+
+  // Run/spinner state is transient. But a completed result is persisted in the
+  // draft, so coming back to the tab still shows the born issue — rehydrate from it.
+  const [status, setStatus] = useState<Status>(
+    draft?.result ? { kind: "done", result: draft.result } : { kind: "idle" },
+  );
   const [suggesting, setSuggesting] = useState(false);
 
   async function readCategory() {
     if (text.trim().length < 8) return;
     setSuggesting(true);
-    setSuggest(null);
+    setDraft({ suggest: null });
     try {
       const c = await api.classify(text.trim());
-      if (c.suggested) setSuggest(c);
+      if (c.suggested) setDraft({ suggest: c });
     } catch {
       /* best-effort — the manual picker still works */
     } finally {
@@ -67,6 +77,7 @@ export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) =>
     setStatus({ kind: "running" });
     try {
       const result = await api.submit({ text, category, lat, lng, photo });
+      setDraft({ result });
       setStatus({ kind: "done", result });
     } catch (e) {
       if (e instanceof SubmitError && e.status === 422) {
@@ -225,6 +236,18 @@ export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) =>
             <IconSubmit size={16} />
             {status.kind === "running" ? "Running the pipeline…" : "Run the pipeline"}
           </button>
+          {(text.length > 0 || photo || status.kind === "done") && (
+            <button
+              type="button"
+              onClick={() => {
+                resetDraft();
+                setStatus({ kind: "idle" });
+              }}
+              className="mt-2 w-full rounded-lg border border-line py-1.5 text-[12px] text-ink-faint transition-colors hover:border-line-strong hover:text-ink-muted"
+            >
+              Clear form
+            </button>
+          )}
         </section>
 
         {/* ── The result ── */}

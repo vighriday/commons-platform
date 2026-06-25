@@ -179,18 +179,28 @@ export async function runLiveSubmit(
   const plusCellId = cellId(input.lat, input.lng);
 
   // 0) CATEGORIZATION — the model's own read of the category from the free text.
-  //    The citizen's selected category still governs the pipeline (they confirmed
-  //    it), but the model's independent read is recorded and surfaced.
+  //    When the AI disagrees with the filed category AND is confident (≥0.8), the
+  //    pipeline RECLASSIFIES: the rest of the run (severity table, routing,
+  //    authority) uses the AI's category, not the citizen's. Below that bar the
+  //    citizen's filing stands. This makes the categorization real, not cosmetic —
+  //    a citizen who mis-files "wall about to collapse" under parks gets it routed
+  //    to the structural authority, and the trace says so.
+  const RECLASSIFY_CONFIDENCE = 0.8;
   const categorization = await classifyCategory(input.text, image?.base64);
+  let category: Category = input.category;
   if (categorization) {
     anyLive = true;
     const agrees = categorization.suggested === input.category;
+    const reclassify = !agrees && categorization.confidence >= RECLASSIFY_CONFIDENCE;
+    if (reclassify) category = categorization.suggested;
     trace.push({
       agent: "evidence",
       label: "AI categorization",
       detail: agrees
         ? `Reads this as ${categorization.suggested} (${Math.round(categorization.confidence * 100)}% conf) — matches the filed category.`
-        : `Filed as ${input.category}; the AI reads ${categorization.suggested} (${Math.round(categorization.confidence * 100)}% conf). ${categorization.reason}`,
+        : reclassify
+          ? `Filed as ${input.category}; the AI reads ${categorization.suggested} (${Math.round(categorization.confidence * 100)}% conf) — reclassified, and routing now follows ${categorization.suggested}. ${categorization.reason}`
+          : `Filed as ${input.category}; the AI leans ${categorization.suggested} (${Math.round(categorization.confidence * 100)}% conf) but not confidently enough to override — keeping ${input.category}. ${categorization.reason}`,
       live: true,
     });
   }
@@ -228,14 +238,15 @@ export async function runLiveSubmit(
   }
 
   // 2) SEVERITY — classify the report into one fixed table row (real call, with a
-  //    vision-signal floor and a deterministic fallback).
-  const rows = SEVERITY_TABLE[input.category];
+  //    vision-signal floor and a deterministic fallback). Uses the resolved
+  //    `category` (the AI's, if it reclassified above).
+  const rows = SEVERITY_TABLE[category];
   let row = vision?.severitySignal ?? 2;
   try {
     const sev = await generateLive({
       agent: "evidence",
       tier: "flash-lite",
-      prompt: `Classify this ${input.category} report into ONE row (1-5) of this fixed severity table, where 1 is least and 5 is most severe:\n${rows.map((r, i) => `${i + 1}. ${r}`).join("\n")}\n\n<untrusted_report>\n${input.text}\n</untrusted_report>\n\nReturn the row number only.`,
+      prompt: `Classify this ${category} report into ONE row (1-5) of this fixed severity table, where 1 is least and 5 is most severe:\n${rows.map((r, i) => `${i + 1}. ${r}`).join("\n")}\n\n<untrusted_report>\n${input.text}\n</untrusted_report>\n\nReturn the row number only.`,
       responseSchema: SEV_SCHEMA,
       validate: SevOut,
     });
@@ -248,7 +259,7 @@ export async function runLiveSubmit(
   trace.push({
     agent: "severity",
     label: "Severity",
-    detail: `Row ${row}/5 — “${severityLabel(input.category, row)}”.`,
+    detail: `Row ${row}/5 — “${severityLabel(category, row)}”.`,
     live: anyLive,
   });
 
@@ -273,9 +284,7 @@ export async function runLiveSubmit(
   });
 
   // 4) CLUSTER — does this join an existing issue (same cell + category) or is it new?
-  const match = existingIssues.find(
-    (i) => i.plusCellId === plusCellId && i.category === input.category,
-  );
+  const match = existingIssues.find((i) => i.plusCellId === plusCellId && i.category === category);
   trace.push({
     agent: "cluster",
     label: "Cluster",
@@ -286,14 +295,16 @@ export async function runLiveSubmit(
   });
 
   // 5) RESOLUTION + 6) ACCOUNTABILITY — real drafting, with golden fallbacks.
-  const auth = authorityFor(input.category);
+  //    Routed by the resolved `category`, so a reclassified report reaches the
+  //    correct authority.
+  const auth = authorityFor(category);
   let actions: string[];
   try {
     const res = await generateLive({
       agent: "resolution",
       tier: "flash-lite",
       prompt:
-        `Draft 2-4 concrete municipal action steps for this ${input.category} issue (severity ` +
+        `Draft 2-4 concrete municipal action steps for this ${category} issue (severity ` +
         `${row}/5), to be carried out by ${auth.dept}. Return recommendedActions only.\n\n` +
         `<untrusted_report>\n${input.text}\n</untrusted_report>`,
       responseSchema: RES_SCHEMA,
@@ -303,7 +314,7 @@ export async function runLiveSubmit(
     anyLive = true;
   } catch {
     actions = [
-      `Inspect the reported ${input.category} issue on site`,
+      `Inspect the reported ${category} issue on site`,
       `Assign to ${auth.dept} for assessment and action`,
       "Update the reporter on the outcome",
     ];
@@ -344,7 +355,7 @@ export async function runLiveSubmit(
     title: input.text.length > 64 ? `${input.text.slice(0, 61)}…` : input.text,
     plusCellId,
     contributingReports: ["LIVE"],
-    category: input.category,
+    category,
     handoff: {
       claim: input.text,
       evidence,
@@ -353,7 +364,7 @@ export async function runLiveSubmit(
         ? "Live submission — photo read by Gemini Vision; single-source."
         : "Live submission — single-source, text only.",
     },
-    severity: { row, label: severityLabel(input.category, row), norm: sevNorm },
+    severity: { row, label: severityLabel(category, row), norm: sevNorm },
     exposure: {
       value: g.exposure,
       source: "open_buildings",
@@ -395,7 +406,14 @@ export async function runLiveSubmit(
   };
 
   logger.info(
-    { event: "live_submit", plusCellId, category: input.category, impactScore, anyLive },
+    {
+      event: "live_submit",
+      plusCellId,
+      filedCategory: input.category,
+      category,
+      impactScore,
+      anyLive,
+    },
     "live submission processed",
   );
   return { issue, trace, anyLive, categorization };
