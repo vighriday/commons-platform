@@ -422,6 +422,22 @@ async function startServer() {
   }
   process.on("SIGTERM", () => shutdown("SIGTERM"));
   process.on("SIGINT", () => shutdown("SIGINT"));
+
+  // Last-resort safety nets — without these a single stray async throw anywhere in
+  // a handler can take down the whole container mid-demo.
+  //  • An unhandled REJECTION is logged and swallowed: one failed promise must not
+  //    crash a long-running server; the affected request already returned a 500.
+  //  • An uncaughtException leaves the process in an unknown state, so we log it and
+  //    exit cleanly — Cloud Run then restarts a fresh container (and the disk store
+  //    rehydrates), which is safer than serving from a corrupted process.
+  process.on("unhandledRejection", (reason) => {
+    logger.error({ reason }, "unhandled_rejection");
+  });
+  process.on("uncaughtException", (err) => {
+    logger.error({ err }, "uncaught_exception");
+    server.close(() => process.exit(1));
+    setTimeout(() => process.exit(1), 5_000).unref();
+  });
 }
 
 startServer().catch((err) => {
