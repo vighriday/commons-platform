@@ -75,3 +75,7 @@ firebase-debug.log
 seed/photos/R033-drain.jpg
 seed/photos/R047-pothole.jpg
 seed/photos/R064-crack.jpg
+
+# Raw brand-image originals (1MB+ each). Only the optimized derivatives in
+# public/ and assets/brand/ are committed and shipped.
+Images/

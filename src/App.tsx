@@ -32,7 +32,7 @@ function Rail() {
   return (
     <nav className="flex w-[68px] shrink-0 flex-col items-center gap-1 border-r border-line bg-surface py-4">
       <a href="/" aria-label="COMMONS home" className="mb-4">
-        <img src="/logo.svg" width={30} height={30} alt="COMMONS" />
+        <img src="/logo.png" width={32} height={32} alt="COMMONS" />
       </a>
       <RailItem
         icon={<IconMatrix size={20} />}

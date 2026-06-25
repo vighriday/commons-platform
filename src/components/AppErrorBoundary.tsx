@@ -30,7 +30,7 @@ export class AppErrorBoundary extends Component<Props, State> {
     return (
       <div className="flex h-full w-full items-center justify-center bg-surface px-6 text-ink">
         <div className="max-w-sm text-center">
-          <img src="/logo.svg" width={36} height={36} alt="COMMONS" className="mx-auto" />
+          <img src="/logo.png" width={40} height={40} alt="COMMONS" className="mx-auto" />
           <h1 className="mt-5 text-[18px] font-semibold">Something went wrong</h1>
           <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">
             COMMONS hit an unexpected error rendering this view. Your data is safe — reloading the

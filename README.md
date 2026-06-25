@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="public/logo.svg" width="64" height="64" alt="COMMONS logo" />
-
-# COMMONS
+<img src="assets/brand/wordmark.png" width="420" alt="COMMONS — Community Attention OS" />
 
 ### The operating system for community attention.
 
@@ -19,6 +17,10 @@ the quiet, dangerous issues a community has not started paying attention to yet.
 
 🔗 **[commons-33047220516.asia-southeast1.run.app](https://commons-33047220516.asia-southeast1.run.app)**
 
+<br/>
+
+<img src="assets/brand/hero.jpg" width="820" alt="The loudest problem is rarely the most dangerous — COMMONS surfaces the hidden crises between the reports." />
+
 </div>
 
 ---
@@ -33,6 +35,10 @@ A pothole gets fifty angry upvotes. Two streets away, a choked stormwater drain
 near a lake — the one that will flood homes next monsoon — sits with two quiet
 reports and no upvotes. Every civic dashboard ranks by volume, so the pothole
 wins and the drain is invisible.
+
+<div align="center">
+<img src="assets/brand/problem.jpg" width="720" alt="The crowd clusters loudly around a trivial issue while a real hidden crisis sits in the dark, unnoticed." />
+</div>
 
 **COMMONS measures danger and loudness separately, and surfaces the gap.**
 
