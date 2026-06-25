@@ -174,6 +174,52 @@ export interface SynthesisInsight {
   whyMissed: string; // why no single report revealed it
 }
 
+// ── Lifecycle / accountability tracking ──────────────────────────────────────────
+// The status an issue moves through. "recurred" is the accountability beat: an
+// issue marked resolved that comes back is not a new incident — it is a systemic
+// failure, and tracking it as such is what turns "resolved 5×" into evidence.
+export type IssueStatus =
+  | "reported" // born from a citizen report, not yet seen by an authority
+  | "acknowledged" // an authority has seen it
+  | "assigned" // routed to the responsible department, SLA clock running
+  | "resolved" // marked fixed
+  | "recurred"; // came back after being resolved — feeds the memory agent
+
+// One entry in the audit trail of an issue's lifecycle.
+export interface StatusEvent {
+  status: IssueStatus;
+  at: string; // ISO
+  note: string; // human-readable ("Routed to BBMP SWD Division")
+  actor: "system" | "authority" | "citizen";
+}
+
+// Live accountability state — overlaid on the issue at read time. The SLA clock,
+// the corroboration count, and the lifecycle are all computed/mutated at runtime,
+// never frozen into the seed.
+export interface Tracking {
+  status: IssueStatus;
+  timeline: StatusEvent[];
+  // When the issue entered "assigned" — the moment the SLA clock starts. Null
+  // until assigned. slaDays comes from the resolution; overdue is computed live.
+  assignedAt: string | null;
+  // Crowd corroboration ("I see this too"). Each bump nudges attentionScore live,
+  // so the community can push back on — or catch up to — the model's ranking.
+  corroborations: number;
+  // The attention the issue was BORN with (seed/derived), before any live crowd
+  // signal. Lets the UI show "model flagged this before the crowd reacted".
+  baselineAttention: number;
+}
+
+// AI categorization output — the model's own read of which category a free-text
+// (+ photo) report belongs to, with the runner-up it considered. The citizen
+// confirms or overrides; the suggestion is shown, never silently applied.
+export interface AICategorization {
+  suggested: Category;
+  confidence: number; // 0..1
+  alternative: Category | null;
+  reason: string; // one line — why the model chose it
+}
+
 // ── Issue (cluster / synthesized output) ────────────────────────────────────────
 export interface Issue {
   issueId: string;
@@ -196,6 +242,9 @@ export interface Issue {
   escalation: Escalation | null;
   memory: Memory | null;
   synthesis: SynthesisInsight | null; // set only on synthesis-type clusters
+  // Live lifecycle + crowd state, overlaid at read time from the runtime store.
+  // Optional so the raw seed/scoring tests don't need to fabricate it.
+  tracking?: Tracking;
   createdAt: string; // ISO
 }
 

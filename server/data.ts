@@ -17,9 +17,11 @@ import type {
   Report,
   Reporter,
   Snapshot,
+  StatusEvent,
   TwinDoc,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
+import { addLiveIssue, listLiveIssues, setSeedLifecycle, withTracking } from "./state/store.ts";
 
 // Seed JSON lives at <repo>/seed and is committed, so it ships with the build.
 // Resolve from process.cwd() (the container working dir) so this works whether
@@ -109,15 +111,159 @@ function buildTwin(): TwinDoc {
 const civicPulse = buildCivicPulse();
 const twin = buildTwin();
 
+// ── Demo lifecycle seeding ────────────────────────────────────────────────────────
+// The six demo issues are given realistic, honest lifecycle states derived from
+// their OWN attributes (recurrence, impact rank, SLA). The STATES are designed
+// (disclosed-synthetic, like the rest of the corpus), but the SLA-overdue math and
+// the recurred-as-systemic logic run live against the wall clock. The thesis is
+// visible in the states themselves: the loudest, lowest-impact issue (the pothole)
+// is RESOLVED, while the quiet, high-impact ones sit ASSIGNED-and-overdue.
+function ev(
+  status: StatusEvent["status"],
+  at: string,
+  note: string,
+  actor: StatusEvent["actor"],
+): StatusEvent {
+  return { status, at, note, actor };
+}
+
+// The lifecycle dates are anchored to a recent window so the live SLA clock reads
+// believably ("9 days overdue", not "a year"). The anchor is a fixed constant (not
+// Date.now(), which would make boot non-deterministic and break the CJS bundle's
+// frozen-baseline guarantee); refresh it when the demo is re-cut. Dates are derived
+// as "N days before the anchor" so the relationships (overdue windows) hold.
+const LIFECYCLE_ANCHOR = new Date("2026-06-26T00:00:00.000Z").getTime();
+function daysBeforeAnchor(n: number): string {
+  return new Date(LIFECYCLE_ANCHOR - n * 86_400_000).toISOString();
+}
+
+function seedDemoLifecycle(): void {
+  // ISS_NOISE — the loud pothole the crowd obsessed over. Got fixed fast BECAUSE it
+  // was loud. The control case: attention got it resolved while danger waited.
+  setSeedLifecycle(
+    "ISS_NOISE",
+    "resolved",
+    [
+      ev("reported", daysBeforeAnchor(18), "Filed — pothole on the main road", "citizen"),
+      ev(
+        "acknowledged",
+        daysBeforeAnchor(17),
+        "High community attention flagged it fast",
+        "authority",
+      ),
+      ev("assigned", daysBeforeAnchor(16), "Routed to BBMP Road Infrastructure", "authority"),
+      ev("resolved", daysBeforeAnchor(10), "Patched and closed within the 10-day SLA", "authority"),
+    ],
+    daysBeforeAnchor(16),
+    0,
+    0.78,
+  );
+
+  // ISS_REC — the recurrence. Resolved before, came back (3rd time, per its memory).
+  // The accountability flagship: tracking turns "closed 3×" into "systemic".
+  setSeedLifecycle(
+    "ISS_REC",
+    "recurred",
+    [
+      ev("reported", daysBeforeAnchor(40), "First report — drain backing up", "citizen"),
+      ev("assigned", daysBeforeAnchor(38), "Routed to BBMP SWD", "authority"),
+      ev("resolved", daysBeforeAnchor(28), "Desilted and closed", "authority"),
+      ev(
+        "recurred",
+        daysBeforeAnchor(7),
+        "Same failure, 3rd time in 162 days — the symptom was closed, not the cause",
+        "system",
+      ),
+    ],
+    daysBeforeAnchor(38),
+    0,
+    0.51,
+  );
+
+  // ISS_HC1 — impact 81, the top hidden crisis. Assigned 24 days ago against a 15-day
+  // SLA → ~9 days overdue. The model ranked it #1; the clock proves it's neglected.
+  setSeedLifecycle(
+    "ISS_HC1",
+    "assigned",
+    [
+      ev("reported", daysBeforeAnchor(30), "Filed — choked stormwater drain", "citizen"),
+      ev("acknowledged", daysBeforeAnchor(26), "Seen by ward office", "authority"),
+      ev("assigned", daysBeforeAnchor(24), "Routed to BBMP SWD Division, SLA 15 days", "authority"),
+    ],
+    daysBeforeAnchor(24),
+    0,
+    0.17,
+  );
+
+  // ISS_HC2 — impact 80, a load-bearing wall crack with a 3-DAY SLA. Assigned 19 days
+  // ago → ~16 days overdue. The most dangerous + tightest SLA, still open.
+  setSeedLifecycle(
+    "ISS_HC2",
+    "assigned",
+    [
+      ev("reported", daysBeforeAnchor(25), "Filed — crack in a load-bearing wall", "citizen"),
+      ev("acknowledged", daysBeforeAnchor(22), "Seen — structural risk noted", "authority"),
+      ev("assigned", daysBeforeAnchor(19), "Routed to BBMP, structural SLA 3 days", "authority"),
+    ],
+    daysBeforeAnchor(19),
+    0,
+    0.15,
+  );
+
+  // ISS_HC3 — impact 62, unlit pedestrian stretch. Acknowledged, not yet assigned —
+  // sitting in the gap the model flagged.
+  setSeedLifecycle(
+    "ISS_HC3",
+    "acknowledged",
+    [
+      ev("reported", daysBeforeAnchor(28), "Filed — unlit pedestrian stretch", "citizen"),
+      ev("acknowledged", daysBeforeAnchor(24), "Logged by BESCOM", "authority"),
+    ],
+    null,
+    0,
+    0.23,
+  );
+
+  // ISS_SYN — the synthesis issue. The latent cause was just surfaced by the model;
+  // acknowledged, awaiting routing across BWSSB/BBMP jurisdictions.
+  setSeedLifecycle(
+    "ISS_SYN",
+    "acknowledged",
+    [
+      ev("reported", daysBeforeAnchor(12), "Surfaced by cross-report synthesis", "system"),
+      ev("acknowledged", daysBeforeAnchor(10), "Flagged for multi-department review", "authority"),
+    ],
+    null,
+    0,
+    0.3,
+  );
+
+  logger.info({ seeded: 6 }, "demo_lifecycle_seeded");
+}
+
+seedDemoLifecycle();
+
 // ── Public read API (seed path; Firestore merge seam noted inline) ───────────────
 export const data = {
   ward: WARD,
+  // The seed issues PLUS any live-submitted ones, each merged with its runtime
+  // lifecycle/corroboration overlay (live attentionScore + recomputed quadrant +
+  // tracking block). The raw seed array is never mutated.
   listIssues(): Issue[] {
-    // SEAM: when Firestore is configured, merge live-submitted issues here.
-    return issues;
+    return [...issues, ...listLiveIssues()].map(withTracking);
+  },
+  // The raw seed issue with NO overlay — used internally where the frozen score is
+  // wanted (e.g. ranking against the baseline before applying live signal).
+  rawIssue(id: string): Issue | undefined {
+    return issues.find((i) => i.issueId === id) ?? listLiveIssues().find((i) => i.issueId === id);
   },
   getIssue(id: string): Issue | undefined {
-    return issues.find((i) => i.issueId === id);
+    const raw = this.rawIssue(id);
+    return raw ? withTracking(raw) : undefined;
+  },
+  // Register a live-submitted issue so it appears in the matrix and is trackable.
+  addLiveIssue(issue: Issue): void {
+    addLiveIssue(issue);
   },
   listReports(): Report[] {
     return reports;

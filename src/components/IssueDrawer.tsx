@@ -1,7 +1,7 @@
-import type { Issue } from "@shared/types.ts";
-import { useQuery } from "@tanstack/react-query";
+import type { Issue, IssueStatus } from "@shared/types.ts";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { api } from "../lib/api.ts";
+import { type IssueDetail, type SlaState, api } from "../lib/api.ts";
 import { useTwinStore } from "../lib/twinStore.ts";
 import { CATEGORY_ICON, IconAlert, IconEscalate, IconLayers, IconReversal } from "./icons.tsx";
 
@@ -103,6 +103,8 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
               View on the Digital Twin
             </button>
             <ImpactBreakdown issue={issue} />
+            <TrackingCard issue={issue} />
+            <VerifyCard issue={issue} />
             {issue.synthesis && <SynthesisCard issue={issue} />}
             {issue.reversal?.overruledAttention && <ReversalCard issue={issue} />}
             {issue.escalation && <EscalationCard issue={issue} />}
@@ -252,6 +254,188 @@ function SynthesisCard({ issue }: { issue: Issue }) {
         <span className="font-medium text-ink-muted">Why no one saw it: </span>
         {s.whyMissed}
       </p>
+    </section>
+  );
+}
+
+// ── Lifecycle tracking — the accountability clock ──────────────────────────────
+// The status, the timeline of what happened when, and the live SLA (overdue
+// computed against the wall clock). The "advance" control walks the issue one
+// legal step so a judge can see the lifecycle move in real time.
+const STATUS_META: Record<IssueStatus, { label: string; color: string; dot: string }> = {
+  reported: { label: "Reported", color: "#6b7c93", dot: "#6b7c93" },
+  acknowledged: { label: "Acknowledged", color: "#3ea6ff", dot: "#3ea6ff" },
+  assigned: { label: "Assigned", color: "#f5a623", dot: "#f5a623" },
+  resolved: { label: "Resolved", color: "#36c98b", dot: "#36c98b" },
+  recurred: { label: "Recurred", color: "#ff5c5c", dot: "#ff5c5c" },
+};
+const NEXT_STATUS: Record<IssueStatus, IssueStatus | null> = {
+  reported: "acknowledged",
+  acknowledged: "assigned",
+  assigned: "resolved",
+  resolved: "recurred",
+  recurred: "acknowledged",
+};
+
+function fmtDate(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+}
+
+function SlaBadge({ sla, status }: { sla: SlaState; status: IssueStatus }) {
+  if (status === "resolved") {
+    return (
+      <span className="rounded-md bg-[#36c98b]/12 px-2 py-0.5 font-data text-[11px] text-[#36c98b]">
+        ✓ closed
+      </span>
+    );
+  }
+  if (!sla.running) {
+    return <span className="font-data text-[11px] text-ink-faint">SLA not started</span>;
+  }
+  if (sla.overdue) {
+    return (
+      <span className="rounded-md bg-critical/12 px-2 py-0.5 font-data text-[11px] font-medium text-critical">
+        ⏱ {Math.abs(sla.daysRemaining)}d overdue
+      </span>
+    );
+  }
+  return (
+    <span className="rounded-md bg-surface-overlay px-2 py-0.5 font-data text-[11px] text-ink-muted">
+      {sla.daysRemaining}d left
+    </span>
+  );
+}
+
+function TrackingCard({ issue }: { issue: IssueDetail }) {
+  const qc = useQueryClient();
+  const t = issue.tracking;
+  const next = t ? NEXT_STATUS[t.status] : null;
+  const advance = useMutation({
+    mutationFn: (to: IssueStatus) => api.advanceStatus(issue.issueId, to),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["issue", issue.issueId] });
+      qc.invalidateQueries({ queryKey: ["issues"] });
+    },
+  });
+  if (!t) return null;
+  const meta = STATUS_META[t.status];
+  return (
+    <section>
+      <div className="label mb-2.5 flex items-center justify-between">
+        <span>Tracking · accountability clock</span>
+        <SlaBadge sla={issue.sla} status={t.status} />
+      </div>
+
+      {/* The lifecycle rail */}
+      <div className="rounded-lg border border-line bg-surface px-3.5 py-3">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full" style={{ background: meta.dot }} />
+          <span className="text-[13px] font-medium" style={{ color: meta.color }}>
+            {meta.label}
+          </span>
+          {t.status === "recurred" && (
+            <span className="rounded-md bg-critical/10 px-1.5 py-0.5 font-data text-[10px] text-critical">
+              systemic — not a one-off
+            </span>
+          )}
+        </div>
+
+        {/* Timeline */}
+        <ol className="relative space-y-2.5 border-l border-line pl-4">
+          {t.timeline.map((e, n) => (
+            <li key={`${e.status}-${n}`} className="relative">
+              <span
+                className="absolute -left-[21px] top-1 h-2 w-2 rounded-full ring-2 ring-surface"
+                style={{ background: STATUS_META[e.status].dot }}
+              />
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="text-[12px] text-ink">{STATUS_META[e.status].label}</span>
+                <span className="shrink-0 font-data text-[10px] text-ink-faint">
+                  {fmtDate(e.at)}
+                </span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-ink-muted">{e.note}</p>
+            </li>
+          ))}
+        </ol>
+
+        {/* Advance control — walk the lifecycle live */}
+        {next && (
+          <button
+            type="button"
+            disabled={advance.isPending}
+            onClick={() => advance.mutate(next)}
+            className="mt-3 w-full rounded-md border border-line-strong bg-surface-overlay py-1.5 text-[12px] text-ink-muted transition-colors hover:border-brand hover:text-ink disabled:opacity-50"
+          >
+            {advance.isPending ? "Updating…" : `Advance → ${STATUS_META[next].label}`}
+          </button>
+        )}
+      </div>
+      {issue.sla.overdue && (
+        <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-critical/90">
+          <IconAlert size={14} className="mt-px shrink-0" />
+          <span>
+            Past its {issue.resolution?.slaDays}-day SLA. The model ranked this high on impact; the
+            clock shows it has been waiting.
+          </span>
+        </p>
+      )}
+    </section>
+  );
+}
+
+// ── Community verification — "I see this too" ──────────────────────────────────
+// A corroboration bumps the live attention. When the model had this high on impact
+// but low on attention (a Hidden Crisis), each tap is the crowd validating the AI's
+// early call — and the card narrates that catch-up explicitly.
+function VerifyCard({ issue }: { issue: IssueDetail }) {
+  const qc = useQueryClient();
+  const [justCrossed, setJustCrossed] = useState(false);
+  const corroborate = useMutation({
+    mutationFn: () => api.corroborate(issue.issueId),
+    onSuccess: (r) => {
+      if (r.crossedIntoCrowd) setJustCrossed(true);
+      qc.invalidateQueries({ queryKey: ["issue", issue.issueId] });
+      qc.invalidateQueries({ queryKey: ["issues"] });
+    },
+  });
+  const count = issue.tracking?.corroborations ?? 0;
+  const modelEarly = Boolean(issue.reversal?.overruledAttention);
+  return (
+    <section className="rounded-lg border border-line bg-surface px-3.5 py-3">
+      <div className="label mb-2 flex items-center justify-between">
+        <span>Community verification</span>
+        <span className="font-data text-[11px] text-ink-muted">
+          attention <span className="text-ink">{issue.attentionScore.toFixed(2)}</span>
+        </span>
+      </div>
+      <p className="text-[12px] leading-relaxed text-ink-muted">
+        {count > 0
+          ? `${count} ${count === 1 ? "person has" : "people have"} confirmed they see this too.`
+          : "Be the first to confirm you see this problem too."}
+      </p>
+      <button
+        type="button"
+        disabled={corroborate.isPending}
+        onClick={() => corroborate.mutate()}
+        className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-md bg-brand/[0.1] py-2 text-[13px] font-medium text-brand transition-colors hover:bg-brand/[0.16] disabled:opacity-50"
+      >
+        <IconAlert size={14} />
+        {corroborate.isPending ? "Recording…" : "⚠ I see this too"}
+      </button>
+      {modelEarly && (
+        <p className="mt-2.5 border-t border-line pt-2.5 text-[11px] leading-relaxed text-hidden">
+          The AI flagged this as high-impact <span className="font-medium">before</span> the crowd
+          reacted. Every corroboration is the community catching up to what the model already knew.
+        </p>
+      )}
+      {justCrossed && (
+        <p className="mt-2 rounded-md bg-hidden/10 px-2.5 py-1.5 text-[11px] font-medium leading-relaxed text-hidden">
+          The crowd just crossed into the model's ranking — community attention now matches the
+          AI-assessed priority.
+        </p>
+      )}
     </section>
   );
 }

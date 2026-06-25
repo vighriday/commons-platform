@@ -8,7 +8,13 @@
 // computed, and a flagged prompt-injection is shown as a blocked attack.
 import type { Issue } from "@shared/types.ts";
 import { useState } from "react";
-import { type LiveStep, SubmitError, type SubmitResult, api } from "../lib/api.ts";
+import {
+  type AICategorization,
+  type LiveStep,
+  SubmitError,
+  type SubmitResult,
+  api,
+} from "../lib/api.ts";
 import { WARD_CENTER } from "../lib/twinGeo.ts";
 import { IconAlert, IconSubmit } from "./icons.tsx";
 
@@ -38,6 +44,24 @@ export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) =>
   const [lng, setLng] = useState(WARD_CENTER.lng);
   const [photo, setPhoto] = useState<File | null>(null);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  // The AI's read of the category from the typed text — a real Gemini call, shown
+  // as a suggestion the citizen can apply with one tap (never silently applied).
+  const [suggest, setSuggest] = useState<AICategorization | null>(null);
+  const [suggesting, setSuggesting] = useState(false);
+
+  async function readCategory() {
+    if (text.trim().length < 8) return;
+    setSuggesting(true);
+    setSuggest(null);
+    try {
+      const c = await api.classify(text.trim());
+      if (c.suggested) setSuggest(c);
+    } catch {
+      /* best-effort — the manual picker still works */
+    } finally {
+      setSuggesting(false);
+    }
+  }
 
   async function run() {
     setStatus({ kind: "running" });
@@ -110,9 +134,45 @@ export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) =>
             <span className="mt-1 block text-right font-data text-[10px] text-ink-faint">
               {text.length}/5000
             </span>
+            <button
+              type="button"
+              disabled={text.trim().length < 8 || suggesting}
+              onClick={readCategory}
+              className="mt-1 inline-flex items-center gap-1.5 rounded-md border border-line px-2.5 py-1 text-[11px] text-ink-muted transition-colors hover:border-brand hover:text-brand disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {suggesting ? (
+                <span className="h-3 w-3 animate-spin rounded-full border border-line border-t-brand" />
+              ) : (
+                <IconSubmit size={12} />
+              )}
+              {suggesting ? "Reading…" : "Let the AI read the category"}
+            </button>
           </Field>
 
           <Field label="Category">
+            {suggest && (
+              <div className="mb-2 flex items-center gap-2 rounded-md border border-brand/40 bg-brand/[0.06] px-2.5 py-1.5 text-[11px]">
+                <span className="text-ink-muted">
+                  AI reads this as{" "}
+                  <span className="font-medium capitalize text-brand">{suggest.suggested}</span>{" "}
+                  <span className="font-data text-ink-faint">
+                    ({Math.round(suggest.confidence * 100)}%)
+                  </span>
+                </span>
+                {suggest.suggested !== category && (
+                  <button
+                    type="button"
+                    onClick={() => setCategory(suggest.suggested)}
+                    className="ml-auto rounded border border-brand/50 px-1.5 py-0.5 font-data text-[10px] text-brand transition-colors hover:bg-brand/10"
+                  >
+                    apply
+                  </button>
+                )}
+                {suggest.suggested === category && (
+                  <span className="ml-auto font-data text-[10px] text-brand">✓ matches</span>
+                )}
+              </div>
+            )}
             <div className="flex flex-wrap gap-1.5">
               {CATEGORIES.map((c) => (
                 <button

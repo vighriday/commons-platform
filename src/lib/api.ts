@@ -4,8 +4,10 @@ import type {
   CivicPulse,
   FootprintDoc,
   Issue,
+  IssueStatus,
   Report,
   Snapshot,
+  StatusEvent,
   TwinDoc,
 } from "@shared/types.ts";
 
@@ -15,9 +17,45 @@ async function getJSON<T>(url: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+async function postJSON<T>(url: string, body?: unknown): Promise<T> {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: body ? { "Content-Type": "application/json" } : {},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) throw new Error(`${url} → ${res.status}`);
+  return (await res.json()) as T;
+}
+
+// The live SLA state attached to a single-issue response (computed server-side
+// against the wall clock).
+export interface SlaState {
+  running: boolean;
+  dueAt: string | null;
+  daysElapsed: number;
+  daysRemaining: number;
+  overdue: boolean;
+}
+export type IssueDetail = Issue & { sla: SlaState };
+
+export interface CorroborateResponse {
+  issueId: string;
+  corroborations: number;
+  attentionScore: number;
+  baselineAttention: number;
+  crossedIntoCrowd: boolean;
+  modelFlaggedEarly: boolean;
+}
+export interface StatusResponse {
+  issueId: string;
+  status: IssueStatus;
+  timeline: StatusEvent[];
+  sla: SlaState;
+}
+
 export const api = {
   issues: () => getJSON<{ ward: string; issues: Issue[] }>("/api/issues"),
-  issue: (id: string) => getJSON<Issue>(`/api/issues/${id}`),
+  issue: (id: string) => getJSON<IssueDetail>(`/api/issues/${id}`),
   reports: () => getJSON<{ ward: string; reports: Report[] }>("/api/reports"),
   neighborhood: (ward: string) =>
     getJSON<{ twin: TwinDoc; civicPulse: CivicPulse }>(`/api/neighborhood/${ward}`),
@@ -26,6 +64,17 @@ export const api = {
     getJSON<{ ward: string; snapshots: Snapshot[] }>(`/api/snapshots/${ward}`),
   footprints: (ward: string) => getJSON<FootprintDoc>(`/api/footprints/${ward}`),
   submit: submitReport,
+  // Community verification — "I see this too".
+  corroborate: (id: string) => postJSON<CorroborateResponse>(`/api/issues/${id}/corroborate`),
+  // Lifecycle tracking — advance the status by one legal step.
+  advanceStatus: (id: string, to: IssueStatus) =>
+    postJSON<StatusResponse>(`/api/issues/${id}/status`, { to }),
+  // The AI category classifier (used by the submit form for a live suggestion).
+  classify: (text: string) =>
+    postJSON<{ suggested: string; confidence: number; alternative: string | null; reason: string }>(
+      "/api/classify",
+      { text },
+    ),
 };
 
 // A live citizen submission (multipart). Resolves with the born issue + the live
@@ -37,11 +86,18 @@ export interface LiveStep {
   detail: string;
   live: boolean;
 }
+export interface AICategorization {
+  suggested: string;
+  confidence: number;
+  alternative: string | null;
+  reason: string;
+}
 export interface SubmitResult {
   issue: Issue;
   trace: LiveStep[];
   anyLive: boolean;
   piiNote: string | null;
+  categorization: AICategorization | null;
 }
 export class SubmitError extends Error {
   constructor(

@@ -34,6 +34,21 @@ const QUADRANT_LABEL: Record<QuadrantKey, string> = {
   monitor: "Monitor",
 };
 
+const STATUS_COLOR: Record<string, string> = {
+  reported: "#6b7c93",
+  acknowledged: "#3ea6ff",
+  assigned: "#f5a623",
+  resolved: "#36c98b",
+  recurred: "#ff5c5c",
+};
+const STATUS_LABEL: Record<string, string> = {
+  reported: "Reported",
+  acknowledged: "Acknowledged",
+  assigned: "Assigned",
+  resolved: "Resolved",
+  recurred: "Recurred",
+};
+
 const MONO = "var(--font-mono)";
 const AXIS = "#5d7184";
 
@@ -322,7 +337,7 @@ function DataTable({ issues, selectedId, onSelect }: Props) {
       <table className="w-full text-left">
         <thead className="sticky top-0 bg-surface-overlay">
           <tr className="border-b border-line">
-            {["Issue", "Impact", "Attention", "Quadrant"].map((h) => (
+            {["Issue", "Impact", "Attention", "Quadrant", "Status"].map((h) => (
               <th key={h} className="label px-3 py-2.5 font-medium">
                 {h}
               </th>
@@ -354,6 +369,20 @@ function DataTable({ issues, selectedId, onSelect }: Props) {
                     />
                     {QUADRANT_LABEL[i.quadrant]}
                   </span>
+                </td>
+                <td className="px-3 py-2.5">
+                  {i.tracking && (
+                    <span
+                      className="inline-flex items-center gap-1.5 text-[12px]"
+                      style={{ color: STATUS_COLOR[i.tracking.status] }}
+                    >
+                      <span
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ background: STATUS_COLOR[i.tracking.status] }}
+                      />
+                      {STATUS_LABEL[i.tracking.status]}
+                    </span>
+                  )}
                 </td>
               </tr>
             );

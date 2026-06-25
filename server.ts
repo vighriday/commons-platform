@@ -21,13 +21,14 @@ import { config } from "./server/config.ts";
 import { data } from "./server/data.ts";
 import { geminiPing, geminiUsage } from "./server/gemini.ts";
 import { sanitize } from "./server/ingest/sanitizer.ts";
-import { runLiveSubmit } from "./server/ingest/submitPipeline.ts";
+import { classifyCategory, runLiveSubmit } from "./server/ingest/submitPipeline.ts";
 import { photoUpload, processImage } from "./server/ingest/upload.ts";
 import { logger } from "./server/lib/logger.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
-import { SubmitSchema } from "./server/schemas/submit.ts";
+import { StatusSchema, SubmitSchema } from "./server/schemas/submit.ts";
+import { advanceStatus, corroborate, slaState } from "./server/state/store.ts";
 
 // The request's own origin (scheme + host), trusting the Cloud Run proxy headers
 // so the A2A card advertises the public URL, not the internal container address.
@@ -111,7 +112,10 @@ async function startServer() {
       res.status(404).json({ error: "ISSUE_NOT_FOUND", requestId: req.requestId });
       return;
     }
-    res.json(issue);
+    // Attach the live SLA state (overdue computed against the wall clock) so the
+    // drawer renders the accountability clock without a second round-trip.
+    const sla = slaState(issue, issue.resolution?.slaDays ?? 15);
+    res.json({ ...issue, sla });
   });
 
   api.get("/neighborhood/:ward", (req, res) => {
@@ -244,11 +248,109 @@ async function startServer() {
         }
 
         const result = await runLiveSubmit(parsed.data, image, data.listIssues());
+        // Register the born issue so it appears in the matrix and is trackable /
+        // corroboratable like any seed issue (lives in the runtime store).
+        data.addLiveIssue(result.issue);
         res.json({ ...result, piiNote: verdict.piiPresent ? "PII detected in text" : null });
       } catch (err) {
         logger.error({ err, requestId: req.requestId }, "submit_failed");
         res.status(500).json({ error: "SUBMIT_FAILED", requestId: req.requestId });
       }
+    });
+  });
+
+  // AI category suggestion for the submit form — runs the classifier on the typed
+  // text so the citizen sees "the AI reads this as drainage" before committing. A
+  // real Gemini call (spends a little quota), so it shares the submit limiter and
+  // sanitises the untrusted text first. Returns null suggestion if the model is off.
+  api.post("/classify", submitLimiter, async (req, res) => {
+    const text = typeof req.body?.text === "string" ? req.body.text.trim() : "";
+    if (text.length < 8 || text.length > 5000) {
+      res.status(400).json({ error: "VALIDATION_FAILED", requestId: req.requestId });
+      return;
+    }
+    const verdict = await sanitize(text);
+    if (verdict.injectionDetected) {
+      res.status(422).json({
+        error: "QUARANTINED",
+        quarantine: { reason: verdict.reason },
+        requestId: req.requestId,
+      });
+      return;
+    }
+    const cat = await classifyCategory(text);
+    res.json(cat ?? { suggested: null, confidence: 0, alternative: null, reason: "" });
+  });
+
+  // ── Community verification + lifecycle tracking ──────────────────────────────
+  // These mutate the runtime overlay (no Gemini spend), so they carry a lighter
+  // limit than /submit but are still throttled so a single client can't inflate
+  // attention or churn the lifecycle. Identity/timestamp/transition-legality are
+  // all server-decided; the body carries only the minimal intent.
+  const interactLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 40,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    handler: (req, res) =>
+      res.status(429).json({ error: "TOO_MANY_REQUESTS", requestId: req.requestId }),
+  });
+
+  // "I see this too" — a citizen corroborates an issue. Bumps the live attention
+  // and reports whether the crowd just crossed into the model's ranking (a Hidden
+  // Crisis the AI flagged early, now caught up to by the community).
+  api.post("/issues/:id/corroborate", interactLimiter, (req, res) => {
+    const issue = data.rawIssue(req.params.id);
+    if (!issue) {
+      res.status(404).json({ error: "ISSUE_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    const r = corroborate(issue);
+    res.json({
+      issueId: issue.issueId,
+      ...r,
+      // The reversal context — if the model had this high on impact but low on
+      // attention, a corroboration is the crowd validating the AI's early call.
+      modelFlaggedEarly: Boolean(issue.reversal?.overruledAttention),
+      requestId: req.requestId,
+    });
+  });
+
+  // Advance an issue's lifecycle by one legal step. Returns the new status, the
+  // timeline, and the live SLA state (overdue computed against the wall clock).
+  api.post("/issues/:id/status", interactLimiter, (req, res) => {
+    const issue = data.rawIssue(req.params.id);
+    if (!issue) {
+      res.status(404).json({ error: "ISSUE_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    const parsed = StatusSchema.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: "VALIDATION_FAILED", requestId: req.requestId });
+      return;
+    }
+    const note =
+      parsed.data.to === "assigned"
+        ? `Routed to ${issue.resolution?.responsibleDept ?? "the responsible department"}`
+        : parsed.data.to === "resolved"
+          ? "Marked resolved"
+          : parsed.data.to === "recurred"
+            ? "Reopened — the problem returned"
+            : "Acknowledged by an authority";
+    const result = advanceStatus(issue, parsed.data.to, note, "authority");
+    if (!result.ok) {
+      res
+        .status(409)
+        .json({ error: "ILLEGAL_TRANSITION", reason: result.reason, requestId: req.requestId });
+      return;
+    }
+    const sla = slaState(issue, issue.resolution?.slaDays ?? 15);
+    res.json({
+      issueId: issue.issueId,
+      status: result.status,
+      timeline: result.timeline,
+      sla,
+      requestId: req.requestId,
     });
   });
 

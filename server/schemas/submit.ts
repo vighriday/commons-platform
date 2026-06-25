@@ -30,3 +30,13 @@ export const SubmitSchema = z
   .strict();
 
 export type SubmitInput = z.infer<typeof SubmitSchema>;
+
+// Status-advance body — only the target status is taken from the client; the
+// transition's legality, the timestamp, and the note are decided server-side.
+export const StatusSchema = z
+  .object({
+    to: z.enum(["acknowledged", "assigned", "resolved", "recurred"]),
+  })
+  .strict();
+
+export type StatusInput = z.infer<typeof StatusSchema>;
