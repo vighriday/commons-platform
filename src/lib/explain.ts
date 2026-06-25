@@ -23,6 +23,11 @@ export const AGENT_META: Record<AgentName, { label: string; job: string; reads: 
     job: "Reads the citizen reports (and their photos) and names the real problem behind them.",
     reads: "the raw reports in one cluster",
   },
+  synthesis: {
+    label: "Synthesis",
+    job: "Reasons across separate, individually-minor reports to the one hidden cause no single reporter could see.",
+    reads: "the weak reports in a synthesis cluster",
+  },
   impact: {
     label: "Impact",
     job: "Works out how dangerous the problem actually is — as a number, from real data.",

@@ -1,9 +1,13 @@
 {
   "finishedAt": "2026-05-22T13:00:00.000Z",
-  "inputHash": "d98a527068f53204",
+  "inputHash": "743a4e57d09b51ce",
   "modelRoute": [
     {
       "agent": "evidence",
+      "model": "flash"
+    },
+    {
+      "agent": "synthesis",
       "model": "flash"
     },
     {
@@ -53,7 +57,7 @@
     "promotedIssueId": "ISS_HC1",
     "reason": "“Stormwater drain choke near Agara Lake — silent flood risk” (impact 81) is promoted over the community's loudest issue “Pothole on 17th Cross, Sector 7” (attention 0.78, impact 19) — a civic blind spot the crowd missed."
   },
-  "runId": "run_d98a527068f53204",
+  "runId": "run_743a4e57d09b51ce",
   "snapshotId": "",
   "startedAt": "2026-05-22T13:00:00.000Z",
   "steps": [
@@ -81,8 +85,9 @@
           },
           {
             "field": "media:photo",
+            "imageUrl": "/seed/photos/R033-drain.web.jpg",
             "reportId": "R033",
-            "value": "silted storm drain — observed: silt+plastic occlusion, stagnant water (severity signal 5/5, conf 0.83)"
+            "value": "A street-side storm drain grate with visible surface rust and surrounding concrete curb. — observed: rusted metal storm drain grate, rusted metal curb hood, concrete curb, concrete pavement (severity signal 2/5, conf 0.95)"
           },
           {
             "field": "text",
@@ -118,7 +123,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_HC1",
-            "value": "0.93 — derived-from-real"
+            "value": "0.93 — curated"
           },
           {
             "field": "vulnerability",
@@ -318,8 +323,9 @@
           },
           {
             "field": "media:photo",
+            "imageUrl": "/seed/photos/R064-crack.web.jpg",
             "reportId": "R064",
-            "value": "diagonal wall crack — observed: diagonal crack, >3mm width, load-bearing wall (severity signal 5/5, conf 0.81)"
+            "value": "Prominent diagonal structural cracks extending from window corners on a building facade. — observed: diagonal wall cracks, stucco delamination near windows, visible substrate underneath facade paint, multiple window openings (severity signal 4/5, conf 0.95)"
           }
         ],
         "uncertainty": "Single-source cluster — no cross-report agreement signal."
@@ -350,7 +356,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_HC2",
-            "value": "0.92 — derived-from-real"
+            "value": "0.92 — curated"
           },
           {
             "field": "vulnerability",
@@ -578,7 +584,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_HC3",
-            "value": "0.89 — derived-from-real"
+            "value": "0.89 — curated"
           },
           {
             "field": "vulnerability",
@@ -785,11 +791,6 @@
             "value": "Small depression forming on road near 27th Main / 5th Cross junction, getting bigger."
           },
           {
-            "field": "media:photo",
-            "reportId": "R058",
-            "value": "road subsidence near junction — observed: asphalt depression ~40cm, edge cracking (severity signal 4/5, conf 0.86)"
-          },
-          {
             "field": "text",
             "reportId": "R072",
             "value": "Brown / rusty water from tap on Tuesday morning, cleared by evening."
@@ -828,7 +829,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_SYN",
-            "value": "0.56 — derived-from-real"
+            "value": "0.56 — curated"
           },
           {
             "field": "vulnerability",
@@ -1092,7 +1093,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_REC",
-            "value": "0.49 — derived-from-real"
+            "value": "0.49 — curated"
           },
           {
             "field": "vulnerability",
@@ -1308,8 +1309,9 @@
           },
           {
             "field": "media:photo",
+            "imageUrl": "/seed/photos/R047-pothole.web.jpg",
             "reportId": "R047",
-            "value": "pothole on 17th Cross — observed: pothole ~30cm, surface only (severity signal 2/5, conf 0.78)"
+            "value": "Two potholes visible in the asphalt road surface. — observed: deep circular pothole, alligator cracking, loose aggregate inside pothole, second smaller pothole in background (severity signal 4/5, conf 0.98)"
           },
           {
             "field": "text",
@@ -1370,7 +1372,7 @@
           {
             "field": "exposure",
             "reportId": "ISS_NOISE",
-            "value": "0.55 — derived-from-real"
+            "value": "0.55 — curated"
           },
           {
             "field": "vulnerability",

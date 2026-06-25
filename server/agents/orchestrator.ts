@@ -21,6 +21,7 @@ import { buildRunReversal, hiddenCrisisAgent } from "./hiddenCrisis.ts";
 import { impactAgent } from "./impact.ts";
 import { resolutionAgent } from "./resolutionPath.ts";
 import { stableHash } from "./stable.ts";
+import { synthesizeIssue } from "./synthesis.ts";
 import type { Agent, AgentContext } from "./types.ts";
 import { ROUTE } from "./types.ts";
 
@@ -115,6 +116,12 @@ export async function runPipeline(
     const ev = await runStep(evidenceAgent, ctx);
     allSteps.push(ev.step);
     next = { ...next, ...ev.patch };
+
+    // 1b) cross-report synthesis — only on synthesis clusters. Fills issue.synthesis
+    // (real Gemini reasoning across the weak reports); it does not add a uniform
+    // trace step, so every lane stays a clean 7 steps.
+    const syn = await synthesizeIssue(ctx);
+    if (syn) next = { ...next, synthesis: syn.synthesis };
 
     // 2) impact ∥ attention (the parallel fork)
     const [imp, att] = await Promise.all([runStep(impactAgent, ctx), runStep(attentionAgent, ctx)]);

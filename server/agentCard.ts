@@ -14,6 +14,11 @@ const SKILL_DESC: Record<AgentName, { name: string; description: string }> = {
     name: "Cluster evidence",
     description: "Group citizen reports (and their photos) into one named real-world problem.",
   },
+  synthesis: {
+    name: "Cross-report synthesis",
+    description:
+      "Reason across separate, individually-minor reports to the one hidden cause no single reporter could see.",
+  },
   impact: {
     name: "Score impact",
     description:
@@ -44,6 +49,7 @@ const SKILL_DESC: Record<AgentName, { name: string; description: string }> = {
 
 const ORDER: AgentName[] = [
   "evidence",
+  "synthesis",
   "impact",
   "attention",
   "hidden_crisis",

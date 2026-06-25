@@ -22,6 +22,7 @@ import type {
 // map as the run's modelRoute, and the trace UI renders the tier per step.
 export const ROUTE: Record<AgentName, ModelTier> = {
   evidence: "flash-lite", // upgraded to flash for synthesis issues — see routeFor()
+  synthesis: "flash", // cross-report reasoning to the latent cause
   impact: "flash-lite",
   attention: "flash-lite",
   hidden_crisis: "flash",

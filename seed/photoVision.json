@@ -1,0 +1,42 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "generatedFrom": "real-CC-images",
+  "vision": {
+    "R033": {
+      "caption": "A street-side storm drain grate with visible surface rust and surrounding concrete curb.",
+      "observedFeatures": [
+        "rusted metal storm drain grate",
+        "rusted metal curb hood",
+        "concrete curb",
+        "concrete pavement"
+      ],
+      "severitySignal": 2,
+      "confidence": 0.95,
+      "web": "seed/photos/R033-drain.web.jpg"
+    },
+    "R047": {
+      "caption": "Two potholes visible in the asphalt road surface.",
+      "observedFeatures": [
+        "deep circular pothole",
+        "alligator cracking",
+        "loose aggregate inside pothole",
+        "second smaller pothole in background"
+      ],
+      "severitySignal": 4,
+      "confidence": 0.98,
+      "web": "seed/photos/R047-pothole.web.jpg"
+    },
+    "R064": {
+      "caption": "Prominent diagonal structural cracks extending from window corners on a building facade.",
+      "observedFeatures": [
+        "diagonal wall cracks",
+        "stucco delamination near windows",
+        "visible substrate underneath facade paint",
+        "multiple window openings"
+      ],
+      "severitySignal": 4,
+      "confidence": 0.95,
+      "web": "seed/photos/R064-crack.web.jpg"
+    }
+  }
+}

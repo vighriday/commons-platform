@@ -6,10 +6,11 @@
 //    cluster is derived, not hardcoded.
 //  • Labels the cluster shape: synthesis (separate symptoms → one latent cause),
 //    recurrence (same cell over time), or single.
-//  • Surfaces the curated media[].extracted multimodal blocks into the handoff
-//    (it does NOT re-run vision on the spine — the photos are placeholders and
-//    re-extraction would burn RPD and drift the frozen values; a gated
-//    geminiVision path exists for when real images land).
+//  • Surfaces the media[].extracted multimodal blocks into the handoff. These are
+//    REAL Gemini Vision observations: scripts/genVision.ts runs gemini-3.1-flash-lite
+//    over the committed Creative-Commons evidence images and freezes the structured
+//    {observedFeatures, severitySignal, confidence} output (the demo replays the
+//    frozen result, 0 RPD). So "the agent looked at the photo" is literally true.
 //
 // confidence comes from confidence.ts (DERIVED). The model tier is recorded for
 // the trace (flash for synthesis), but the evidence itself is deterministic.
@@ -70,12 +71,16 @@ export const evidenceAgent: Agent = async (ctx: AgentContext): Promise<AgentResu
     evidence.push({ reportId: r.reportId, field: "text", value: r.text });
     for (const m of r.media) {
       if (m.type !== "none" && m.extracted) {
+        // A real, servable image (not the generic placeholder) → expose its URL so
+        // the drawer can show the actual photo the Vision agent analysed.
+        const real = m.ref && !m.ref.includes("placeholder") ? `/${m.ref}` : undefined;
         evidence.push({
           reportId: r.reportId,
           field: `media:${m.type}`,
           value:
             `${m.caption ?? m.type} — observed: ${m.extracted.observedFeatures.join(", ")} ` +
             `(severity signal ${m.extracted.severitySignal}/5, conf ${m.extracted.confidence})`,
+          ...(real ? { imageUrl: real } : {}),
         });
       }
     }

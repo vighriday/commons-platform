@@ -195,15 +195,17 @@
     "media": [
       {
         "type": "photo",
-        "ref": "seed/photos/placeholder.svg",
-        "caption": "silted storm drain",
+        "ref": "seed/photos/R033-drain.web.jpg",
+        "caption": "A street-side storm drain grate with visible surface rust and surrounding concrete curb.",
         "extracted": {
           "observedFeatures": [
-            "silt+plastic occlusion",
-            "stagnant water"
+            "rusted metal storm drain grate",
+            "rusted metal curb hood",
+            "concrete curb",
+            "concrete pavement"
           ],
-          "severitySignal": 5,
-          "confidence": 0.83
+          "severitySignal": 2,
+          "confidence": 0.95
         }
       }
     ],
@@ -346,15 +348,17 @@
     "media": [
       {
         "type": "photo",
-        "ref": "seed/photos/placeholder.svg",
-        "caption": "pothole on 17th Cross",
+        "ref": "seed/photos/R047-pothole.web.jpg",
+        "caption": "Two potholes visible in the asphalt road surface.",
         "extracted": {
           "observedFeatures": [
-            "pothole ~30cm",
-            "surface only"
+            "deep circular pothole",
+            "alligator cracking",
+            "loose aggregate inside pothole",
+            "second smaller pothole in background"
           ],
-          "severitySignal": 2,
-          "confidence": 0.78
+          "severitySignal": 4,
+          "confidence": 0.98
         }
       }
     ],
@@ -677,16 +681,9 @@
     "media": [
       {
         "type": "photo",
-        "ref": "seed/photos/placeholder.svg",
+        "ref": null,
         "caption": "road subsidence near junction",
-        "extracted": {
-          "observedFeatures": [
-            "asphalt depression ~40cm",
-            "edge cracking"
-          ],
-          "severitySignal": 4,
-          "confidence": 0.86
-        }
+        "extracted": null
       }
     ],
     "engagement": {
@@ -756,16 +753,17 @@
     "media": [
       {
         "type": "photo",
-        "ref": "seed/photos/placeholder.svg",
-        "caption": "diagonal wall crack",
+        "ref": "seed/photos/R064-crack.web.jpg",
+        "caption": "Prominent diagonal structural cracks extending from window corners on a building facade.",
         "extracted": {
           "observedFeatures": [
-            "diagonal crack",
-            ">3mm width",
-            "load-bearing wall"
+            "diagonal wall cracks",
+            "stucco delamination near windows",
+            "visible substrate underneath facade paint",
+            "multiple window openings"
           ],
-          "severitySignal": 5,
-          "confidence": 0.81
+          "severitySignal": 4,
+          "confidence": 0.95
         }
       }
     ],

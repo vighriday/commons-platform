@@ -88,6 +88,7 @@ export interface EvidenceRef {
   reportId: string;
   field: string;
   value: string;
+  imageUrl?: string; // set on a media:photo row that has a real, servable image
 }
 
 export interface AgentHandoff {
@@ -165,6 +166,14 @@ export interface Reversal {
   reason: string;
 }
 
+// Cross-Report Synthesis — the latent cause a Gemini reasoning pass connects from
+// individually-trivial reports that no single reporter could have seen.
+export interface SynthesisInsight {
+  latentCause: string; // the hidden, connecting cause
+  signalChain: string[]; // how each weak report points to it
+  whyMissed: string; // why no single report revealed it
+}
+
 // ── Issue (cluster / synthesized output) ────────────────────────────────────────
 export interface Issue {
   issueId: string;
@@ -186,12 +195,14 @@ export interface Issue {
   resolution: Resolution | null;
   escalation: Escalation | null;
   memory: Memory | null;
+  synthesis: SynthesisInsight | null; // set only on synthesis-type clusters
   createdAt: string; // ISO
 }
 
 // ── Agent run (the trace) ───────────────────────────────────────────────────────
 export type AgentName =
   | "evidence"
+  | "synthesis"
   | "impact"
   | "attention"
   | "hidden_crisis"

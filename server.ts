@@ -148,7 +148,15 @@ async function startServer() {
       return;
     }
     const doc = data.getFootprints();
-    res.json(doc ?? { wardId: data.ward, provenance: "derived-from-real", source: "", count: 0, footprints: [] });
+    res.json(
+      doc ?? {
+        wardId: data.ward,
+        provenance: "derived-from-real",
+        source: "",
+        count: 0,
+        footprints: [],
+      },
+    );
   });
 
   // Time Machine snapshots (month-end frames of the quadrant state).
@@ -161,6 +169,16 @@ async function startServer() {
   });
 
   app.use("/api", api);
+
+  // Evidence photos (real, EXIF-stripped, CC-licensed) — served read-only so the
+  // report drawer can show the actual image the Vision agent analysed.
+  app.use(
+    "/seed/photos",
+    express.static(path.resolve(process.cwd(), "seed/photos"), {
+      maxAge: "1d",
+      fallthrough: false,
+    }),
+  );
 
   // A2A discovery — the canonical well-known path. Must be registered before the
   // SPA catch-all (which would otherwise serve index.html for this path).

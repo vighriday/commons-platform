@@ -1,6 +1,6 @@
-import { useState } from "react";
 import type { Issue } from "@shared/types.ts";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { api } from "../lib/api.ts";
 import { useTwinStore } from "../lib/twinStore.ts";
 import { CATEGORY_ICON, IconAlert, IconEscalate, IconLayers, IconReversal } from "./icons.tsx";
@@ -103,6 +103,7 @@ export function IssueDrawer({ id, onClose }: { id: string; onClose: () => void }
               View on the Digital Twin
             </button>
             <ImpactBreakdown issue={issue} />
+            {issue.synthesis && <SynthesisCard issue={issue} />}
             {issue.reversal?.overruledAttention && <ReversalCard issue={issue} />}
             {issue.escalation && <EscalationCard issue={issue} />}
             <Evidence issue={issue} />
@@ -228,6 +229,33 @@ function ReversalCard({ issue }: { issue: Issue }) {
   );
 }
 
+// Cross-Report Synthesis — the latent cause a Gemini reasoning pass connected
+// from individually-trivial reports. The "no single reporter could see this" beat.
+function SynthesisCard({ issue }: { issue: Issue }) {
+  const s = issue.synthesis!;
+  return (
+    <section className="rounded-lg border border-brand/40 bg-brand/[0.06] px-4 py-3.5">
+      <div className="label flex items-center gap-1.5 text-brand">
+        <IconLayers size={14} />
+        Cross-report synthesis · Gemini reasoning
+      </div>
+      <p className="mt-2 text-[14px] font-medium leading-snug text-ink">{s.latentCause}</p>
+      <div className="mt-3 space-y-1.5">
+        {s.signalChain.map((line) => (
+          <div key={line} className="flex gap-2 text-[12px] leading-relaxed text-ink-muted">
+            <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand" />
+            <span>{line}</span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 border-t border-brand/20 pt-2.5 text-[12px] leading-relaxed text-ink-faint">
+        <span className="font-medium text-ink-muted">Why no one saw it: </span>
+        {s.whyMissed}
+      </p>
+    </section>
+  );
+}
+
 function Evidence({ issue }: { issue: Issue }) {
   return (
     <section>
@@ -239,10 +267,28 @@ function Evidence({ issue }: { issue: Issue }) {
         </span>
       </div>
       <ul className="space-y-2">
-        {issue.handoff.evidence.map((e) => (
-          <li key={e.reportId} className="rounded-lg border border-line bg-surface px-3 py-2.5">
-            <span className="font-data text-[11px] text-ink-faint">{e.reportId}</span>
-            <p className="mt-1 text-[13px] leading-relaxed text-ink-muted">{e.value}</p>
+        {issue.handoff.evidence.map((e, n) => (
+          <li
+            key={`${e.reportId}-${e.field}-${n}`}
+            className="overflow-hidden rounded-lg border border-line bg-surface"
+          >
+            {e.imageUrl && (
+              <div className="relative">
+                <img
+                  src={e.imageUrl}
+                  alt={`Evidence photo for ${e.reportId}`}
+                  className="h-36 w-full object-cover"
+                  loading="lazy"
+                />
+                <span className="absolute right-2 top-2 rounded-md bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
+                  👁 read by Gemini Vision
+                </span>
+              </div>
+            )}
+            <div className="px-3 py-2.5">
+              <span className="font-data text-[11px] text-ink-faint">{e.reportId}</span>
+              <p className="mt-1 text-[13px] leading-relaxed text-ink-muted">{e.value}</p>
+            </div>
           </li>
         ))}
       </ul>

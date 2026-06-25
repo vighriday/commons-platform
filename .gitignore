@@ -66,3 +66,9 @@ firebase-debug.log
 
 # deploy archives (built on demand, never committed)
 *.zip
+
+# Full-res evidence-photo originals (re-downloadable from Wikimedia per ATTRIBUTION.md);
+# only the served *.web.jpg derivatives are committed.
+seed/photos/R033-drain.jpg
+seed/photos/R047-pothole.jpg
+seed/photos/R064-crack.jpg

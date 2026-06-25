@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160" role="img" aria-label="Photo attached (not analysed)">
+  <rect width="240" height="160" rx="10" fill="#11161d"/>
+  <rect x="0.5" y="0.5" width="239" height="159" rx="9.5" fill="none" stroke="#2a323d"/>
+  <g stroke="#5d7184" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="86" y="58" width="68" height="48" rx="4"/>
+    <circle cx="120" cy="80" r="11"/>
+    <path d="M99 58l5-7h32l5 7"/>
+  </g>
+  <text x="120" y="128" text-anchor="middle" fill="#5d7184" font-family="system-ui, sans-serif" font-size="11">photo attached — not analysed</text>
+</svg>

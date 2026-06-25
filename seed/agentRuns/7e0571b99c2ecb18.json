@@ -1,0 +1,10 @@
+{
+  "latentCause": "A subsurface water main leak eroding the road base and causing localized soil saturation.",
+  "signalChain": [
+    "R041: Loss of main pressure indicating a breach in the local distribution line.",
+    "R058: Soil washout underneath the pavement resulting in a sinkhole depression.",
+    "R072: Sediment and rust infiltration into the water supply caused by pressure fluctuations and pipe wall degradation at the breach site.",
+    "R086: Constant seepage of treated water to the surface despite dry weather, confirming a persistent underground leak."
+  ],
+  "whyMissed": "The reports are categorized under distinct civic departments—water, roads, and drainage—preventing a unified view; individually, they appear as minor maintenance issues, and their geographical proximity is ignored by volume-ranked algorithms that prioritize high-frequency incident types over cross-category spatial clustering."
+}

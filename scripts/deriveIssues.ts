@@ -171,7 +171,7 @@ function buildIssue(def: PlantedDef): Issue {
   const exposure: ExposureFactor = {
     value: exposureVal,
     source: "open_buildings",
-    provenance: "derived-from-real",
+    provenance: "curated", // design-locked, calibrated to the Open Buildings method
     inputs: {
       densityNorm: exp.densityNorm as number,
       heightNorm: exp.heightNorm as number,
@@ -183,7 +183,7 @@ function buildIssue(def: PlantedDef): Issue {
     source: "data_commons",
     adminLevel: "district",
     lowGranularityWarning: true,
-    provenance: "real",
+    provenance: "curated", // deprivation input real (Census 2011); per-cell value design-locked
     inputs: {
       deprivationNorm: vul.deprivationNorm as number,
       floodProneFlag: vul.floodProneFlag as number,
@@ -224,6 +224,7 @@ function buildIssue(def: PlantedDef): Issue {
     resolution: null,
     escalation: null,
     memory: null, // Phase 2 (agents)
+    synthesis: null, // filled by the synthesis agent on synthesis clusters
     createdAt: members[members.length - 1].createdAt,
   };
 }

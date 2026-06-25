@@ -138,11 +138,8 @@ add({
   createdAt: iso("2025-03-26T18:40:00"),
   reporterId: "U09",
   location: locFor("main27_s1", "R058"),
-  media: media("photo", "road subsidence near junction", {
-    observedFeatures: ["asphalt depression ~40cm", "edge cracking"],
-    severitySignal: 4,
-    confidence: 0.86,
-  }),
+  // No real image for this report → no fabricated vision block (text-only honest).
+  media: media("photo", "road subsidence near junction", null),
   engagement: { upvotes: 2, replies: 1, viewCount: 14 },
   alarmIntensity: 0.28,
   isGenuine: true,
@@ -187,11 +184,8 @@ add({
   createdAt: iso("2025-01-19T10:05:00"),
   reporterId: "U02",
   location: locFor("agara_lake", "R033"),
-  media: media("photo", "silted storm drain", {
-    observedFeatures: ["silt+plastic occlusion", "stagnant water"],
-    severitySignal: 5,
-    confidence: 0.83,
-  }),
+  // Real vision is added by scripts/applyVision.ts from the committed CC image.
+  media: media("photo", "storm drain", null),
   engagement: { upvotes: 1, replies: 0, viewCount: 9 },
   alarmIntensity: 0.18,
   isGenuine: true,
@@ -220,11 +214,8 @@ add({
   createdAt: iso("2025-04-15T08:30:00"),
   reporterId: "U17",
   location: locFor("somasundara", "R064"),
-  media: media("photo", "diagonal wall crack", {
-    observedFeatures: ["diagonal crack", ">3mm width", "load-bearing wall"],
-    severitySignal: 5,
-    confidence: 0.81,
-  }),
+  // Real vision is added by scripts/applyVision.ts from the committed CC image.
+  media: media("photo", "wall crack", null),
   engagement: { upvotes: 0, replies: 0, viewCount: 7 },
   alarmIntensity: 0.2,
   isGenuine: true,
@@ -336,11 +327,8 @@ potholeIds.forEach((id, i) => {
     location: locFor("cross17_s7", id),
     media:
       i === 0
-        ? media("photo", "pothole on 17th Cross", {
-            observedFeatures: ["pothole ~30cm", "surface only"],
-            severitySignal: 2,
-            confidence: 0.78,
-          })
+        ? // Real vision added by scripts/applyVision.ts from the committed CC image.
+          media("photo", "pothole on 17th Cross", null)
         : media("none", null),
     engagement: { upvotes: potholeUpvotes[i], replies: int(1, 4), viewCount: int(40, 90) },
     alarmIntensity: 0.78 + rng() * 0.08,

@@ -5,14 +5,14 @@
 // seed-design.md §1; background cells get deterministic, ward-typical values.
 //
 // Provenance is honest:
-//   exposure      = derived-from-real (Open Buildings 2.5D Temporal, clipped offline)
-//   vulnerability = real-derived (Census 2011 via Data Commons, district) + curated floodProneFlag
-//
-// PHASE NOTE: the planted exposure numbers are the locked design values. The
-// offline Open Buildings raster clip that *computes* these per cell is a Phase-3
-// task (scripts/genExposureFromOpenBuildings.ts); until then these committed
-// values stand in, labelled derived-from-real. Vulnerability deprivation (0.219)
-// is the real Census 2011 illiteracy rate for Bengaluru Urban.
+//   exposure      = synthetic, design-locked, calibrated to the Open Buildings 2.5D
+//                   density/height methodology (NOT a live GCS raster clip — that
+//                   is not done; the values are hand-locked to the design table).
+//   vulnerability = the deprivation input is the REAL Census 2011 illiteracy rate
+//                   for Bengaluru Urban (0.2181); the per-cell value + flood flag
+//                   are design-locked so Impact lands on the self-consistent table.
+// The README/UI present Open Buildings + Data Commons as the METHOD, which is true;
+// the per-cell numbers are disclosed-synthetic, not pulled from those services.
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,7 +22,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SEED_DIR = path.resolve(__dirname, "../seed");
 
 // Real Census 2011 (Data Commons, Bengaluru Urban district): illiteracy rate.
-const DEPRIVATION_NORM = 0.219;
+const DEPRIVATION_NORM = 0.2181;
 const VULN_ADMIN_LEVEL = "district";
 
 // Locked exposure values for planted cells (seed-design §1 number table).
@@ -111,8 +111,9 @@ const exposureGrid = HSR_CELLS.map((c) => {
     heightSlope: v.heightSlope,
     countSlope: v.countSlope,
     exposure: v.exposure,
-    provenance: "derived-from-real",
-    source: "OpenBuildings2.5D-Temporal-v1@GCS, clipped offline",
+    provenance: "synthetic-calibrated",
+    source:
+      "design-locked, calibrated to Open Buildings 2.5D density/height methodology (not a live GCS clip)",
   };
 });
 
@@ -132,8 +133,8 @@ const vulnerabilityGrid = HSR_CELLS.map((c) => {
     lowGranularityWarning: true,
     deprivationNorm: DEPRIVATION_NORM,
     floodProneFlag,
-    provenance: "real-derived(Census2011)+curated(flood)",
-    source: "Census 2011 via Data Commons (district Bengaluru Urban) + BBMP flood map",
+    provenance: "synthetic-calibrated(Census2011 deprivation, real)+design-locked(flood)",
+    source: "Census 2011 deprivation (real, district Bengaluru Urban) + design-locked flood flag",
   };
 });
 
@@ -143,7 +144,7 @@ const dataCommons = {
   adminLevel: "district",
   censusYear: 2011,
   provenance: "real",
-  source: "Data Commons v2 (cached at build time)",
+  source: "Census 2011 figures transcribed from Data Commons (manually, at build time — no live API call)",
   vars: {
     Count_Person: 9621551,
     Count_Person_Literate: 7522893,

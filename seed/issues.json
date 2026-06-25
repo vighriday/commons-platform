@@ -28,7 +28,7 @@
         "densityNorm": 0.98,
         "heightNorm": 0.63
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.93
     },
@@ -106,16 +106,17 @@
       "norm": 1,
       "row": 5
     },
+    "synthesis": null,
     "title": "Stormwater drain choke near Agara Lake — silent flood risk",
     "type": "hidden_crisis",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 1
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },
@@ -149,7 +150,7 @@
         "densityNorm": 0.97,
         "heightNorm": 0.83
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.92
     },
@@ -218,16 +219,17 @@
       "norm": 1,
       "row": 5
     },
+    "synthesis": null,
     "title": "Load-bearing wall crack, Somasundarapalya tenement block",
     "type": "hidden_crisis",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 0
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },
@@ -262,7 +264,7 @@
         "densityNorm": 0.94,
         "heightNorm": 0.47
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.89
     },
@@ -334,16 +336,17 @@
       "norm": 0.8,
       "row": 4
     },
+    "synthesis": null,
     "title": "Streetlight blackout on ORR service road — pedestrian risk",
     "type": "hidden_crisis",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 0
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },
@@ -380,7 +383,7 @@
         "densityNorm": 0.61,
         "heightNorm": 0.27
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.56
     },
@@ -474,16 +477,26 @@
       "norm": 1,
       "row": 5
     },
+    "synthesis": {
+      "latentCause": "A subsurface water main leak eroding the road base and causing localized soil saturation.",
+      "signalChain": [
+        "R041: Loss of main pressure indicating a breach in the local distribution line.",
+        "R058: Soil washout underneath the pavement resulting in a sinkhole depression.",
+        "R072: Sediment and rust infiltration into the water supply caused by pressure fluctuations and pipe wall degradation at the breach site.",
+        "R086: Constant seepage of treated water to the surface despite dry weather, confirming a persistent underground leak."
+      ],
+      "whyMissed": "The reports are categorized under distinct civic departments—water, roads, and drainage—preventing a unified view; individually, they appear as minor maintenance issues, and their geographical proximity is ignored by volume-ranked algorithms that prioritize high-frequency incident types over cross-category spatial clustering."
+    },
     "title": "Failing trunk water main under 27th Main, Sector 1 — pre-rupture",
     "type": "synthesis",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 1
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },
@@ -519,7 +532,7 @@
         "densityNorm": 0.54,
         "heightNorm": 0.18
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.49
     },
@@ -605,16 +618,17 @@
       "norm": 0.8,
       "row": 4
     },
+    "synthesis": null,
     "title": "Recurring Drainage Infrastructure Failure — 14th Main x 1st Cross",
     "type": "recurrence",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 1
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },
@@ -654,7 +668,7 @@
         "densityNorm": 0.6,
         "heightNorm": 0.22
       },
-      "provenance": "derived-from-real",
+      "provenance": "curated",
       "source": "open_buildings",
       "value": 0.55
     },
@@ -775,16 +789,17 @@
       "norm": 0.4,
       "row": 2
     },
+    "synthesis": null,
     "title": "Pothole on 17th Cross, Sector 7",
     "type": "noise",
     "vulnerability": {
       "adminLevel": "district",
       "inputs": {
-        "deprivationNorm": 0.219,
+        "deprivationNorm": 0.2181,
         "floodProneFlag": 0
       },
       "lowGranularityWarning": true,
-      "provenance": "real",
+      "provenance": "curated",
       "source": "data_commons",
       "value": 0.87
     },

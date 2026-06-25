@@ -98,7 +98,7 @@ function main(): void {
 
   const out = {
     wardId: "blr-174-hsr",
-    provenance: "derived-from-real",
+    provenance: "synthetic-calibrated",
     source: "synthetic footprints scaled by OpenBuildings 2.5D density/height per cell",
     count: footprints.length,
     footprints,
