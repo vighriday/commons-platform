@@ -246,7 +246,8 @@ export function advanceStatus(
   const at = new Date().toISOString();
   o.status = to;
   if (to === "assigned") o.assignedAt = at;
-  o.timeline = [...o.timeline, { status: to, at, note, actor }];
+  // Append, capped — keep the most recent MAX_TIMELINE events.
+  o.timeline = [...o.timeline, { status: to, at, note, actor }].slice(-MAX_TIMELINE);
   logger.info({ event: "status_advance", issueId: issue.issueId, to }, "issue status advanced");
   persist();
   return { ok: true, status: o.status, timeline: o.timeline };
@@ -288,19 +289,32 @@ export function slaState(issue: Issue, slaDays: number): SlaState {
 // duplicate cards in the Matrix, so we suffix a monotonic counter the moment a
 // collision is detected: ISS_LIVE_WJFQ, ISS_LIVE_WJFQ_2, ISS_LIVE_WJFQ_3, …
 export function uniqueLiveId(base: string): string {
-  const exists = (id: string) =>
-    liveIssues.some((i) => i.issueId === id) || overlays.has(id);
+  const exists = (id: string) => liveIssues.some((i) => i.issueId === id) || overlays.has(id);
   if (!exists(base)) return base;
   let n = 2;
   while (exists(`${base}_${n}`)) n++;
   return `${base}_${n}`;
 }
 
+// Hard ceiling on runtime-stored live issues so a sustained submission stream can
+// never grow the array / persisted file without bound and OOM the container. Far
+// above any real demo need; on overflow the oldest live issue (and its overlay) is
+// evicted, keeping the seed issues and the most recent submissions intact.
+const MAX_LIVE_ISSUES = 200;
+// Cap timeline length per issue so a status-churn loop can't grow one overlay
+// unboundedly. A real lifecycle is <10 events; keep generous headroom.
+const MAX_TIMELINE = 50;
+
 export function addLiveIssue(issue: Issue): void {
   // Defence in depth: never push a duplicate id (would render twice in the Matrix).
   if (liveIssues.some((i) => i.issueId === issue.issueId)) return;
   liveIssues.push(issue);
   ensure(issue);
+  // Evict the oldest live issue + its overlay if over the cap.
+  while (liveIssues.length > MAX_LIVE_ISSUES) {
+    const evicted = liveIssues.shift();
+    if (evicted) overlays.delete(evicted.issueId);
+  }
   persist();
 }
 export function listLiveIssues(): Issue[] {

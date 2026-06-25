@@ -17,7 +17,11 @@ const Verdict = z.object({
   piiPresent: z.boolean(),
   reason: z.string().max(240),
 });
-export type SanitizerVerdict = z.infer<typeof Verdict>;
+// The model-call result plus a `degraded` flag the caller uses to fail CLOSED: when
+// the screening model is unavailable, text that the cheap heuristic could not clear
+// is NOT silently passed into the pipeline — the route rejects it (503) and asks the
+// citizen to retry. Set false on a normal model verdict.
+export type SanitizerVerdict = z.infer<typeof Verdict> & { degraded?: boolean };
 
 const SCHEMA: Schema = {
   type: Type.OBJECT,
@@ -67,12 +71,18 @@ export async function sanitize(text: string): Promise<SanitizerVerdict> {
     }
     return v;
   } catch {
-    // Model offline / failed → fail safe but DON'T hard-block a genuine report:
-    // the heuristic already cleared the obvious attacks above.
+    // Model offline / failed → FAIL CLOSED. The heuristic already cleared the
+    // obvious attacks, but a sophisticated injection the heuristic can't see must
+    // not slip through unscreened just because the screening model is down. We mark
+    // the verdict `degraded`; the route turns that into a 503 "screening
+    // unavailable, retry" rather than processing unverified citizen text. (Bounded
+    // either way — the text is fenced as DATA and all model outputs are Zod-clamped
+    // — but failing closed is the correct security default.)
     return {
       injectionDetected: false,
       piiPresent: false,
-      reason: "sanitizer offline — heuristic only",
+      reason: "Content screening is temporarily unavailable — please retry.",
+      degraded: true,
     };
   }
 }

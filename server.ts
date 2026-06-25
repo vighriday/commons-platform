@@ -195,7 +195,24 @@ async function startServer() {
     },
   });
 
-  api.post("/submit", submitLimiter, (req, res) => {
+  // M4 — GLOBAL daily ceiling on Gemini-spending routes, across ALL clients. The
+  // per-IP limiter stops one identity; this stops a distributed swarm from draining
+  // the day's free-tier quota before the circuit-breaker (the last resort) trips.
+  // A constant well below the RPD soft cap, reset on a rolling 24h window. Keyed on
+  // a constant so every request shares one bucket regardless of IP.
+  const globalLiveCap = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000,
+    limit: 600, // total live-spending calls/day across everyone; demo uses a handful
+    standardHeaders: false,
+    legacyHeaders: false,
+    keyGenerator: () => "global",
+    handler: (req, res) => {
+      logger.warn({ event: "global_live_cap" }, "global daily live-call ceiling reached");
+      res.status(429).json({ error: "DAILY_LIMIT_REACHED", requestId: req.requestId });
+    },
+  });
+
+  api.post("/submit", globalLiveCap, submitLimiter, (req, res) => {
     // multer parses multipart (the photo + text fields) within the size caps.
     photoUpload(req, res, async (uploadErr) => {
       if (uploadErr) {
@@ -227,6 +244,12 @@ async function startServer() {
 
         // C2 — injection sanitizer. Flagged text is quarantined, not processed.
         const verdict = await sanitize(parsed.data.text);
+        // Fail closed: if the screening model was unavailable, do NOT process
+        // unscreened text — ask the citizen to retry.
+        if (verdict.degraded) {
+          res.status(503).json({ error: "SCREENING_UNAVAILABLE", requestId: req.requestId });
+          return;
+        }
         if (verdict.injectionDetected) {
           res.status(422).json({
             error: "QUARANTINED",
@@ -265,7 +288,7 @@ async function startServer() {
   // text so the citizen sees "the AI reads this as drainage" before committing. A
   // real Gemini call (spends a little quota), so it shares the submit limiter and
   // sanitises the untrusted text first. Returns null suggestion if the model is off.
-  api.post("/classify", submitLimiter, async (req, res) => {
+  api.post("/classify", globalLiveCap, submitLimiter, async (req, res) => {
     const text = typeof req.body?.text === "string" ? req.body.text.trim() : "";
     if (text.length < 8 || text.length > 5000) {
       res.status(400).json({ error: "VALIDATION_FAILED", requestId: req.requestId });
@@ -278,6 +301,12 @@ async function startServer() {
         quarantine: { reason: verdict.reason },
         requestId: req.requestId,
       });
+      return;
+    }
+    // /classify is a non-blocking hint; if screening is degraded, just return no
+    // suggestion (the manual picker still works) rather than running it unscreened.
+    if (verdict.degraded) {
+      res.json({ suggested: null, confidence: 0, alternative: null, reason: "" });
       return;
     }
     const cat = await classifyCategory(text);

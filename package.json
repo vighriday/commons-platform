@@ -12,6 +12,7 @@
     "dev": "node --env-file=.env --import tsx --watch server.ts",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
+    "reset-state": "node -e \"const fs=require('node:fs');try{fs.rmSync('.data/live-state.json');console.log('live state cleared — back to the seed baseline')}catch{console.log('no live state to clear')}\"",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",

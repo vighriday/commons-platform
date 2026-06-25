@@ -32,7 +32,13 @@ export interface ProcessedImage {
 // Verify + sanitize an uploaded image buffer. Throws on a non-image (sharp can't
 // decode it) so a renamed bomb never reaches the model.
 export async function processImage(buf: Buffer): Promise<ProcessedImage> {
-  const pipeline = sharp(buf, { failOn: "error" })
+  const pipeline = sharp(buf, {
+    failOn: "error",
+    // Cap decoded pixel count (decompression-bomb defence): a 6MB file can encode
+    // a hugely-dimensioned image that blows up to gigabytes decoded. 24MP is plenty
+    // for any phone photo; anything larger throws and is reported as 415.
+    limitInputPixels: 24_000_000,
+  })
     .rotate() // apply EXIF orientation before we strip metadata
     .resize(1024, 1024, { fit: "inside", withoutEnlargement: true })
     .jpeg({ quality: 80 }); // re-encode → drops all metadata (EXIF/GPS gone)

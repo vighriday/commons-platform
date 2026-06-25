@@ -22,7 +22,7 @@ const isDev = process.env.NODE_ENV !== "production";
 const devScriptSrc = isDev ? ["'unsafe-inline'"] : [];
 const devConnectSrc = isDev ? ["ws://localhost:*", "http://localhost:*"] : [];
 
-export const securityHeaders: RequestHandler = helmet({
+const helmetHeaders: RequestHandler = helmet({
   contentSecurityPolicy: {
     useDefaults: false,
     directives: {
@@ -52,3 +52,15 @@ export const securityHeaders: RequestHandler = helmet({
   crossOriginOpenerPolicy: { policy: "same-origin" },
   // X-Content-Type-Options: nosniff, X-Frame-Options, etc. come from helmet.
 });
+
+// helmet does not set Permissions-Policy. COMMONS needs none of the powerful
+// browser features (camera, mic, geolocation, payment, USB, …), so deny them all
+// — defence-in-depth that shrinks the attack surface of any injected/embedded
+// content. Wrap helmet so both run in order.
+export const securityHeaders: RequestHandler = (req, res, next) => {
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()",
+  );
+  helmetHeaders(req, res, next);
+};
