@@ -5,9 +5,9 @@
 // WebGL context. This is the deck.gl-documented pattern that avoids the
 // two-cameras-fighting jitter you get when DeckGL wraps the Map. The result is a
 // rock-steady 3D scene that pans/tilts/rotates with the map.
-import { ColumnLayer, ScatterplotLayer } from "@deck.gl/layers";
+import { ColumnLayer, PolygonLayer, ScatterplotLayer } from "@deck.gl/layers";
 import { MapboxOverlay } from "@deck.gl/mapbox";
-import type { Issue, Quadrant } from "@shared/types.ts";
+import type { Footprint, Issue, Quadrant } from "@shared/types.ts";
 import maplibregl from "maplibre-gl";
 import { useCallback, useMemo, useRef, useState } from "react";
 import MapGL, { useControl } from "react-map-gl/maplibre";
@@ -28,6 +28,7 @@ function rgb(hex: string): [number, number, number] {
 interface Props {
   geo: TwinGeo;
   issues: Issue[];
+  footprints: Footprint[];
   onSelect: (id: string) => void;
   focusCellId: string | null;
 }
@@ -42,7 +43,7 @@ function DeckOverlay({ layers }: { layers: unknown[] }) {
   return null;
 }
 
-export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
+export function DigitalTwin3D({ geo, issues, footprints, onSelect, focusCellId }: Props) {
   const [hover, setHover] = useState<{ x: number; y: number; m: TwinMarker } | null>(null);
 
   // Each cell's column colour = the quadrant of the highest-impact issue in that
@@ -62,6 +63,27 @@ export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
 
   const layers = useMemo(
     () => [
+      // Building footprints — a low, dark extruded layer UNDER the columns, so the
+      // ward reads as a real built-up place. Count/height per cell scale with the
+      // real Open Buildings density/height (see scripts/genFootprints.ts).
+      new PolygonLayer({
+        id: "building-footprints",
+        data: footprints,
+        extruded: true,
+        // Match the column elevation scale (exposure × 700) so buildings read as
+        // real massing beneath the taller exposure columns, not flat slabs.
+        elevationScale: 5,
+        getPolygon: (f: Footprint) => f.polygon,
+        getElevation: (f: Footprint) => f.heightM,
+        // Lighter slate so the massing is legible against the dark basemap.
+        getFillColor: [96, 116, 140, 240],
+        getLineColor: [140, 160, 184, 255],
+        getLineWidth: 1,
+        lineWidthUnits: "pixels",
+        stroked: true,
+        material: { ambient: 0.6, diffuse: 0.7, shininess: 24 },
+        pickable: false,
+      }),
       new ColumnLayer({
         id: "exposure-columns",
         data: geo.cells,
@@ -103,7 +125,7 @@ export function DigitalTwin3D({ geo, issues, onSelect, focusCellId }: Props) {
         updateTriggers: { getLineColor: [focusCellId] },
       }),
     ],
-    [geo, cellQuadrant, focusCellId, onHover],
+    [geo, footprints, cellQuadrant, focusCellId, onHover],
   );
 
   return (

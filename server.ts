@@ -140,6 +140,17 @@ async function startServer() {
     res.json(buildAgentCard(originOf(req)));
   });
 
+  // Digital-Twin building footprints (disclosed-synthetic, density/height scaled
+  // from the real Open Buildings exposure grid). 200 with empty list if absent.
+  api.get("/footprints/:ward", (req, res) => {
+    if (req.params.ward !== data.ward) {
+      res.status(404).json({ error: "WARD_NOT_FOUND", requestId: req.requestId });
+      return;
+    }
+    const doc = data.getFootprints();
+    res.json(doc ?? { wardId: data.ward, provenance: "derived-from-real", source: "", count: 0, footprints: [] });
+  });
+
   // Time Machine snapshots (month-end frames of the quadrant state).
   api.get("/snapshots/:ward", (req, res) => {
     if (req.params.ward !== data.ward) {

@@ -25,7 +25,8 @@
     "seed:issues": "tsx scripts/deriveIssues.ts",
     "seed:embeddings": "node --env-file=.env --import tsx scripts/genEmbeddings.ts",
     "seed:snapshots": "tsx scripts/genSnapshots.ts",
-    "seed:all": "npm run seed:grids && npm run seed && npm run seed:issues && npm run agents && npm run seed:snapshots",
+    "seed:footprints": "tsx scripts/genFootprints.ts",
+    "seed:all": "npm run seed:grids && npm run seed && npm run seed:issues && npm run agents && npm run seed:snapshots && npm run seed:footprints",
     "gate": "npm run typecheck && vite build",
     "predeploy": "npm run build && node scripts/checkBundleSecrets.mjs",
     "audit:security": "npm audit --audit-level=high"

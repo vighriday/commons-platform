@@ -78,9 +78,9 @@ def main():
         except Exception as e:
             print(f"  (inspector skipped: {e})")
 
-        # 6) Digital Twin (3D) — give deck.gl + tiles time to paint
+        # 6) Digital Twin (3D) — give deck.gl + tiles + footprints time to paint
         rail(page, "Twin")
-        page.wait_for_timeout(3500)
+        page.wait_for_timeout(5500)
         shot(page, "06-twin")
 
         # 7) Time Machine

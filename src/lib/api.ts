@@ -1,5 +1,13 @@
 // Typed client for the COMMONS API. One place that knows the endpoint shapes.
-import type { AgentRun, CivicPulse, Issue, Report, Snapshot, TwinDoc } from "@shared/types.ts";
+import type {
+  AgentRun,
+  CivicPulse,
+  FootprintDoc,
+  Issue,
+  Report,
+  Snapshot,
+  TwinDoc,
+} from "@shared/types.ts";
 
 async function getJSON<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -16,4 +24,5 @@ export const api = {
   agentRun: () => getJSON<AgentRun>("/api/agent-run"),
   snapshots: (ward: string) =>
     getJSON<{ ward: string; snapshots: Snapshot[] }>(`/api/snapshots/${ward}`),
+  footprints: (ward: string) => getJSON<FootprintDoc>(`/api/footprints/${ward}`),
 };

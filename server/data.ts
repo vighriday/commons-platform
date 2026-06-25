@@ -12,6 +12,7 @@ import type {
   AgentRun,
   CivicPulse,
   ExposureGridCell,
+  FootprintDoc,
   Issue,
   Report,
   Reporter,
@@ -45,6 +46,9 @@ const exposureGrid = load<ExposureGridCell[]>("exposureGrid.json", []);
 const agentRun = load<AgentRun | null>("agentRun.json", null);
 // Time Machine snapshots (Phase 3) — month-end frames of the quadrant state.
 const snapshots = load<Snapshot[]>("snapshots.json", []);
+// Digital-Twin building footprints (disclosed-synthetic, density/height from the
+// real exposure grid). Optional — the twin renders fine without them.
+const footprintDoc = load<FootprintDoc | null>("footprints.json", null);
 
 logger.info(
   { reports: reports.length, issues: issues.length, cells: exposureGrid.length },
@@ -129,5 +133,8 @@ export const data = {
   },
   listSnapshots(): Snapshot[] {
     return snapshots;
+  },
+  getFootprints(): FootprintDoc | null {
+    return footprintDoc;
   },
 };

@@ -266,6 +266,21 @@ export interface CivicPulse {
   narrative: string;
 }
 
+// Building footprints for the Digital Twin — a disclosed-synthetic visual whose
+// per-cell count + height are scaled by the real Open Buildings density/height.
+export interface Footprint {
+  plusCellId: string;
+  polygon: [number, number][]; // [lng, lat] ring
+  heightM: number;
+}
+export interface FootprintDoc {
+  wardId: string;
+  provenance: Provenance;
+  source: string;
+  count: number;
+  footprints: Footprint[];
+}
+
 export interface Snapshot {
   wardId: string;
   takenAt: string; // ISO

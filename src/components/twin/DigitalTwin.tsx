@@ -8,7 +8,9 @@ import type { Issue, Quadrant, TwinDoc } from "@shared/types.ts";
 //   2. Otherwise render the 3D twin inside an error boundary whose fallback is
 //      the SAME 2D choropleth — so a runtime deck.gl throw degrades, not blanks.
 // Both paths consume one buildTwinGeo() join, so they are data-identical.
+import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { api } from "../../lib/api.ts";
 import { QUADRANT_COLOR, buildTwinGeo } from "../../lib/twinGeo.ts";
 import { useTwinStore } from "../../lib/twinStore.ts";
 import { DigitalTwin3D } from "./DigitalTwin3D.tsx";
@@ -32,10 +34,17 @@ interface Props {
   onSelect: (id: string) => void;
 }
 
-export function DigitalTwin({ twin, issues, onSelect }: Props) {
+export function DigitalTwin({ ward, twin, issues, onSelect }: Props) {
   const focusCellId = useTwinStore((s) => s.focusCellId);
   const geo = useMemo(() => buildTwinGeo(twin, issues), [twin, issues]);
   const webgl2 = useMemo(hasWebGL2, []);
+  // Building footprints enrich the 3D scene only (the 2D choropleth ignores them).
+  const footprintsQ = useQuery({
+    queryKey: ["footprints", ward],
+    queryFn: () => api.footprints(ward),
+    enabled: webgl2,
+  });
+  const footprints = footprintsQ.data?.footprints ?? [];
 
   if (geo.cells.length === 0) {
     return (
@@ -51,7 +60,13 @@ export function DigitalTwin({ twin, issues, onSelect }: Props) {
     <div className="relative h-full w-full">
       {webgl2 ? (
         <TwinErrorBoundary fallback={fallback2D}>
-          <DigitalTwin3D geo={geo} issues={issues} onSelect={onSelect} focusCellId={focusCellId} />
+          <DigitalTwin3D
+            geo={geo}
+            issues={issues}
+            footprints={footprints}
+            onSelect={onSelect}
+            focusCellId={focusCellId}
+          />
         </TwinErrorBoundary>
       ) : (
         fallback2D
@@ -76,7 +91,7 @@ function TwinOverlay({ webgl2 }: { webgl2: boolean }) {
         </h2>
         <p className="mt-1.5 text-[13px] leading-relaxed text-ink-muted">
           {webgl2
-            ? "Each column is a ~275 m cell — taller = more built exposure (Open Buildings 2.5D). Markers are issues, sized by impact."
+            ? "Buildings are massed by real Open Buildings density/height. Each tall column is a ~275 m cell — taller = more built exposure. Markers are issues, sized by impact."
             : "Each square is a ~275 m cell, shaded by built exposure (Open Buildings 2.5D). Markers are issues, sized by impact."}
         </p>
       </div>
