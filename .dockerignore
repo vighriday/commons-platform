@@ -13,8 +13,6 @@ docs
 coverage
 .vscode
 .idea
-.claude
-.veris
 *.log
 .DS_Store
 Thumbs.db

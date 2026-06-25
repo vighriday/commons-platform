@@ -59,9 +59,10 @@ firebase-debug.log
 .eslintcache
 *.tsbuildinfo
 
-# Local agent/tooling state (not part of the product)
-.claude/
-.veris/
+# Local editor/tooling state (not part of the product)
+.idea/
+.vscode/
+*.local
 
 # deploy archives (built on demand, never committed)
 *.zip
