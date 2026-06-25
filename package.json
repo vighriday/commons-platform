@@ -33,6 +33,7 @@
   "dependencies": {
     "@deck.gl/core": "^9.0.0",
     "@deck.gl/layers": "^9.0.0",
+    "@deck.gl/mapbox": "^9.3.4",
     "@deck.gl/react": "^9.0.0",
     "@fontsource-variable/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
