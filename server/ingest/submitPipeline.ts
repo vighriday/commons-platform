@@ -21,6 +21,7 @@ import { SEVERITY_TABLE, severityLabel, severityNorm } from "../../seed/severity
 import { generateLive } from "../gemini.ts";
 import { logger } from "../lib/logger.ts";
 import type { SubmitInput } from "../schemas/submit.ts";
+import { uniqueLiveId } from "../state/store.ts";
 import type { ProcessedImage } from "./upload.ts";
 
 const SEED = path.resolve(process.cwd(), "seed");
@@ -333,7 +334,8 @@ export async function runLiveSubmit(
   });
 
   // ── Assemble the born issue (same shape as the frozen issues) ──
-  const id = `ISS_LIVE_${plusCellId.slice(-4)}`;
+  // Unique id even when two reports land in the same cell (avoids duplicate cards).
+  const id = uniqueLiveId(`ISS_LIVE_${plusCellId.slice(-4)}`);
   const evidence = [
     { reportId: "LIVE", field: "text", value: input.text },
     ...(vision

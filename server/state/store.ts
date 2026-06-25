@@ -283,7 +283,22 @@ export function slaState(issue: Issue, slaDays: number): SlaState {
 }
 
 // ── Live-submitted issues ─────────────────────────────────────────────────────────
+// A unique, readable issue id from a base (e.g. "ISS_LIVE_WJFQ"). Two submissions
+// to the SAME cell would otherwise collide on the cell-derived base and show as
+// duplicate cards in the Matrix, so we suffix a monotonic counter the moment a
+// collision is detected: ISS_LIVE_WJFQ, ISS_LIVE_WJFQ_2, ISS_LIVE_WJFQ_3, …
+export function uniqueLiveId(base: string): string {
+  const exists = (id: string) =>
+    liveIssues.some((i) => i.issueId === id) || overlays.has(id);
+  if (!exists(base)) return base;
+  let n = 2;
+  while (exists(`${base}_${n}`)) n++;
+  return `${base}_${n}`;
+}
+
 export function addLiveIssue(issue: Issue): void {
+  // Defence in depth: never push a duplicate id (would render twice in the Matrix).
+  if (liveIssues.some((i) => i.issueId === issue.issueId)) return;
   liveIssues.push(issue);
   ensure(issue);
   persist();
