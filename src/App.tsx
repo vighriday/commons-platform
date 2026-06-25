@@ -1,15 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { AgentTrace } from "./components/AgentTrace.tsx";
 import { CivicPulse } from "./components/CivicPulse.tsx";
 import { IssueDrawer } from "./components/IssueDrawer.tsx";
 import { Quadrant } from "./components/Quadrant.tsx";
 import { SeedBanner } from "./components/SeedBanner.tsx";
-import { DigitalTwin } from "./components/twin/DigitalTwin.tsx";
-import { TimeMachine } from "./components/twin/TimeMachine.tsx";
 import { IconClock, IconLayers, IconMatrix, IconTrace } from "./components/icons.tsx";
 import { api } from "./lib/api.ts";
 import { useTwinStore } from "./lib/twinStore.ts";
+
+// The Twin (deck.gl) and Time Machine (maplibre) are heavy map deps — lazy-load
+// them so the Matrix/Trace landing views ship a small first paint and only pull
+// the map bundle when the user opens those views.
+const DigitalTwin = lazy(() =>
+  import("./components/twin/DigitalTwin.tsx").then((m) => ({ default: m.DigitalTwin })),
+);
+const TimeMachine = lazy(() =>
+  import("./components/twin/TimeMachine.tsx").then((m) => ({ default: m.TimeMachine })),
+);
 
 const WARD = "blr-174-hsr";
 
@@ -148,16 +156,18 @@ export default function App() {
         <main className="min-h-0 flex-1 overflow-auto">
           {isMap ? (
             <div className="h-full">
-              {view === "twin" ? (
-                <DigitalTwin
-                  ward={WARD}
-                  twin={hoodQ.data?.twin ?? null}
-                  issues={issuesQ.data?.issues ?? []}
-                  onSelect={setSelectedId}
-                />
-              ) : (
-                <TimeMachine ward={WARD} issues={issuesQ.data?.issues ?? []} />
-              )}
+              <Suspense fallback={<MapLoading />}>
+                {view === "twin" ? (
+                  <DigitalTwin
+                    ward={WARD}
+                    twin={hoodQ.data?.twin ?? null}
+                    issues={issuesQ.data?.issues ?? []}
+                    onSelect={setSelectedId}
+                  />
+                ) : (
+                  <TimeMachine ward={WARD} issues={issuesQ.data?.issues ?? []} />
+                )}
+              </Suspense>
             </div>
           ) : (
             <div className="mx-auto max-w-[1400px] px-7 py-7">
@@ -274,6 +284,15 @@ function PanelSkeleton({ error, label }: { error?: boolean; label: string }) {
       <span className="font-data text-xs text-ink-faint">
         {error ? `Could not load the ${label}.` : `Loading the ${label}…`}
       </span>
+    </div>
+  );
+}
+
+// Shown while the lazy-loaded map bundle (deck.gl / maplibre) downloads.
+function MapLoading() {
+  return (
+    <div className="flex h-full items-center justify-center bg-surface">
+      <span className="font-data text-xs text-ink-faint">Loading the map…</span>
     </div>
   );
 }
