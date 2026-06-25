@@ -28,6 +28,7 @@ import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.
 import { requestId } from "./server/middleware/requestId.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
 import { StatusSchema, SubmitSchema } from "./server/schemas/submit.ts";
+import { persistenceEnabled } from "./server/state/persistence.ts";
 import { advanceStatus, corroborate, slaState } from "./server/state/store.ts";
 
 // The request's own origin (scheme + host), trusting the Cloud Run proxy headers
@@ -80,6 +81,7 @@ async function startServer() {
       env: config.nodeEnv,
       geminiConfigured: config.gemini.isConfigured,
       models: config.gemini.models,
+      persistence: persistenceEnabled(),
     });
   });
 

@@ -29,6 +29,9 @@ dist-ssr/
 build/
 .vite/
 
+# Runtime store — live submissions + lifecycle deltas (created at runtime, not source)
+.data/
+
 # Test / coverage
 coverage/
 .nyc_output/

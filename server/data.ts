@@ -21,7 +21,13 @@ import type {
   TwinDoc,
 } from "../shared/types.ts";
 import { logger } from "./lib/logger.ts";
-import { addLiveIssue, listLiveIssues, setSeedLifecycle, withTracking } from "./state/store.ts";
+import {
+  addLiveIssue,
+  hydrate,
+  listLiveIssues,
+  setSeedLifecycle,
+  withTracking,
+} from "./state/store.ts";
 
 // Seed JSON lives at <repo>/seed and is committed, so it ships with the build.
 // Resolve from process.cwd() (the container working dir) so this works whether
@@ -241,7 +247,10 @@ function seedDemoLifecycle(): void {
   logger.info({ seeded: 6 }, "demo_lifecycle_seeded");
 }
 
+// Lay down the deterministic demo baseline first, THEN replay any persisted
+// real-world deltas (live submissions + visitor corroborations/advances) on top.
 seedDemoLifecycle();
+hydrate();
 
 // ── Public read API (seed path; Firestore merge seam noted inline) ───────────────
 export const data = {
