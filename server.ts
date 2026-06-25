@@ -86,6 +86,12 @@ async function startServer() {
     res.json({ ward: data.ward, issues: data.listIssues() });
   });
 
+  // Phase 0 raw inputs — the citizen reports that fed the pipeline. The
+  // transparency layer shows the chain from raw report → clustered issue → agent.
+  api.get("/reports", (_req, res) => {
+    res.json({ ward: data.ward, reports: data.listReports() });
+  });
+
   api.get("/issues/:id", (req, res) => {
     const issue = data.getIssue(req.params.id);
     if (!issue) {
