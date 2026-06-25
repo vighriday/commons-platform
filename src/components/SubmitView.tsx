@@ -128,6 +128,12 @@ export function SubmitView({ onSelectIssue }: { onSelectIssue: (issue: Issue) =>
           server — read, scored, clustered, and routed to the responsible authority — behind the
           same safety guardrails (injection filter, upload limits, validation, rate limit).
         </p>
+        <p className="mt-2 inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 py-1 text-[11px] text-ink-faint">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          The issue you create is <span className="text-ink-muted">saved on the live server</span> —
+          it joins the Matrix and stays fully trackable. (Session-persisted, card-free — no external
+          database.)
+        </p>
       </header>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -436,6 +442,10 @@ function ResultPanel({ result, onOpen }: { result: SubmitResult; onOpen: () => v
           <div className="mt-2 text-[12px] text-brand">Open the full breakdown →</div>
         </Shell>
       </button>
+      <p className="flex items-center gap-1.5 px-1 text-[11px] text-ink-faint">
+        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+        Saved — find it in the Matrix and track its lifecycle anytime this session.
+      </p>
     </div>
   );
 }
