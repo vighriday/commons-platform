@@ -243,17 +243,23 @@ render failure degrades to a calm recovery screen — never a blank page.
 
 ## Built on Google technology
 
+Every entry below is genuinely wired in the shipping code — no aspirational tech.
+
 | Technology | Used for |
 |------------|----------|
+| **Google AI Studio** | The build + deploy path to Cloud Run. |
 | **Google Cloud Run** | Hosting (containerized Node server + SPA). |
 | **Gemini 3.5 Flash** | The reasoning steps — evidence, critique, escalation prose. |
 | **Gemini 3.1 Flash-Lite** | The high-volume workhorse steps. |
 | **gemini-embedding-001** | Clustering reports into issues (3072-dim). |
-| **Google Open Buildings 2.5D** | The Exposure factor (built density + height). |
+| **Gemini Structured Output** | `responseSchema`-constrained JSON for every agent. |
+| **Gemini safety settings** | Explicit harm thresholds on the brief-drafting agents. |
+| **Gemma** | RPD-wall fallback model (separate free-tier pool). |
+| **Google Open Buildings 2.5D** | The Exposure factor (built density + height) + the Twin's building mass. |
 | **Google Data Commons** | The Vulnerability factor (census deprivation proxy). |
 | **Google Plus Codes** | The ~275 m grid cell — the spatial join key. |
-| **Gemma** | RPD-wall fallback model (separate free-tier pool). |
 | **A2A** | The pipeline is discoverable at `/.well-known/agent.json`. |
+| **deck.gl** (vis.gl) | The 3D Digital Twin. |
 
 ---
 
