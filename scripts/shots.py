@@ -88,6 +88,22 @@ def main():
         page.wait_for_timeout(1500)
         shot(page, "07-time")
 
+        # 8) Submit — the live-pipeline form
+        rail(page, "Submit")
+        page.wait_for_timeout(800)
+        try:
+            page.get_by_placeholder("Stormwater drain").fill(
+                "Stormwater drain choked with silt near Agara Lake road, water not draining, smell getting worse each day."
+            )
+            page.wait_for_timeout(300)
+            shot(page, "08-submit-form")
+            # run it (live pipeline)
+            page.get_by_role("button", name="Run the pipeline").click(timeout=4000)
+            page.wait_for_timeout(9000)  # live Gemini calls
+            shot(page, "09-submit-result")
+        except Exception as e:
+            print(f"  (submit skipped: {e})")
+
         browser.close()
     print("done.")
 

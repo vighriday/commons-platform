@@ -1,11 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import type { Issue } from "@shared/types.ts";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Suspense, lazy, useState } from "react";
 import { AgentTrace } from "./components/AgentTrace.tsx";
 import { CivicPulse } from "./components/CivicPulse.tsx";
 import { IssueDrawer } from "./components/IssueDrawer.tsx";
 import { Quadrant } from "./components/Quadrant.tsx";
 import { SeedBanner } from "./components/SeedBanner.tsx";
-import { IconClock, IconLayers, IconMatrix, IconTrace } from "./components/icons.tsx";
+import { SubmitView } from "./components/SubmitView.tsx";
+import { IconClock, IconLayers, IconMatrix, IconSubmit, IconTrace } from "./components/icons.tsx";
 import { api } from "./lib/api.ts";
 import { useTwinStore } from "./lib/twinStore.ts";
 
@@ -32,10 +34,36 @@ function Rail() {
       <a href="/" aria-label="COMMONS home" className="mb-4">
         <img src="/logo.svg" width={30} height={30} alt="COMMONS" />
       </a>
-      <RailItem icon={<IconMatrix size={20} />} label="Matrix" active={view === "matrix"} onClick={() => setView("matrix")} />
-      <RailItem icon={<IconTrace size={20} />} label="Trace" active={view === "trace"} onClick={() => setView("trace")} />
-      <RailItem icon={<IconLayers size={20} />} label="Twin" active={view === "twin"} onClick={() => setView("twin")} />
-      <RailItem icon={<IconClock size={20} />} label="Time" active={view === "time"} onClick={() => setView("time")} />
+      <RailItem
+        icon={<IconMatrix size={20} />}
+        label="Matrix"
+        active={view === "matrix"}
+        onClick={() => setView("matrix")}
+      />
+      <RailItem
+        icon={<IconTrace size={20} />}
+        label="Trace"
+        active={view === "trace"}
+        onClick={() => setView("trace")}
+      />
+      <RailItem
+        icon={<IconLayers size={20} />}
+        label="Twin"
+        active={view === "twin"}
+        onClick={() => setView("twin")}
+      />
+      <RailItem
+        icon={<IconClock size={20} />}
+        label="Time"
+        active={view === "time"}
+        onClick={() => setView("time")}
+      />
+      <RailItem
+        icon={<IconSubmit size={20} />}
+        label="Submit"
+        active={view === "submit"}
+        onClick={() => setView("submit")}
+      />
     </nav>
   );
 }
@@ -137,12 +165,20 @@ function PlaceLabel() {
 export default function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const view = useTwinStore((s) => s.view);
+  const queryClient = useQueryClient();
 
   const issuesQ = useQuery({ queryKey: ["issues"], queryFn: api.issues });
   const hoodQ = useQuery({
     queryKey: ["neighborhood", WARD],
     queryFn: () => api.neighborhood(WARD),
   });
+
+  // A live-submitted issue isn't on the server's /api/issues/:id route, so prime
+  // the query cache with it before opening the drawer (which reads that cache).
+  function openLiveIssue(issue: Issue) {
+    queryClient.setQueryData(["issue", issue.issueId], issue);
+    setSelectedId(issue.issueId);
+  }
 
   // Twin + Time are full-bleed map surfaces; Matrix + Trace sit in the titled
   // reading column. The frame (rail + context bar) is shared.
@@ -154,7 +190,9 @@ export default function App() {
       <div className="flex min-w-0 flex-1 flex-col">
         <ContextBar />
         <main className="min-h-0 flex-1 overflow-auto">
-          {isMap ? (
+          {view === "submit" ? (
+            <SubmitView onSelectIssue={openLiveIssue} />
+          ) : isMap ? (
             <div className="h-full">
               <Suspense fallback={<MapLoading />}>
                 {view === "twin" ? (

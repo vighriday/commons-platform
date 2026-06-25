@@ -72,6 +72,13 @@ export const IconClock = (p: IconProps) => (
   </Icon>
 );
 
+// Submit — a citizen adds a new report (a plus inside a pin-ish frame).
+export const IconSubmit = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Icon>
+);
+
 // ── Semantic / state ────────────────────────────────────────────────────────
 
 // Reversal — attention overruled by impact. A measured rotation, not the ⟲ glyph.

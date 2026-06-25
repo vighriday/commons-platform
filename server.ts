@@ -20,10 +20,14 @@ import { buildAgentCard } from "./server/agentCard.ts";
 import { config } from "./server/config.ts";
 import { data } from "./server/data.ts";
 import { geminiPing, geminiUsage } from "./server/gemini.ts";
+import { sanitize } from "./server/ingest/sanitizer.ts";
+import { runLiveSubmit } from "./server/ingest/submitPipeline.ts";
+import { photoUpload, processImage } from "./server/ingest/upload.ts";
 import { logger } from "./server/lib/logger.ts";
 import { errorHandler, notFoundHandler } from "./server/middleware/errorHandler.ts";
 import { requestId } from "./server/middleware/requestId.ts";
 import { securityHeaders } from "./server/middleware/securityHeaders.ts";
+import { SubmitSchema } from "./server/schemas/submit.ts";
 
 // The request's own origin (scheme + host), trusting the Cloud Run proxy headers
 // so the A2A card advertises the public URL, not the internal container address.
@@ -166,6 +170,86 @@ async function startServer() {
       return;
     }
     res.json({ ward: data.ward, snapshots: data.listSnapshots() });
+  });
+
+  // ── Live submission (the only Gemini-spending route) ─────────────────────────
+  // A citizen submits text + location + an optional photo, and the REAL pipeline
+  // runs on the spot. Because each call spends quota, this route carries its own
+  // strict per-IP limit on top of the global one (C8), and runs the full guard
+  // gauntlet: upload safety (C6) → Zod validation (C7) → injection sanitizer (C2)
+  // → the live pipeline (which itself honours the circuit-breaker, C9).
+  const submitLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // per hour
+    limit: 12, // a demo needs only a few; abuse is throttled to an identity
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    handler: (req, res) => {
+      logger.warn({ ip: req.ip, event: "submit_rate_limit" }, "submit_rate_limited");
+      res.status(429).json({ error: "TOO_MANY_SUBMISSIONS", requestId: req.requestId });
+    },
+  });
+
+  api.post("/submit", submitLimiter, (req, res) => {
+    // multer parses multipart (the photo + text fields) within the size caps.
+    photoUpload(req, res, async (uploadErr) => {
+      if (uploadErr) {
+        const code =
+          uploadErr.message === "UNSUPPORTED_MEDIA_TYPE"
+            ? 415
+            : uploadErr.message?.includes("File too large")
+              ? 413
+              : 400;
+        res
+          .status(code)
+          .json({ error: uploadErr.message ?? "UPLOAD_FAILED", requestId: req.requestId });
+        return;
+      }
+      try {
+        // C7 — validate the text fields (strict; identity is never from the body).
+        const parsed = SubmitSchema.safeParse(req.body);
+        if (!parsed.success) {
+          res.status(400).json({
+            error: "VALIDATION_FAILED",
+            fields: parsed.error.issues.map((i) => ({
+              path: i.path.join("."),
+              message: i.message,
+            })),
+            requestId: req.requestId,
+          });
+          return;
+        }
+
+        // C2 — injection sanitizer. Flagged text is quarantined, not processed.
+        const verdict = await sanitize(parsed.data.text);
+        if (verdict.injectionDetected) {
+          res.status(422).json({
+            error: "QUARANTINED",
+            quarantine: { reason: verdict.reason },
+            requestId: req.requestId,
+          });
+          return;
+        }
+
+        // C6 — verify + sanitize the image (sharp re-decode strips EXIF, proves it's
+        // really an image). A non-image throws and is reported as 415.
+        let image = null;
+        const file = (req as express.Request & { file?: { buffer: Buffer } }).file;
+        if (file?.buffer) {
+          try {
+            image = await processImage(file.buffer);
+          } catch {
+            res.status(415).json({ error: "INVALID_IMAGE", requestId: req.requestId });
+            return;
+          }
+        }
+
+        const result = await runLiveSubmit(parsed.data, image, data.listIssues());
+        res.json({ ...result, piiNote: verdict.piiPresent ? "PII detected in text" : null });
+      } catch (err) {
+        logger.error({ err, requestId: req.requestId }, "submit_failed");
+        res.status(500).json({ error: "SUBMIT_FAILED", requestId: req.requestId });
+      }
+    });
   });
 
   app.use("/api", api);

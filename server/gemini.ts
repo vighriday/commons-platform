@@ -136,6 +136,70 @@ export async function geminiPing(prompt = "Reply with the single word: OK"): Pro
   }
 }
 
+// ── Live (uncached) structured generation — the live-submit path ─────────────────
+// Unlike generateStructured (cache-first, for the frozen demo), this always makes
+// a live call: a citizen's fresh submission has no cache key. It still honours the
+// circuit-breaker (degrade rather than burn the last of the quota), the safety
+// settings, and the RPD counter. Supports an optional image part for Vision.
+// Live calls cover the pipeline agents plus the ingest-only sanitizer/vision steps.
+export type LiveAgent = AgentName | "sanitizer" | "vision";
+
+export interface LiveCall<T> {
+  agent: LiveAgent;
+  tier: ModelTier;
+  prompt: string;
+  responseSchema: Schema;
+  validate: ZodType<T>;
+  imageBase64?: string; // a JPEG for a Vision call
+}
+
+export async function generateLive<T>(call: LiveCall<T>): Promise<T> {
+  if (!config.gemini.isConfigured) throw new AgentOffline(call.agent as AgentName);
+  if (circuitOpen()) {
+    logger.warn({ agent: call.agent }, "quota_circuit_open_live");
+    throw new AgentOffline(call.agent as AgentName);
+  }
+  const ai = getClient();
+  const tier: ModelTier = geminiBudgetSpent() ? "gemma" : call.tier;
+  const model = modelFor(tier);
+  // Safety thresholds apply to the brief-drafting pipeline agents (not ingest).
+  const safetySettings =
+    call.agent === "sanitizer" || call.agent === "vision" ? undefined : safetyFor(call.agent);
+
+  const parts: Record<string, unknown>[] = [{ text: call.prompt }];
+  if (call.imageBase64) {
+    parts.push({ inlineData: { mimeType: "image/jpeg", data: call.imageBase64 } });
+  }
+  const genConfig =
+    tier === "gemma"
+      ? safetySettings
+        ? { safetySettings }
+        : undefined
+      : {
+          responseMimeType: "application/json",
+          responseSchema: call.responseSchema,
+          ...(safetySettings ? { safetySettings } : {}),
+        };
+
+  const response = await ai.models.generateContent({
+    model,
+    contents: [{ parts }] as never,
+    ...(genConfig ? { config: genConfig } : {}),
+  });
+  if (tier === "flash") usage.flash++;
+  else if (tier === "gemma") usage.gemma++;
+  else usage.flashLite++;
+
+  const json = JSON.parse(stripJsonFence(response.text ?? "")) as unknown;
+  const parsed = call.validate.safeParse(json);
+  if (!parsed.success) {
+    logger.warn({ agent: call.agent, issues: parsed.error.issues.length }, "live_validate_failed");
+    throw new Error("LIVE_VALIDATION_FAILED");
+  }
+  logger.info({ agent: call.agent, model, tier }, "live_generated");
+  return parsed.data;
+}
+
 // ── Structured, routed, cached generation ────────────────────────────────────────
 export interface StructuredCall<T> {
   agent: AgentName;

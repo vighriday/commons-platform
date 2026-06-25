@@ -7,7 +7,7 @@
 // in the Matrix view drive two sibling views at once.
 import { create } from "zustand";
 
-export type View = "matrix" | "trace" | "twin" | "time";
+export type View = "matrix" | "trace" | "twin" | "time" | "submit";
 
 interface TwinState {
   view: View;
