@@ -1,0 +1,29 @@
+# Keep the Cloud Run container warm.
+#
+# Cloud Run scales to zero when idle, which means the first request after a quiet
+# spell pays a cold-start penalty. A judge hitting a cold URL sees a slow first
+# paint. This workflow pings the health endpoint on a schedule so the container
+# stays warm and the demo loads fast — a free, card-free substitute for a
+# min-instances setting.
+name: keep-warm
+
+on:
+  schedule:
+    # Every 6 hours (GitHub cron is UTC; the exact minute can drift under load).
+    - cron: "0 */6 * * *"
+  # Allow a manual warm-up right before judging.
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /api/health
+        run: |
+          URL="https://commons-33047220516.asia-southeast1.run.app/api/health"
+          echo "Pinging $URL"
+          code=$(curl -s -o /tmp/body.txt -w "%{http_code}" --max-time 30 "$URL" || echo "000")
+          echo "HTTP $code"
+          cat /tmp/body.txt || true
+          # A warm 200 is success; anything else fails the run so it's visible.
+          test "$code" = "200"

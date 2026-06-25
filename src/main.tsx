@@ -11,6 +11,7 @@ import "@fontsource/jetbrains-mono/600.css";
 // MapLibre base styles (Digital Twin + Time Machine maps).
 import "maplibre-gl/dist/maplibre-gl.css";
 import App from "./App.tsx";
+import { AppErrorBoundary } from "./components/AppErrorBoundary.tsx";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -24,8 +25,10 @@ if (!root) throw new Error("Root element #root not found");
 
 createRoot(root).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <AppErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </AppErrorBoundary>
   </StrictMode>,
 );
