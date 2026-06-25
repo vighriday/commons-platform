@@ -133,12 +133,13 @@ function ev(
   return { status, at, note, actor };
 }
 
-// The lifecycle dates are anchored to a recent window so the live SLA clock reads
-// believably ("9 days overdue", not "a year"). The anchor is a fixed constant (not
-// Date.now(), which would make boot non-deterministic and break the CJS bundle's
-// frozen-baseline guarantee); refresh it when the demo is re-cut. Dates are derived
-// as "N days before the anchor" so the relationships (overdue windows) hold.
-const LIFECYCLE_ANCHOR = new Date("2026-06-26T00:00:00.000Z").getTime();
+// The lifecycle dates are anchored to NOW (resolved once at server boot) so the
+// live SLA clock always reads believably — "9 days overdue", never "150 days" —
+// no matter what day the demo runs. This is a runtime value (data.ts loads when
+// the server starts, never in the offline seed-freeze scripts), so reading the
+// clock here is correct; it does not affect the frozen seed corpus. Dates are
+// derived as "N days before boot", so the overdue windows hold their shape.
+const LIFECYCLE_ANCHOR = Date.now();
 function daysBeforeAnchor(n: number): string {
   return new Date(LIFECYCLE_ANCHOR - n * 86_400_000).toISOString();
 }
