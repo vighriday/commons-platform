@@ -18,10 +18,14 @@ async function getJSON<T>(url: string): Promise<T> {
 }
 
 async function postJSON<T>(url: string, body?: unknown): Promise<T> {
+  // Always send a JSON body (defaulting to {}). A body-less POST has no
+  // Content-Length, which Google's front end rejects with 411 before the request
+  // reaches the server. An empty object keeps body-less endpoints (corroborate)
+  // working on Cloud Run.
   const res = await fetch(url, {
     method: "POST",
-    headers: body ? { "Content-Type": "application/json" } : {},
-    body: body ? JSON.stringify(body) : undefined,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body ?? {}),
   });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);
   return (await res.json()) as T;
